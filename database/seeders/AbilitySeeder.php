@@ -118,7 +118,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar typeofperson',
+                'name' => 'Cadastrar typeofperson',
                 'slug' => 'typeofperson_insert',
                 'functionality' => 'tipo de pessoa',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -127,7 +127,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar typeofperson',
+                'name' => 'Seleciona typeofperson',
                 'slug' => 'typeofperson_by_id',
                 'functionality' => 'tipo de pessoa',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -136,7 +136,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar typeofperson',
+                'name' => 'Editar typeofperson',
                 'slug' => 'typeofperson_edit',
                 'functionality' => 'tipo de pessoa',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -145,7 +145,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar typeofperson',
+                'name' => 'Deletar typeofperson',
                 'slug' => 'typeofperson_delete',
                 'functionality' => 'tipo de pessoa',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -164,7 +164,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishment',
+                'name' => 'Cadastrar establishment',
                 'slug' => 'establishment_insert',
                 'functionality' => 'estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -173,7 +173,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishment',
+                'name' => 'Seleciona establishment',
                 'slug' => 'establishment_by_id',
                 'functionality' => 'estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -182,7 +182,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishment',
+                'name' => 'Editar establishment',
                 'slug' => 'establishment_edit',
                 'functionality' => 'estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -191,7 +191,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishment',
+                'name' => 'Deletar establishment',
                 'slug' => 'establishment_delete',
                 'functionality' => 'estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -209,7 +209,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar services',
+                'name' => 'Cadastrar services',
                 'slug' => 'services_insert',
                 'functionality' => 'serviços',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -218,7 +218,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar services',
+                'name' => 'Seleciona services',
                 'slug' => 'services_by_id',
                 'functionality' => 'serviços',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -227,7 +227,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar services',
+                'name' => 'Editar services',
                 'slug' => 'services_edit',
                 'functionality' => 'serviços',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -236,7 +236,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar services',
+                'name' => 'Deletar services',
                 'slug' => 'services_delete',
                 'functionality' => 'serviços',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -254,7 +254,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentservices',
+                'name' => 'Cadastrar establishmentservices',
                 'slug' => 'establishmentservices_insert',
                 'functionality' => 'serviços do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -263,7 +263,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentservices',
+                'name' => 'Seleciona establishmentservices',
                 'slug' => 'establishmentservices_by_id',
                 'functionality' => 'serviços do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -272,7 +272,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentservices',
+                'name' => 'Editar establishmentservices',
                 'slug' => 'establishmentservices_edit',
                 'functionality' => 'serviços do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -281,7 +281,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentservices',
+                'name' => 'Deletar establishmentservices',
                 'slug' => 'establishmentservices_delete',
                 'functionality' => 'serviços do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -299,7 +299,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar status',
+                'name' => 'Cadastrar status',
                 'slug' => 'status_insert',
                 'functionality' => 'status',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -308,7 +308,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar status',
+                'name' => 'Seleciona status',
                 'slug' => 'status_by_id',
                 'functionality' => 'status',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -317,7 +317,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar status',
+                'name' => 'Editar status',
                 'slug' => 'status_edit',
                 'functionality' => 'status',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -326,7 +326,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar status',
+                'name' => 'Deletar status',
                 'slug' => 'status_delete',
                 'functionality' => 'status',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -342,7 +342,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar client',
+                'name' => 'Cadastrar client',
                 'slug' => 'client_insert',
                 'functionality' => 'cliente',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -351,7 +351,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar client',
+                'name' => 'Seleciona client',
                 'slug' => 'client_by_id',
                 'functionality' => 'cliente',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -360,7 +360,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar client',
+                'name' => 'Editar client',
                 'slug' => 'client_edit',
                 'functionality' => 'cliente',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -369,7 +369,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar client',
+                'name' => 'Deletar client',
                 'slug' => 'client_delete',
                 'functionality' => 'cliente',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
