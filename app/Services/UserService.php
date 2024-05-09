@@ -89,8 +89,8 @@ class UserService
 
     public function login($request)
     {
-        $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
-        $user = $this->user->where('cpf', $request->cpf)->first();
+        $request['cpf_cnpj'] = preg_replace('/[^0-9]/', '', $request->cpf_cnpj);
+        $user = $this->user->where('cpf_cnpj', $request->cpf_cnpj)->first();
 
         if (!$user) {
             return response()->json(['error' => 'Usuario não encontrado'], Response::HTTP_NOT_FOUND);
