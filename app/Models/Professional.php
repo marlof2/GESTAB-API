@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Profile extends Model
+class Professional extends Model
 {
     protected $guarded = ['id'];
-    protected $fillable = ["name","description"];
+    protected $fillable = ["profile_id","name","cpf","email","phone","password","valid"];
 }

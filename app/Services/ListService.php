@@ -2,25 +2,25 @@
 
 namespace App\Services;
 use Illuminate\Http\Response;
-use App\Models\Profile;
+use App\Models\List;
 
-class ProfileService
+class ListService
 {
-    protected $profile;
+    protected $list;
     protected $pageLimit;
 
-    public function __construct(Profile $profile){
-            $this->profile = $profile;
+    public function __construct(List $list){
+            $this->list = $list;
             $this->pageLimit = 10;
     }
     public function index($request)
     {
-       $data = $this->profile->orderBy('name');
+       $data = $this->list->orderBy('name');
         if ($request->filled('search')) {
             $data = $data->where('name' , 'ILIKE' , '%' . $request->search . '%');
         }
         if ($request->filled('limit')) {
-            $data = ["data" => $this->profile->get()];
+            $data = ["data" => $this->list->get()];
             return response()->json($data, Response::HTTP_OK );
         } else {
             $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
@@ -32,7 +32,7 @@ class ProfileService
     {
         $dataFrom = $request->all();
         try {
-            $data = $this->profile->create($dataFrom);
+            $data = $this->list->create($dataFrom);
             return response()->json($data,Response::HTTP_CREATED ) ;
         }
         catch (\Exception $e) {
@@ -41,7 +41,7 @@ class ProfileService
     }
     public function show($id)
     {
-        $data = $this->profile->find($id);
+        $data = $this->list->find($id);
         if(!$data){
             return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
         }
@@ -49,7 +49,7 @@ class ProfileService
     }
     public function update($request, $id)
     {
-        $data = $this->profile->find($id);
+        $data = $this->list->find($id);
         if(!$data){
             return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
         }
@@ -66,7 +66,7 @@ class ProfileService
 
     public function destroy($id)
     {
-        $data = $this->profile->find($id);
+        $data = $this->list->find($id);
         if(!$data){
             return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
         }

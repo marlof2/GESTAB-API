@@ -1,52 +1,41 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Services\ProfileService;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProfileRequest;
+use App\Services\ProfileService;
 
 class ProfileController extends Controller
 {
-
-    private $profileService;
-
-    function __construct(ProfileService $profileService)
-    {
-        $this->profileService = $profileService;
+    protected $profile_service;
+    public function __construct(ProfileService $profile_service){
+        $this->profile_service = $profile_service;
     }
 
     public function index(Request $request)
     {
-        return $this->profileService->index($request);
+         return $this->profile_service->index($request);
     }
 
-    protected function store(Request $request)
+    public function store(ProfileRequest $request)
     {
-        return $this->profileService->store($request);
+        return $this->profile_service->store($request);
     }
 
-    protected function update(Request $request, $id)
+    public function show($id)
     {
-        return $this->profileService->update($request, $id);
+        return $this->profile_service->show($id);
     }
 
-    function show($id)
+    public function update(ProfileRequest $request, $id)
     {
-        return $this->profileService->show($id);
+        return $this->profile_service->update($request,$id);
     }
 
-    protected function destroy($id)
+    public function destroy($id)
     {
-        return $this->profileService->destroy($id);
+        return $this->profile_service->destroy($id);
     }
 
-    public function getAbilities($id)
-    {
-        return $this->profileService->getAbilities($id);
-    }
-
-    protected function addPermissions(Request $request)
-    {
-        return $this->profileService->addPermissions($request);
-    }
 }
