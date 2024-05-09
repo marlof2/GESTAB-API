@@ -387,7 +387,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar professional',
+                'name' => 'Cadastrar professional',
                 'slug' => 'professional_insert',
                 'functionality' => 'profissional',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -396,7 +396,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar professional',
+                'name' => 'Seleciona professional',
                 'slug' => 'professional_by_id',
                 'functionality' => 'profissional',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -405,7 +405,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar professional',
+                'name' => 'Editar professional',
                 'slug' => 'professional_edit',
                 'functionality' => 'profissional',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -414,7 +414,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar professional',
+                'name' => 'Deletar professional',
                 'slug' => 'professional_delete',
                 'functionality' => 'profissional',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -432,7 +432,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentprofessional',
+                'name' => 'Cadastrar establishmentprofessional',
                 'slug' => 'establishmentprofessional_insert',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -441,7 +441,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentprofessional',
+                'name' => 'Seleciona establishmentprofessional',
                 'slug' => 'establishmentprofessional_by_id',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -450,7 +450,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentprofessional',
+                'name' => 'Editar establishmentprofessional',
                 'slug' => 'establishmentprofessional_edit',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -459,7 +459,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar establishmentprofessional',
+                'name' => 'Deletar establishmentprofessional',
                 'slug' => 'establishmentprofessional_delete',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -477,7 +477,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar list',
+                'name' => 'Cadastrar list',
                 'slug' => 'list_insert',
                 'functionality' => 'lista',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -486,7 +486,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar list',
+                'name' => 'Seleciona list',
                 'slug' => 'list_by_id',
                 'functionality' => 'lista',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -495,7 +495,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar list',
+                'name' => 'Editar list',
                 'slug' => 'list_edit',
                 'functionality' => 'lista',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -504,7 +504,7 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar list',
+                'name' => 'Deletar list',
                 'slug' => 'list_delete',
                 'functionality' => 'lista',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
