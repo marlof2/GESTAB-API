@@ -24,6 +24,7 @@ Route::get('', function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [UserController::class, 'store']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("/me", [AuthController::class, 'me']);
@@ -36,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->middleware('abilities:user_list');
-        Route::post('/', [UserController::class, 'store'])->middleware('abilities:user_insert');
+        Route::post('/', [UserController::class, 'store']); //->middleware('abilities:user_insert');
         Route::get('/{id}', [UserController::class, 'show'])->middleware('abilities:user_by_id');
         Route::put('/{id}', [UserController::class, 'update'])->middleware('abilities:user_edit');
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('abilities:user_delete');

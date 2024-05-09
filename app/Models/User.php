@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'cpf_cnpj',
+        'cpf',
         'profile_id',
 
     ];
@@ -57,7 +57,7 @@ class User extends Authenticatable
 
         return $query
             ->OrWhere('name', 'LIKE', '%' . $filtro . '%')
-            ->OrWhere('cpf_cnpj', 'LIKE', '%' . $filtro . '%')
+            ->OrWhere('cpf', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('email', 'LIKE', '%' . $filtro . '%')
             ->paginate(config('app.pageLimit'));
     }

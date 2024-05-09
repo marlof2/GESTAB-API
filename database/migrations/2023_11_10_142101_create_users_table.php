@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('profile_id')->nullable();
             $table->string('name');
-            $table->string('cpf_cnpj')->unique();
+            $table->string('cpf')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();

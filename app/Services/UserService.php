@@ -40,7 +40,6 @@ class UserService
 
     public function store($request)
     {
-        $request['password'] = Hash::make(12345);
         $dataFrom = $request->all();
         try {
             $data = $this->user->create($dataFrom);
@@ -89,8 +88,8 @@ class UserService
 
     public function login($request)
     {
-        $request['cpf_cnpj'] = preg_replace('/[^0-9]/', '', $request->cpf_cnpj);
-        $user = $this->user->where('cpf_cnpj', $request->cpf_cnpj)->first();
+        $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
+        $user = $this->user->where('cpf', $request->cpf)->first();
 
         if (!$user) {
             return response()->json(['error' => 'Usuario não encontrado'], Response::HTTP_NOT_FOUND);
