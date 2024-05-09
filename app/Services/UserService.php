@@ -108,8 +108,17 @@ class UserService
 
         $token = $user->createToken('AccessToken', $abilities)->plainTextToken;
 
+        $respUser = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'cpf' => $user->cpf,
+            'email' => $user->email,
+            'profile_id' => $user->profile_id
+        ];
+
         return response([
-            'token' => $token
+            'user' => $respUser,
+            'token' => $token,
         ], 200);
     }
 
