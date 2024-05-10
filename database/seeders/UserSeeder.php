@@ -15,21 +15,33 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::firstOrCreate([
-            'name' => 'Marlo',
-            'profile_id' => 1,
-            'cpf' => '03296244581',
-            'email' => 'marlosilva.f2@gmail.com',
-            'password' => Hash::make('123')
-        ],
-        [
-            'name' => 'Juliana',
-            'profile_id' => 1,
-            'cpf' => '85873615543',
-            'email' => 'jumatosk@gmail.com',
-            'password' => Hash::make('123456')
-        ]
-    );
 
+        $users = [
+            [
+                'name' => 'Marlo',
+                'profile_id' => 1,
+                'cpf' => '03296244581',
+                'email' => 'marlosilva.f2@gmail.com',
+                'password' => Hash::make('123')
+            ],
+            [
+                'name' => 'Juliana',
+                'profile_id' => 1,
+                'cpf' => '85873615543',
+                'email' => 'jumatosk@gmail.com',
+                'password' => Hash::make('123')
+            ]
+        ];
+
+
+        foreach ($users as $key => $value) {
+            User::firstOrCreate([
+                'name' => $value['name'],
+                'profile_id' => $value['profile_id'],
+                'cpf' => $value['cpf'],
+                'email' => $value['email'],
+                'password' => $value['password'],
+            ]);
+        }
     }
 }
