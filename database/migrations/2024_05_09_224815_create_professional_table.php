@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('professional', function (Blueprint $table) {
             $table->id();
+            $table->string("name");
+            $table->string("cpf", 11);
+            $table->string("email");
+            $table->string("phone");
+            $table->string("password");
+            $table->boolean("valid");
+            $table->unsignedBigInteger('profile_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('set null');
         });
     }
 
