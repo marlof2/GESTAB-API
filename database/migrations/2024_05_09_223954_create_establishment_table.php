@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('establishment', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->string('cpf', 11);
-            $table->string('cnpj', 14);
-            $table->boolean('ativo')->default(false);
-            $table->unsignedBigInteger('typeofperson_id')->nullable();
+            $table->unsignedBigInteger('type_of_person_id')->nullable();
+            $table->string('name');
+            $table->string('cpf');
+            $table->string('cnpj');
+            $table->string('is_active');
             $table->timestamps();
 
-            $table->foreign('typeofperson_id')->references('id')->on('typeofperson')->onDelete('set null');
+            $table->foreign('type_of_person_id')->references('id')->on('type_of_person');
         });
     }
 
