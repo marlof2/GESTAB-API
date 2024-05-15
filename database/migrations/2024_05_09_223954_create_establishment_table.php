@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('establishment', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('type_of_person_id')->nullable();
+            $table->string('name');
+            $table->string('cpf');
+            $table->string('cnpj');
+            $table->string('is_active');
             $table->timestamps();
+
+            $table->foreign('type_of_person_id')->references('id')->on('type_of_person');
         });
     }
 
