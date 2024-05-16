@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class EstablishmentProfessional extends Model
 {
+    protected $table = "establishment_professional";
     protected $guarded = ['id'];
     protected $fillable = ["professional_id","establishment_id"];
 }
