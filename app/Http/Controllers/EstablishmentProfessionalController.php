@@ -1,41 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use App\Http\Requests\EstablishmentProfessionalRequest;
-use App\Services\EstablishmentProfessionalService;
+use App\Http\Requests\EstablishmentUserRequest;
+use App\Services\EstablishmentUserService;
 
-class EstablishmentProfessionalController extends Controller
+class EstablishmentUserController extends Controller
 {
-    protected $establishment_professional_service;
-    public function __construct(EstablishmentProfessionalService $establishment_professional_service){
-        $this->establishment_professional_service = $establishment_professional_service;
+    protected $establishment_user_service;
+    public function __construct(EstablishmentUserService $establishment_user_service){
+        $this->establishment_user_service = $establishment_user_service;
     }
 
     public function index(Request $request)
     {
-         return $this->establishment_professional_service->index($request);
+         return $this->establishment_user_service->index($request);
     }
 
-    public function store(EstablishmentProfessionalRequest $request)
+    public function store(EstablishmentUserRequest $request)
     {
-        return $this->establishment_professional_service->store($request);
+        return $this->establishment_user_service->store($request);
     }
 
     public function show($id)
     {
-        return $this->establishment_professional_service->show($id);
+        return $this->establishment_user_service->show($id);
     }
 
-    public function update(EstablishmentProfessionalRequest $request, $id)
+    public function update(EstablishmentUserRequest $request, $id)
     {
-        return $this->establishment_professional_service->update($request,$id);
+        return $this->establishment_user_service->update($request,$id);
     }
 
     public function destroy($id)
     {
-        return $this->establishment_professional_service->destroy($id);
+        return $this->establishment_user_service->destroy($id);
     }
 
 }

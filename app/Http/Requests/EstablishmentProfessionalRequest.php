@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class EstablishmentProfessionalRequest extends FormRequest
+class EstablishmentUserRequest extends FormRequest
 {
     public $id_request;
 

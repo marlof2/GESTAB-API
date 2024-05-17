@@ -2,14 +2,14 @@
 
 namespace App\Services;
 use Illuminate\Http\Response;
-use App\Models\List;
+use App\Models\Lista;
 
 class ListService
 {
     protected $list;
     protected $pageLimit;
 
-    public function __construct(List $list){
+    public function __construct(Lista $list){
             $this->list = $list;
             $this->pageLimit = 10;
     }

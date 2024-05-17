@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class TypeOfPerson extends Model
 {
+    protected $table = 'type_of_person';
     protected $guarded = ['id'];
     protected $fillable = ["name"];
 }

@@ -58,11 +58,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::prefix('type_of_person')->group(function () {
-        Route::get('/', [App\Http\Controllers\TypeOfPersonController::class, 'index'])->middleware('abilities:typeofperson_list');
-        Route::post('/', [App\Http\Controllers\TypeOfPersonController::class, 'store'])->middleware('abilities:typeofperson_insert');
-        Route::get('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'show'])->middleware('abilities:typeofperson_by_id');
-        Route::put('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'update'])->middleware('abilities:typeofperson_edit');
-        Route::delete('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'destroy'])->middleware('abilities:typeofperson_delete');
+        Route::get('/', [App\Http\Controllers\TypeOfPersonController::class, 'index']);
+        // Route::post('/', [App\Http\Controllers\TypeOfPersonController::class, 'store'])->middleware('abilities:typeofperson_insert');
+        // Route::get('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'show'])->middleware('abilities:typeofperson_by_id');
+        // Route::put('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'update'])->middleware('abilities:typeofperson_edit');
+        // Route::delete('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'destroy'])->middleware('abilities:typeofperson_delete');
     });
 
 
@@ -86,41 +86,25 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/', [App\Http\Controllers\EstablishmentServicesController::class, 'index'])->middleware('abilities:establishmentservices_list');
         Route::post('/', [App\Http\Controllers\EstablishmentServicesController::class, 'store'])->middleware('abilities:establishmentservices_insert');
         Route::get('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'show'])->middleware('abilities:establishmentservices_by_id');
-        Route::put('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'update'])->middleware('abilities:establishmentservices_edit');
-        Route::delete('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'destroy'])->middleware('abilities:establishmentservices_delete');
+        // Route::put('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'update'])->middleware('abilities:establishmentservices_edit');
+        // Route::delete('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'destroy'])->middleware('abilities:establishmentservices_delete');
     });
 
     Route::prefix('status')->group(function () {
-        Route::get('/', [App\Http\Controllers\StatusController::class, 'index'])->middleware('abilities:status_list');
-        Route::post('/', [App\Http\Controllers\StatusController::class, 'store'])->middleware('abilities:status_insert');
-        Route::get('/{id}', [App\Http\Controllers\StatusController::class, 'show'])->middleware('abilities:status_by_id');
-        Route::put('/{id}', [App\Http\Controllers\StatusController::class, 'update'])->middleware('abilities:status_edit');
-        Route::delete('/{id}', [App\Http\Controllers\StatusController::class, 'destroy'])->middleware('abilities:status_delete');
+        Route::get('/', [App\Http\Controllers\StatusController::class, 'index']);
+        // Route::post('/', [App\Http\Controllers\StatusController::class, 'store'])->middleware('abilities:status_insert');
+        // Route::get('/{id}', [App\Http\Controllers\StatusController::class, 'show'])->middleware('abilities:status_by_id');
+        // Route::put('/{id}', [App\Http\Controllers\StatusController::class, 'update'])->middleware('abilities:status_edit');
+        // Route::delete('/{id}', [App\Http\Controllers\StatusController::class, 'destroy'])->middleware('abilities:status_delete');
     });
 
 
-    Route::prefix('clients')->group(function () {
-        Route::get('/', [App\Http\Controllers\ClientController::class, 'index'])->middleware('abilities:client_list');
-        Route::post('/', [App\Http\Controllers\ClientController::class, 'store'])->middleware('abilities:client_insert');
-        Route::get('/{id}', [App\Http\Controllers\ClientController::class, 'show'])->middleware('abilities:client_by_id');
-        Route::put('/{id}', [App\Http\Controllers\ClientController::class, 'update'])->middleware('abilities:client_edit');
-        Route::delete('/{id}', [App\Http\Controllers\ClientController::class, 'destroy'])->middleware('abilities:client_delete');
-    });
-
-    Route::prefix('professionals')->group(function () {
-        Route::get('/', [App\Http\Controllers\ProfessionalController::class, 'index'])->middleware('abilities:professional_list');
-        Route::post('/', [App\Http\Controllers\ProfessionalController::class, 'store'])->middleware('abilities:professional_insert');
-        Route::get('/{id}', [App\Http\Controllers\ProfessionalController::class, 'show'])->middleware('abilities:professional_by_id');
-        Route::put('/{id}', [App\Http\Controllers\ProfessionalController::class, 'update'])->middleware('abilities:professional_edit');
-        Route::delete('/{id}', [App\Http\Controllers\ProfessionalController::class, 'destroy'])->middleware('abilities:professional_delete');
-    });
-
-    Route::prefix('establishment_professionals')->group(function () {
-        Route::get('/', [App\Http\Controllers\EstablishmentProfessionalController::class, 'index'])->middleware('abilities:establishmentprofessional_list');
-        Route::post('/', [App\Http\Controllers\EstablishmentProfessionalController::class, 'store'])->middleware('abilities:establishmentprofessional_insert');
-        Route::get('/{id}', [App\Http\Controllers\EstablishmentProfessionalController::class, 'show'])->middleware('abilities:establishmentprofessional_by_id');
-        Route::put('/{id}', [App\Http\Controllers\EstablishmentProfessionalController::class, 'update'])->middleware('abilities:establishmentprofessional_edit');
-        Route::delete('/{id}', [App\Http\Controllers\EstablishmentProfessionalController::class, 'destroy'])->middleware('abilities:establishmentprofessional_delete');
+    Route::prefix('establishment_user')->group(function () {
+        Route::get('/', [App\Http\Controllers\EstablishmentUserController::class, 'index'])->middleware('abilities:establishmentuser_list');
+        Route::post('/', [App\Http\Controllers\EstablishmentUserController::class, 'store'])->middleware('abilities:establishmentuser_insert');
+        Route::get('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
+        Route::put('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'update'])->middleware('abilities:establishmentuser_edit');
+        Route::delete('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
     });
 
     Route::prefix('lists')->group(function () {
@@ -132,17 +116,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 });
 
- 
- Route::prefix('typeofusers')->group(function () {
- 
- Route::get('/',[App\Http\Controllers\TypeOfUserController::class, 'index'])->middleware('abilities:typeofuser_list');
- 
- Route::post('/',[App\Http\Controllers\TypeOfUserController::class, 'store'])->middleware('abilities:typeofuser_insert');
- 
- Route::get('/{id}',[App\Http\Controllers\TypeOfUserController::class, 'show'])->middleware('abilities:typeofuser_by_id');
- 
- Route::put('/{id}',[App\Http\Controllers\TypeOfUserController::class, 'update'])->middleware('abilities:typeofuser_edit');
- 
- Route::delete('/{id}',[App\Http\Controllers\TypeOfUserController::class, 'destroy'])->middleware('abilities:typeofuser_delete');
- 
- });
+
+Route::prefix('typeofusers')->group(function () {
+    Route::get('/', [App\Http\Controllers\TypeOfUserController::class, 'index']);
+    // Route::get('/{id}', [App\Http\Controllers\TypeOfUserController::class, 'show'])->middleware('abilities:typeofuser_by_id');
+    // Route::post('/', [App\Http\Controllers\TypeOfUserController::class, 'store'])->middleware('abilities:typeofuser_insert');
+    // Route::put('/{id}', [App\Http\Controllers\TypeOfUserController::class, 'update'])->middleware('abilities:typeofuser_edit');
+    // Route::delete('/{id}', [App\Http\Controllers\TypeOfUserController::class, 'destroy'])->middleware('abilities:typeofuser_delete');
+});

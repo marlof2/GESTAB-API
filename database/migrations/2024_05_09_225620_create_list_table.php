@@ -15,15 +15,13 @@ return new class extends Migration
             $table->id();
             $table->date("date");
             $table->time("time");
-            $table->unsignedBigInteger('professional_id')->nullable();
-            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('services_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
             $table->unsignedBigInteger('establishment_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('professional_id')->references('id')->on('professional')->onDelete('set null');
-            $table->foreign('client_id')->references('id')->on('client')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('services_id')->references('id')->on('services')->onDelete('set null');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('set null');
             $table->foreign('establishment_id')->references('id')->on('establishment')->onDelete('set null');

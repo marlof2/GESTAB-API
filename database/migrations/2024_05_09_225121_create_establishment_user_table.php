@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('establishment_professional', function (Blueprint $table) {
+        Schema::create('establishment_user', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('establishment_id')->nullable();
-            $table->unsignedBigInteger('professional_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('establishment_id')->references('id')->on('establishment')->onDelete('set null');
-            $table->foreign('professional_id')->references('id')->on('professional')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('establishmentprofessional');
+        Schema::dropIfExists('establishment_user');
     }
 };

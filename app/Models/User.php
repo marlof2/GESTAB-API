@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'cpf',
         'profile_id',
+        'type_of_user'
 
     ];
 

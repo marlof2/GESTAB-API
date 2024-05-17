@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Professional extends Model
+class Lista extends Model
 {
+    protected $table = 'list';
     protected $guarded = ['id'];
-    protected $fillable = ["profile_id","name","cpf","email","phone","password","valid"];
+    protected $fillable = ["user_id","services_id","status_id","establishment_id","date","time"];
 }

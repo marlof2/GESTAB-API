@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('cpf');
             $table->string('cnpj');
+            $table->string('phone');
             $table->string('is_active');
             $table->timestamps();
 

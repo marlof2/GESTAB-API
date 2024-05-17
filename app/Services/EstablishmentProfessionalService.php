@@ -4,26 +4,26 @@ namespace App\Services;
 
 use App\Models\Establishment;
 use Illuminate\Http\Response;
-use App\Models\EstablishmentProfessional;
+use App\Models\EstablishmentUser;
 
-class EstablishmentProfessionalService
+class EstablishmentUserService
 {
-    protected $establishmentprofessional;
+    protected $establishmentpro_user;
     protected $pageLimit;
 
-    public function __construct(EstablishmentProfessional $establishmentprofessional)
+    public function __construct(EstablishmentUser $establishmentpro_user)
     {
-        $this->establishmentprofessional = $establishmentprofessional;
+        $this->establishmentpro_user = $establishmentpro_user;
         $this->pageLimit = 10;
     }
     public function index($request)
     {
-        $data = $this->establishmentprofessional->orderBy('name');
+        $data = $this->establishmentpro_user->orderBy('name');
         if ($request->filled('search')) {
             $data = $data->where('name', 'ILIKE', '%' . $request->search . '%');
         }
         if ($request->filled('limit')) {
-            $data = ["data" => $this->establishmentprofessional->get()];
+            $data = ["data" => $this->establishmentpro_user->get()];
             return response()->json($data, Response::HTTP_OK);
         } else {
             $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
@@ -33,18 +33,15 @@ class EstablishmentProfessionalService
     }
     public function store($request)
     {
-        $data = Establishment::find($request->establishment_id);
-        if (!$data) {
-            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
-        }
         try {
-            $professional_id = $request["professional_id"];
+            $user_id = $request["user_id"];
             $establishment_id = $request->establishment_id;
 
-            foreach ($professional_id as $key => $id) {
+            foreach ($user_id as $key => $id) {
 
-                $this->establishmentprofessional->create(["establishment_id" => $establishment_id, "professional_id" => $id]);
+                $this->establishmentpro_user->create(["establishment_id" => $establishment_id, "user_id" => $id]);
             }
+
             return response()->json(["message" => "Profissionais vinculados com sucesso."], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
@@ -52,7 +49,7 @@ class EstablishmentProfessionalService
     }
     public function show($id)
     {
-        $data = $this->establishmentprofessional->find($id);
+        $data = $this->establishmentpro_user->find($id);
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
@@ -60,7 +57,7 @@ class EstablishmentProfessionalService
     }
     public function update($request, $id)
     {
-        $data = $this->establishmentprofessional->find($id);
+        $data = $this->establishmentpro_user->find($id);
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
@@ -75,7 +72,7 @@ class EstablishmentProfessionalService
 
     public function destroy($id)
     {
-        $data = $this->establishmentprofessional->find($id);
+        $data = $this->establishmentpro_user->find($id);
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }

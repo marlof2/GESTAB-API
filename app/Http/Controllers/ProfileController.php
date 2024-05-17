@@ -38,4 +38,14 @@ class ProfileController extends Controller
         return $this->profile_service->destroy($id);
     }
 
+    public function getAbilities($id)
+    {
+        return $this->profile_service->getAbilities($id);
+    }
+
+    protected function addPermissions(Request $request)
+    {
+        return $this->profile_service->addPermissions($request);
+    }
+
 }

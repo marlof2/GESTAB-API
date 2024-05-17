@@ -22,14 +22,16 @@ class UserSeeder extends Seeder
                 'profile_id' => 1,
                 'cpf' => '03296244581',
                 'email' => 'marlosilva.f2@gmail.com',
-                'password' => Hash::make('123')
+                'password' => Hash::make('123'),
+                'type_of_user_id' => 1
             ],
             [
                 'name' => 'Juliana',
                 'profile_id' => 1,
                 'cpf' => '85873615543',
                 'email' => 'jumatosk@gmail.com',
-                'password' => Hash::make('123')
+                'password' => Hash::make('123'),
+                'type_of_user_id' => 1
             ]
         ];
 
@@ -41,6 +43,7 @@ class UserSeeder extends Seeder
                 'cpf' => $value['cpf'],
                 'email' => $value['email'],
                 'password' => $value['password'],
+                'type_of_user_id' => $value['type_of_user_id']
             ]);
         }
     }

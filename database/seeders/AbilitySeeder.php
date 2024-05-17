@@ -16,7 +16,7 @@ class AbilitySeeder extends Seeder
     public function run()
     {
         $abilities = [
-           [
+            [
                 'name' => 'Listar usuários',
                 'slug' => 'user_list',
                 'functionality' => 'usuario',
@@ -108,51 +108,6 @@ class AbilitySeeder extends Seeder
                 'functionality' => 'perfil',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ],
-            [
-                'name' => 'Listar typeofperson',
-                'slug' => 'typeofperson_list',
-                'functionality' => 'tipo de pessoa',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Cadastrar typeofperson',
-                'slug' => 'typeofperson_insert',
-                'functionality' => 'tipo de pessoa',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Seleciona typeofperson',
-                'slug' => 'typeofperson_by_id',
-                'functionality' => 'tipo de pessoa',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Editar typeofperson',
-                'slug' => 'typeofperson_edit',
-                'functionality' => 'tipo de pessoa',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Deletar typeofperson',
-                'slug' => 'typeofperson_delete',
-                'functionality' => 'tipo de pessoa',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
 
             [
                 'name' => 'Listar establishment',
@@ -290,141 +245,8 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Listar status',
-                'slug' => 'status_list',
-                'functionality' => 'status',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Cadastrar status',
-                'slug' => 'status_insert',
-                'functionality' => 'status',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Seleciona status',
-                'slug' => 'status_by_id',
-                'functionality' => 'status',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Editar status',
-                'slug' => 'status_edit',
-                'functionality' => 'status',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Deletar status',
-                'slug' => 'status_delete',
-                'functionality' => 'status',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'name' => 'Listar client',
-                'slug' => 'client_list',
-                'functionality' => 'cliente',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Cadastrar client',
-                'slug' => 'client_insert',
-                'functionality' => 'cliente',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Seleciona client',
-                'slug' => 'client_by_id',
-                'functionality' => 'cliente',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Editar client',
-                'slug' => 'client_edit',
-                'functionality' => 'cliente',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Deletar client',
-                'slug' => 'client_delete',
-                'functionality' => 'cliente',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Listar professional',
-                'slug' => 'professional_list',
-                'functionality' => 'profissional',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Cadastrar professional',
-                'slug' => 'professional_insert',
-                'functionality' => 'profissional',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Seleciona professional',
-                'slug' => 'professional_by_id',
-                'functionality' => 'profissional',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Editar professional',
-                'slug' => 'professional_edit',
-                'functionality' => 'profissional',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Deletar professional',
-                'slug' => 'professional_delete',
-                'functionality' => 'profissional',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Listar establishmentprofessional',
-                'slug' => 'establishmentprofessional_list',
+                'name' => 'Listar estabelecimento do usuário',
+                'slug' => 'establishmentuser_list',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -432,8 +254,8 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Cadastrar establishmentprofessional',
-                'slug' => 'establishmentprofessional_insert',
+                'name' => 'Cadastrar estabelecimento do usuário',
+                'slug' => 'establishmentuser_insert',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -441,8 +263,8 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Seleciona establishmentprofessional',
-                'slug' => 'establishmentprofessional_by_id',
+                'name' => 'Seleciona estabelecimento do usuário',
+                'slug' => 'establishmentuser_by_id',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -450,8 +272,8 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Editar establishmentprofessional',
-                'slug' => 'establishmentprofessional_edit',
+                'name' => 'Editar estabelecimento do usuário',
+                'slug' => 'establishmentuser_edit',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -459,8 +281,8 @@ class AbilitySeeder extends Seeder
 
 
             [
-                'name' => 'Deletar establishmentprofessional',
-                'slug' => 'establishmentprofessional_delete',
+                'name' => 'Deletar estabelecimento do usuário',
+                'slug' => 'establishmentuser_delete',
                 'functionality' => 'profissional do estabelecimento',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -510,49 +332,7 @@ class AbilitySeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
-            [
-                'name' => 'Listar typeofuser',
-                'slug' => 'typeofuser_list',
-                'functionality' => 'tipo de usuario',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
 
-
-            [
-                'name' => 'Cadastrar typeofuser',
-                'slug' => 'typeofuser_insert',
-                'functionality' => 'tipo de usuario',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Editar typeofuser',
-                'slug' => 'typeofuser_by_id',
-                'functionality' => 'tipo de usuario',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Seleciona typeofuser',
-                'slug' => 'typeofuser_edit',
-                'functionality' => 'tipo de usuario',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-
-
-            [
-                'name' => 'Deletar typeofuser',
-                'slug' => 'typeofuser_delete',
-                'functionality' => 'tipo de usuario',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
         ];
 
         foreach ($abilities as $key => $value) {
@@ -562,6 +342,5 @@ class AbilitySeeder extends Seeder
                 'functionality' => $value['functionality'],
             ]);
         }
-
     }
 }
