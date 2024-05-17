@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("email");
             $table->string("phone");
             $table->string("password");
-            $table->boolean("valid");
+            $table->boolean("is_active");
             $table->unsignedBigInteger('profile_id')->nullable();
             $table->timestamps();
 
