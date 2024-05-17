@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Establishment;
 use Illuminate\Http\Response;
 use App\Models\EstablishmentProfessional;
 
@@ -32,12 +33,19 @@ class EstablishmentProfessionalService
     }
     public function store($request)
     {
+        $data = Establishment::find($request->establishment_id);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
+        }
         try {
-            foreach ($request["professional_id"] as $key => $id) {
+            $professional_id = $request["professional_id"];
+            $establishment_id = $request->establishment_id;
 
-                $this->establishmentprofessional->create(["establishment_id" => $request->establishment_id, "professional_id" => $id]);
+            foreach ($professional_id as $key => $id) {
+
+                $this->establishmentprofessional->create(["establishment_id" => $establishment_id, "professional_id" => $id]);
             }
-            return response()->json(["message"=> "Profissionais vinculados com sucesso."], Response::HTTP_CREATED);
+            return response()->json(["message" => "Profissionais vinculados com sucesso."], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }

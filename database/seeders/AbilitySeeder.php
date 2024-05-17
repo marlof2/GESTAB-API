@@ -510,6 +510,49 @@ class AbilitySeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
+            [
+                'name' => 'Listar typeofuser',
+                'slug' => 'typeofuser_list',
+                'functionality' => 'tipo de usuario',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Cadastrar typeofuser',
+                'slug' => 'typeofuser_insert',
+                'functionality' => 'tipo de usuario',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Editar typeofuser',
+                'slug' => 'typeofuser_by_id',
+                'functionality' => 'tipo de usuario',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Seleciona typeofuser',
+                'slug' => 'typeofuser_edit',
+                'functionality' => 'tipo de usuario',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Deletar typeofuser',
+                'slug' => 'typeofuser_delete',
+                'functionality' => 'tipo de usuario',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
         ];
 
         foreach ($abilities as $key => $value) {

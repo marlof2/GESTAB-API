@@ -131,3 +131,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/{id}', [App\Http\Controllers\ListController::class, 'destroy'])->middleware('abilities:list_delete');
     });
 });
+
+ 
+ Route::prefix('typeofusers')->group(function () {
+ 
+ Route::get('/',[App\Http\Controllers\TypeOfUserController::class, 'index'])->middleware('abilities:typeofuser_list');
+ 
+ Route::post('/',[App\Http\Controllers\TypeOfUserController::class, 'store'])->middleware('abilities:typeofuser_insert');
+ 
+ Route::get('/{id}',[App\Http\Controllers\TypeOfUserController::class, 'show'])->middleware('abilities:typeofuser_by_id');
+ 
+ Route::put('/{id}',[App\Http\Controllers\TypeOfUserController::class, 'update'])->middleware('abilities:typeofuser_edit');
+ 
+ Route::delete('/{id}',[App\Http\Controllers\TypeOfUserController::class, 'destroy'])->middleware('abilities:typeofuser_delete');
+ 
+ });
