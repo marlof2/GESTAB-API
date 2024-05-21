@@ -8,7 +8,10 @@ use Illuminate\Support\Str;
 
 class Establishment extends Model
 {
+    use SoftDeletes;
+
     protected $table = "establishment";
     protected $guarded = ['id'];
-    protected $fillable = ["name","type_of_person_id","cpf","cnpj","ativo"];
+    protected $fillable = ["name","type_of_person_id","cpf","cnpj"];
+    protected $dates = ['deleted_at'];
 }

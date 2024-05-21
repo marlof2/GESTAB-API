@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('cpf');
             $table->string('cnpj');
             $table->string('phone');
-            $table->string('is_active');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('type_of_person_id')->references('id')->on('type_of_person');
         });

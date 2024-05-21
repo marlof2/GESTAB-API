@@ -26,12 +26,7 @@ class UserService
             if ($request->filled('search')) {
                 return response()->json($this->user::Filtro($request->search));
             }
-            // return response()->json($this->user->where('name', 'LIKE', '%' . $request->search . '%')->paginate(10));
         }
-
-        // if ($request->filled('name')) {
-        //     return response()->json($this->user->where('name', 'LIKE', '%' . $request->name . '%')->paginate(10));
-        // }
 
         $data =  $this->user->with('profile')->paginate($this->pageLimit);
 
@@ -40,6 +35,13 @@ class UserService
 
     public function store($request)
     {
+        $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
+        if($request['type_of_user_id'] == 2){
+            $request['profile_id'] = 1;
+        }
+        if($request['type_of_user_id'] == 3){
+            $request['profile_id'] = 2;
+        }
         $dataFrom = $request->all();
         try {
             $data = $this->user->create($dataFrom);
@@ -92,13 +94,13 @@ class UserService
         $user = $this->user->where('cpf', $request->cpf)->first();
 
         if (!$user) {
-            return response()->json(['error' => 'Usuario não encontrado'], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => 'Usuario não encontrado na base de dados.'], Response::HTTP_NOT_FOUND);
         };
 
         if (!Hash::check($request->password, $user->password)) {
             return response([
                 'message' => 'Usuário ou Senha Inválido.'
-            ], 401);
+            ], 406);
         }
 
         $abilities = [];

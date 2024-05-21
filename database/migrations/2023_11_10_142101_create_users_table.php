@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('set null');
             $table->foreign('type_of_user_id')->references('id')->on('type_of_user')->onDelete('set null');

@@ -21,7 +21,6 @@ class EstablishmentSeeder extends Seeder
                 'name' => 'Clube da Navalha',
                 'cpf' => '25674675058',
                 'cnpj' => '',
-                'is_active' => true,
                 'phone' => '71991717209'
             ],
             [
@@ -29,7 +28,6 @@ class EstablishmentSeeder extends Seeder
                 'name' => 'Tiquinho Styles',
                 'cpf' => '',
                 'cnpj' => '31397084000172',
-                'is_active' => true,
                 'phone' => '71991717209'
             ],
             [
@@ -37,7 +35,6 @@ class EstablishmentSeeder extends Seeder
                 'name' => 'Barbearia teste',
                 'cpf' => '25674675051',
                 'cnpj' => '',
-                'is_active' => false,
                 'phone' => '71991717209'
             ],
 
@@ -49,7 +46,6 @@ class EstablishmentSeeder extends Seeder
                 'name' => $value['name'],
                 'cnpj' => $value['cnpj'],
                 'cpf' => $value['cpf'],
-                'is_active' => $value['is_active'],
                 'phone' => $value['phone']
             ]);
         }
