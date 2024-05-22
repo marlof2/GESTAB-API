@@ -30,18 +30,15 @@ class TypeOfUserRequest extends FormRequest
     public function store()
     {
         return [
-            "name" => "required|string|max:255|unique:type_of_user"
+            "name" => ["required", "string", "max:255", "unique:type_of_user"]
         ];
     }
 
     public function update()
     {
-        $rules = ["name" => "required|string|max:255|unique:type_of_user", [
-            Rule::exists('type_of_user')->where(function ($query) {
-                $query->where('name', $this->request->all()['name'])->where('id', '<>', $this->id);
-            })
-        ]];
-        return $rules;
+        return [
+            "name" => ["required", "string", "max:100", "unique:type_of_user,name,$this->id_request,id"],
+        ];
     }
 
     public function view()

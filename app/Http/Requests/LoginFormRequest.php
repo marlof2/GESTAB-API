@@ -27,8 +27,8 @@ class LoginFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'cpf' => "required|string",
-            'password' => 'required|string'
+            'cpf' => ["required", "string"],
+            'password' => ["required","string"]
         ];
     }
 

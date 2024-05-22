@@ -30,20 +30,19 @@ class ServicesRequest extends FormRequest
     public function store()
     {
         return [
-            "name" => "required|string|max:100|unique:services",
-            "amount" => ["numeric", "regex:/^\d+(\.\d{1,2})?$/"],
-            "time" => "nullable|string|date_format:H:i",
+            "name" => ["required", "string", "max:100", "unique:services"],
+            "amount" => ["nullable", "numeric", "regex:/^\d+(\.\d{1,2})?$/"],
+            "time" => ["nullable", "string", "date_format:H:i"],
         ];
     }
 
     public function update()
     {
-        $rules = ["name" => "required|string|max:100|unique:services", [
-                Rule::exists('services')->where(function ($query) {
-                    $query->where('name', $this->request->all()['name'])->where('id', '<>', $this->id_request);
-                })
-            ]];
-        return $rules;
+       return [
+            "name" => ["required", "string", "max:100", "unique:services,name,$this->id_request,id"],
+            "amount" => ["nullable", "numeric", "regex:/^\d+(\.\d{1,2})?$/"],
+            "time" => ["nullable", "string", "date_format:H:i"],
+        ];
     }
 
     public function view()
@@ -58,6 +57,7 @@ class ServicesRequest extends FormRequest
             "name.string" => "O campo informado deve ser do tipo texto.",
             "name.max" => "Máximo de 100 caracteres.",
             "name.unique" => "O serviço informado já existe.",
+            "name.exists" => "O serviço informado já existe.",
             "amount.numeric" => "O campo informado deve ser do tipo texto.",
             "amount.regex" => "O valor deve conter duas casas decimais.",
             "time.string" => "O campo informado deve ser do tipo texto.",
