@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use App\Http\Requests\ServicesRequest;
 use Illuminate\Http\Response;
 use App\Models\Services;
 
@@ -28,7 +30,7 @@ class ServicesService
         }
         return response()->json($data, Response::HTTP_OK );
     }
-    public function store($request)
+    public function store(ServicesRequest $request)
     {
         $dataFrom = $request->all();
         try {
@@ -47,7 +49,7 @@ class ServicesService
         }
         return response()->json($data,Response::HTTP_OK ) ;
     }
-    public function update($request, $id)
+    public function update(ServicesRequest $request, $id)
     {
         $data = $this->services->find($id);
         if(!$data){

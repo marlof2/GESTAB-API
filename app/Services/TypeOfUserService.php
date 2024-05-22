@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use App\Http\Requests\TypeOfUserRequest;
 use Illuminate\Http\Response;
 use App\Models\TypeOfUser;
 
@@ -28,7 +30,7 @@ class TypeOfUserService
         }
         return response()->json($data, Response::HTTP_OK );
     }
-    public function store($request)
+    public function store(TypeOfUserRequest $request)
     {
         $dataFrom = $request->all();
         try {
@@ -47,7 +49,7 @@ class TypeOfUserService
         }
         return response()->json($data,Response::HTTP_OK ) ;
     }
-    public function update($request, $id)
+    public function update(TypeOfUserRequest $request, $id)
     {
         $data = $this->typeofuser->find($id);
         if(!$data){
