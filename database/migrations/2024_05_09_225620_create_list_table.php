@@ -15,16 +15,12 @@ return new class extends Migration
             $table->id();
             $table->date("date");
             $table->time("time");
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('services_id')->nullable();
-            $table->unsignedBigInteger('status_id')->nullable();
-            $table->unsignedBigInteger('establishment_id')->nullable();
+            $table->foreignId('establishment_id')->constrained('establishment');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('service_id')->constrained('services');
+            $table->foreignId('status_id')->constrained('status');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('services_id')->references('id')->on('services')->onDelete('set null');
-            $table->foreign('status_id')->references('id')->on('status')->onDelete('set null');
-            $table->foreign('establishment_id')->references('id')->on('establishment')->onDelete('set null');
         });
     }
 

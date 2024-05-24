@@ -20,7 +20,7 @@ class ListSeeder extends Seeder
                 'time' => '08:00',
                 'date' => Carbon::now()->format('Y/m/d'),
                 'establishment_id' => 1,
-                'services_id' => 1,
+                'service_id' => 1,
                 'user_id' => 1,
                 'status_id' => 1,
             ],
@@ -31,7 +31,7 @@ class ListSeeder extends Seeder
                 'time' => $value['time'],
                 'date' => $value['date'],
                 'establishment_id' => $value['establishment_id'],
-                'services_id' => $value['services_id'],
+                'service_id' => $value['service_id'],
                 'user_id' => $value['user_id'],
                 'status_id' => $value['status_id'],
             ]);
