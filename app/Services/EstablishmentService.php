@@ -15,17 +15,18 @@ class EstablishmentService
     }
     public function index($request)
     {
-       $data = $this->establishment->orderBy('name');
+       $data = $this->establishment->with('tipoPessoa')->orderBy('name');
+
         if ($request->filled('search')) {
-            $data = $data->where('name' , 'ILIKE' , '%' . $request->search . '%');
+            return response()->json($this->establishment::Filtro($request->search));
         }
         if ($request->filled('limit')) {
             $data = ["data" => $this->establishment->get()];
             return response()->json($data, Response::HTTP_OK );
         } else {
-            $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
-            $data = $data->paginate($page_limit);
+            $data = $data->paginate($this->pageLimit);
         }
+
         return response()->json($data, Response::HTTP_OK );
     }
     public function store($request)
