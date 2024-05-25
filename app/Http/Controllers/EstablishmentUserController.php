@@ -22,9 +22,9 @@ class EstablishmentUserController extends Controller
         return $this->establishment_user_service->store($request);
     }
 
-    public function show($id)
+    public function show($user_id)
     {
-        return $this->establishment_user_service->show($id);
+        return $this->establishment_user_service->show($user_id);
     }
 
     public function update(EstablishmentUserRequest $request, $id)
@@ -36,5 +36,4 @@ class EstablishmentUserController extends Controller
     {
         return $this->establishment_user_service->destroy($id);
     }
-
 }

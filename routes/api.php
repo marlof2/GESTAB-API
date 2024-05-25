@@ -4,6 +4,7 @@ use App\Http\Controllers\AbilityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EstablishmentProfessionalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('establishment_user')->group(function () {
         Route::get('/', [App\Http\Controllers\EstablishmentUserController::class, 'index'])->middleware('abilities:establishmentuser_list');
         Route::post('/', [App\Http\Controllers\EstablishmentUserController::class, 'store'])->middleware('abilities:establishmentuser_insert');
-        Route::get('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
+        Route::get('/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'update'])->middleware('abilities:establishmentuser_edit');
         Route::delete('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
     });

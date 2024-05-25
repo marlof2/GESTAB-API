@@ -8,22 +8,22 @@ use App\Models\EstablishmentUser;
 
 class EstablishmentUserService
 {
-    protected $establishmentpro_user;
+    protected $establishment_user;
     protected $pageLimit;
 
-    public function __construct(EstablishmentUser $establishmentpro_user)
+    public function __construct(EstablishmentUser $establishment_user)
     {
-        $this->establishmentpro_user = $establishmentpro_user;
+        $this->establishment_user = $establishment_user;
         $this->pageLimit = 10;
     }
     public function index($request)
     {
-        $data = $this->establishmentpro_user->orderBy('name');
+        $data = $this->establishment_user->with("establishment_user");
         if ($request->filled('search')) {
             $data = $data->where('name', 'ILIKE', '%' . $request->search . '%');
         }
         if ($request->filled('limit')) {
-            $data = ["data" => $this->establishmentpro_user->get()];
+            $data = ["data" => $this->establishment_user->get()];
             return response()->json($data, Response::HTTP_OK);
         } else {
             $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
@@ -39,7 +39,7 @@ class EstablishmentUserService
 
             foreach ($user_id as $key => $id) {
 
-                $this->establishmentpro_user->create(["establishment_id" => $establishment_id, "user_id" => $id]);
+                $this->establishment_user->create(["establishment_id" => $establishment_id, "user_id" => $id]);
             }
 
             return response()->json(["message" => "Profissionais vinculados com sucesso."], Response::HTTP_CREATED);
@@ -47,17 +47,17 @@ class EstablishmentUserService
             return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
-    public function show($id)
+    public function show($user_id)
     {
-        $data = $this->establishmentpro_user->find($id);
+        $data = $this->establishment_user->with("establishment:id,name,cnpj,cpf,phone")->where('user_id', $user_id)->get();
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
-        return response()->json($data, Response::HTTP_OK);
+        return response()->json(["data" => $data], Response::HTTP_OK);
     }
     public function update($request, $id)
     {
-        $data = $this->establishmentpro_user->find($id);
+        $data = $this->establishment_user->find($id);
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
@@ -72,7 +72,7 @@ class EstablishmentUserService
 
     public function destroy($id)
     {
-        $data = $this->establishmentpro_user->find($id);
+        $data = $this->establishment_user->find($id);
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
