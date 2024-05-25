@@ -35,13 +35,9 @@ class UserService
 
     public function store($request)
     {
-        $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
-        if($request['type_of_user_id'] == 2){
-            $request['profile_id'] = 1;
-        }
-        if($request['type_of_user_id'] == 3){
-            $request['profile_id'] = 2;
-        }
+        $request['cpf'] = $this->removeCaracters($request->cpf);
+        $request['phone'] = $this->removeCaracters($request->phone);
+
         $dataFrom = $request->all();
         try {
             $data = $this->user->create($dataFrom);
@@ -209,5 +205,10 @@ class UserService
                 'message' => $e->getMessage(),
             ], 406);
         }
+    }
+
+    public function removeCaracters($value)
+    {
+        return preg_replace('/\D/', '', $value);
     }
 }

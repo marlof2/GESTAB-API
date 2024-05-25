@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Marlo',
                 'profile_id' => 1,
+                'phone' => '71991717209',
                 'cpf' => '03296244581',
                 'email' => 'marlosilva.f2@gmail.com',
                 'password' => Hash::make('123'),
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Juliana',
                 'profile_id' => 1,
+                'phone' => '71991717209',
                 'cpf' => '85873615543',
                 'email' => 'jumatosk@gmail.com',
                 'password' => Hash::make('123'),
@@ -38,6 +40,7 @@ class UserSeeder extends Seeder
             User::firstOrCreate([
                 'name' => $value['name'],
                 'profile_id' => $value['profile_id'],
+                'phone' => $value['phone'],
                 'cpf' => $value['cpf'],
                 'email' => $value['email'],
                 'password' => $value['password'],

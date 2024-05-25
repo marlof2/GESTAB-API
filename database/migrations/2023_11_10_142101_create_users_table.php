@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('profile_id')->constrained('profiles');
             $table->string('name');
             $table->string('cpf')->unique();
+            $table->string('phone');
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
