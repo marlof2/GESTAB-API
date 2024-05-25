@@ -9,5 +9,13 @@ use Illuminate\Support\Str;
 class Services extends Model
 {
     protected $guarded = ['id'];
-    protected $fillable = ["name","amount"];
+    protected $fillable = ["name", "amount", "time"];
+
+    public function scopeFiltro($query, $filtro)
+    {
+
+        return $query
+            ->where('name', 'LIKE', '%' . $filtro . '%')
+            ->paginate(config('app.pageLimit'));
+    }
 }
