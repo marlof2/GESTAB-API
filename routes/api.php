@@ -59,10 +59,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('type_of_person')->group(function () {
         Route::get('/', [App\Http\Controllers\TypeOfPersonController::class, 'index']);
-        // Route::post('/', [App\Http\Controllers\TypeOfPersonController::class, 'store'])->middleware('abilities:typeofperson_insert');
-        // Route::get('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'show'])->middleware('abilities:typeofperson_by_id');
-        // Route::put('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'update'])->middleware('abilities:typeofperson_edit');
-        // Route::delete('/{id}', [App\Http\Controllers\TypeOfPersonController::class, 'destroy'])->middleware('abilities:typeofperson_delete');
     });
 
 
@@ -92,10 +88,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('status')->group(function () {
         Route::get('/', [App\Http\Controllers\StatusController::class, 'index']);
-        // Route::post('/', [App\Http\Controllers\StatusController::class, 'store'])->middleware('abilities:status_insert');
-        // Route::get('/{id}', [App\Http\Controllers\StatusController::class, 'show'])->middleware('abilities:status_by_id');
-        // Route::put('/{id}', [App\Http\Controllers\StatusController::class, 'update'])->middleware('abilities:status_edit');
-        // Route::delete('/{id}', [App\Http\Controllers\StatusController::class, 'destroy'])->middleware('abilities:status_delete');
     });
 
 
@@ -113,13 +105,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/{id}', [App\Http\Controllers\ListController::class, 'show'])->middleware('abilities:list_by_id');
         Route::put('/{id}', [App\Http\Controllers\ListController::class, 'update'])->middleware('abilities:list_edit');
         Route::delete('/{id}', [App\Http\Controllers\ListController::class, 'destroy'])->middleware('abilities:list_delete');
-    });
-    Route::prefix('typeofusers')->group(function () {
-        Route::get('/', [App\Http\Controllers\TypeOfUserController::class, 'index']);
-        Route::get('/{id}', [App\Http\Controllers\TypeOfUserController::class, 'show']);
-        Route::post('/', [App\Http\Controllers\TypeOfUserController::class, 'store']);
-        Route::put('/{id}', [App\Http\Controllers\TypeOfUserController::class, 'update']);
-        Route::delete('/{id}', [App\Http\Controllers\TypeOfUserController::class, 'destroy']);
     });
 });
 
