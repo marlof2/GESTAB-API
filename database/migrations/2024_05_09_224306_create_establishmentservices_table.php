@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('establishment_services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('establishment_id')->nullable();
-            $table->unsignedBigInteger('service_id')->nullable();
+            $table->foreignId('establishment_id')->constrained('establishment')->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services');
             $table->timestamps();
 
-            $table->foreign('establishment_id')->references('id')->on('establishment')->onDelete('set null');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('set null');
         });
     }
 

@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('profile_id')->nullable();
-            $table->unsignedBigInteger('type_of_user_id')->nullable();
+            $table->foreignId('profile_id')->constrained('profiles');
             $table->string('name');
             $table->string('cpf')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('set null');
-            $table->foreign('type_of_user_id')->references('id')->on('type_of_user')->onDelete('set null');
         });
     }
 
