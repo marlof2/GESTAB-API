@@ -13,7 +13,6 @@ class Services extends Model
 
     public function scopeFiltro($query, $filtro)
     {
-
         return $query
             ->where('name', 'LIKE', '%' . $filtro . '%')
             ->paginate(config('app.pageLimit'));

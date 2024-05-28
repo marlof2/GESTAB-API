@@ -20,7 +20,7 @@ class EstablishmentUserService
     {
         $data = $this->establishment_user->with("establishment_user");
         if ($request->filled('search')) {
-            $data = $data->where('name', 'ILIKE', '%' . $request->search . '%');
+           return response()->json($this->establishment_user::Filtro($request->search));
         }
         if ($request->filled('limit')) {
             $data = ["data" => $this->establishment_user->get()];

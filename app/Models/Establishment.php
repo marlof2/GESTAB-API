@@ -21,6 +21,7 @@ class Establishment extends Model
             ->OrWhere('name', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('cnpj', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('cpf', 'LIKE', '%' . $filtro . '%')
+            ->OrWhere('phone', 'LIKE', '%' . $filtro . '%')
             // ->OrWhereRelation('tipoPessoa', 'name', 'LIKE', '%' . $filtro . '%')
             ->paginate(config('app.pageLimit'));
     }

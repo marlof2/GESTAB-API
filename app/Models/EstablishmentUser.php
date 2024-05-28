@@ -19,4 +19,15 @@ class EstablishmentUser extends Model
     {
         return $this->hasOne(Establishment::class, "id", "establishment_id")->select("id", "name", "cnpj", "cpf", "phone");
     }
+
+    public function scopeFiltro($query, $filtro) {
+        return $query
+        ->with("establishment_user")
+        ->where('name', 'ILIKE', '%' . $filtro . '%')
+        ->OrWhere('cpf', 'ILIKE', '%' . $filtro . '%')
+        ->OrWhere('cnpj', 'ILIKE', '%' . $filtro . '%')
+        ->OrWhere('phone', 'ILIKE', '%' . $filtro . '%')
+        ->paginate(config('app.pageLimit'));
+
+    }
 }
