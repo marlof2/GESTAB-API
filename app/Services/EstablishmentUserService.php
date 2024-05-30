@@ -20,7 +20,7 @@ class EstablishmentUserService
     {
         $data = $this->establishment_user->with("establishment_user");
         if ($request->filled('search')) {
-           return response()->json($this->establishment_user::Filtro($request->search));
+            return response()->json($this->establishment_user::Filtro($request->search));
         }
         if ($request->filled('limit')) {
             $data = ["data" => $this->establishment_user->get()];
@@ -70,17 +70,30 @@ class EstablishmentUserService
         }
     }
 
-    public function destroy($id)
+    public function destroy($request)
     {
-        $data = $this->establishment_user->find($id);
-        if (!$data) {
-            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
-        }
         try {
-            $data->delete();
-            return response()->json(['success' => 'Deletado com sucesso.'], Response::HTTP_OK);
+            $user_id = $request["user_id"];
+            $establishment_id = $request->establishment_id;
+
+            $establishment = $this->establishment_user->where('establishment_id', $establishment_id)->first();
+
+            if (!$establishment) {
+                return response()->json([
+                    "message" => "O estabelecimento informado não existe."
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            foreach ($user_id as $key => $id) {
+                $this->establishment_user->where([
+                    'establishment_id' => $establishment_id,
+                    'user_id' => $id
+                ])->delete();
+            }
+
+            return response()->json(["message" => "Profissionais desvinculados com sucesso."], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return response()->json(["message" => 'Não foi possível excluir', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+            return response()->json(["message" => 'Não foi possível desvincular', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
 }

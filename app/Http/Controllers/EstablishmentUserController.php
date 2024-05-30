@@ -32,8 +32,8 @@ class EstablishmentUserController extends Controller
         return $this->establishment_user_service->update($request,$id);
     }
 
-    public function destroy($id)
+    public function destroy(EstablishmentUserRequest $request)
     {
-        return $this->establishment_user_service->destroy($id);
+        return $this->establishment_user_service->destroy($request);
     }
 }

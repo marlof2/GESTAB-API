@@ -51,4 +51,10 @@ class UserController
     {
         return  $this->userService->resetSenha($request);
     }
+
+    public function establishments($id)
+    {
+        return  $this->userService->establishments($id);
+
+    }
 }

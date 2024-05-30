@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class, 'id', 'profile_id');
     }
+
+    public function establishments()
+    {
+        return $this->belongsToMany(Establishment::class, 'establishment_user', 'user_id', 'establishment_id');
+    }
 }

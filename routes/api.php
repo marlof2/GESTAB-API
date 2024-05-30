@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('abilities:user_delete');
         Route::post('/alterarsenha', [UserController::class, 'alterarSenhaUsuario'])->middleware('abilities:user_change_password');
         Route::post('/resetSenha', [UserController::class, 'resetSenha'])->middleware('abilities:user_reset_senha');
+        Route::get('/establishments/{id}', [UserController::class, 'establishments'])->middleware('abilities:user_by_id');
     });
 
     Route::prefix('profiles')->group(function () {
@@ -97,7 +98,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/', [App\Http\Controllers\EstablishmentUserController::class, 'store'])->middleware('abilities:establishmentuser_insert');
         Route::get('/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'update'])->middleware('abilities:establishmentuser_edit');
-        Route::delete('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
+        Route::delete('/', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
     });
 
     Route::prefix('lists')->group(function () {

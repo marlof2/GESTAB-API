@@ -211,4 +211,19 @@ class UserService
     {
         return preg_replace('/\D/', '', $value);
     }
+
+    public function establishments($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $establishments = $user->establishments;
+
+            return response()->json($establishments, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Não foi possível obter os estabelecimentos do usuário.",
+                "error" => $e
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
 }
