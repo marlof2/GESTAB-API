@@ -12,9 +12,10 @@ class Establishment extends Model
 
     protected $table = "establishment";
     protected $guarded = ['id'];
-    protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "is_active"];
+    protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "phone"];
 
-    public  function scopeFiltro($query, $filtro)
+
+    public  function scopeFiltro($query, $filtro, $page)
     {
         return $query
             ->with("tipoPessoa")
@@ -23,7 +24,7 @@ class Establishment extends Model
             ->OrWhere('cpf', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('phone', 'LIKE', '%' . $filtro . '%')
             // ->OrWhereRelation('tipoPessoa', 'name', 'LIKE', '%' . $filtro . '%')
-            ->paginate(config('app.pageLimit'));
+            ->paginate($page);
     }
 
     public function tipoPessoa()

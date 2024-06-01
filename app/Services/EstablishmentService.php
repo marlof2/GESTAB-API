@@ -11,14 +11,14 @@ class EstablishmentService
 
     public function __construct(Establishment $establishment){
             $this->establishment = $establishment;
-            $this->pageLimit = 10;
+            $this->pageLimit = 5;
     }
     public function index($request)
     {
-       $data = $this->establishment->with('tipoPessoa')->orderBy('name');
+       $data = $this->establishment->with('tipoPessoa')->orderBy('id');
 
         if ($request->filled('search')) {
-            return response()->json($this->establishment::Filtro($request->search));
+            return response()->json($this->establishment::Filtro($request->search, $this->pageLimit));
         }
         if ($request->filled('limit')) {
             $data = ["data" => $this->establishment->get()];
@@ -31,6 +31,10 @@ class EstablishmentService
     }
     public function store($request)
     {
+        $request['cnpj'] = $this->removeCaracters($request->cnpj);
+        $request['cpf'] = $this->removeCaracters($request->cpf);
+        $request['phone'] = $this->removeCaracters($request->phone);
+
         $dataFrom = $request->all();
         try {
             $data = $this->establishment->create($dataFrom);
@@ -79,6 +83,11 @@ class EstablishmentService
              {
                 return response()->json(["message"=>'Não foi possível excluir',"error"=>$e], Response::HTTP_NOT_ACCEPTABLE );
             }
+    }
+
+    public function removeCaracters($value)
+    {
+        return preg_replace('/\D/', '', $value);
     }
 
 }

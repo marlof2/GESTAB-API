@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('type_of_person_id')->constrained('type_of_person');
             $table->string('name');
-            $table->string('cpf');
-            $table->string('cnpj');
-            $table->string('phone');
+            $table->string('cpf')->nullable();
+            $table->string('cnpj')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
