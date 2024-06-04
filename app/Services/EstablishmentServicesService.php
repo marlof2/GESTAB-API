@@ -28,7 +28,7 @@ class EstablishmentServicesService
             });
         }
         if ($request->filled('limit')) {
-            $data = ["data" => $this->establishmentservices->get()];
+            $data = ["data" => $this->establishmentservices->with(["establishment", "service"])->get()];
             return response()->json($data, Response::HTTP_OK);
         } else {
             $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
