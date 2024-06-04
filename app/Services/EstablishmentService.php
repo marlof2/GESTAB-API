@@ -23,10 +23,10 @@ class EstablishmentService
             return response()->json($this->establishment::Filtro($request->search, $this->pageLimit));
         }
         if ($request->filled('limit')) {
-            $data = ["data" => $this->establishment->get()];
+            $data = ["data" => $this->establishment->with('tipoPessoa')->get()];
             return response()->json($data, Response::HTTP_OK);
         } else {
-            $data = $data->paginate($this->pageLimit);
+            $data = $data->withTrashed()->paginate($this->pageLimit);
         }
 
         return response()->json($data, Response::HTTP_OK);
