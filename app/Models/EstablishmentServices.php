@@ -10,6 +10,7 @@ class EstablishmentServices extends Model
 {
     protected $guarded = ['id'];
     protected $fillable = ["establishment_id", "service_id"];
+    protected $hidden = ["created_at", "updated_at"];
 
     public function establishment()
     {

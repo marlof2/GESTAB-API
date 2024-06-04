@@ -22,13 +22,17 @@ class UserService
 
     public function index($request)
     {
-        if ($request->filled('search')) {
-            if ($request->filled('search')) {
-                return response()->json($this->user::Filtro($request->search));
-            }
-        }
+        $data = $this->user->with('profile')->orderBy('name');
 
-        $data =  $this->user->with('profile')->paginate($this->pageLimit);
+        if ($request->filled('search')) {
+            return response()->json($this->user::Filtro($request->search, $this->pageLimit));
+        }
+        if ($request->filled('limit')) {
+            $data = ["data" => $this->user->with('profile')->orderBy('name')->get()];
+            return response()->json($data, Response::HTTP_OK);
+        } else {
+            $data = $data->paginate($this->pageLimit);
+        }
 
         return response()->json($data, Response::HTTP_OK);
     }
@@ -50,13 +54,13 @@ class UserService
 
     public function show($id)
     {
+        $data = $this->user->with('profile')->find($id);
 
-        try {
-            $data = $this->user->find($id);
-            return response()->json($data, Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e->getMessage()], Response::HTTP_NOT_ACCEPTABLE);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
+
+        return response()->json($data, Response::HTTP_OK);
     }
 
     public function update($request, $id)
@@ -215,9 +219,12 @@ class UserService
     public function establishments($id)
     {
         try {
-            $user = User::findOrFail($id);
+            $user = $this->user->find($id);
             $establishments = $user->establishments;
 
+            if(!$user){
+                return response()->json(['error'=>'Dados não encontrados'],Response::HTTP_NOT_FOUND) ;
+            }
             return response()->json($establishments, Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([

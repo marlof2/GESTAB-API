@@ -29,7 +29,7 @@ class ServicesService
         });
 
         if ($request->filled('search')) {
-            return response()->json($this->services::Filtro($request));
+            return response()->json($this->services::Filtro($request->search, $this->pageLimit));
         }
         if ($request->filled('limit')) {
             $data = ["data" => $this->services->get()];

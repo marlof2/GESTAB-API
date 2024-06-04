@@ -38,6 +38,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
@@ -53,25 +56,23 @@ class User extends Authenticatable
 
     public  function scopeFiltro($query, $filtro)
     {
-        // if (str_contains($filtro, '/')) {
-        //     $filtro = Carbon::createFromFormat('d/m/Y', $filtro)->format('Y-m-d');
-        // }
-
         return $query
+            ->with("profile")
             ->OrWhere('name', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('cpf', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('email', 'LIKE', '%' . $filtro . '%')
+            ->OrWhere('phone', 'LIKE', '%' . $filtro . '%')
             ->paginate(config('app.pageLimit'));
     }
 
 
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'id', 'profile_id');
+        return $this->hasOne(Profile::class, 'id', 'profile_id')->select("id", "name", "descricao");
     }
 
     public function establishments()
     {
-        return $this->belongsToMany(Establishment::class, 'establishment_user', 'user_id', 'establishment_id');
+        return $this->belongsToMany(Establishment::class, 'establishment_user', 'user_id', 'establishment_id')->as("establishments")->select("establishment_id", "name", "cpf", "cnpj", "phone");
     }
 }
