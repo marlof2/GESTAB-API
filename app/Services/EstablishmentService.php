@@ -17,7 +17,7 @@ class EstablishmentService
     }
     public function index($request)
     {
-        $data = $this->establishment->with('tipoPessoa')->orderBy('id');
+       $data = $this->establishment->with('tipoPessoa')->orderBy('name');
 
         if ($request->filled('search')) {
             return response()->json($this->establishment::Filtro($request->search, $this->pageLimit));
