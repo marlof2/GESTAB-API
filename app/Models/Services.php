@@ -10,6 +10,7 @@ class Services extends Model
 {
     protected $guarded = ['id'];
     protected $fillable = ["name", "amount", "time"];
+    protected $hidden = ["created_at", "updated_at"];
 
     public function scopeFiltro($query, $filtro)
     {
