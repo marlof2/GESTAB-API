@@ -38,4 +38,9 @@ class EstablishmentController extends Controller
         return $this->establishment_service->destroy($id);
     }
 
+    public function restore($id)
+    {
+        return $this->establishment_service->restore($id);
+    }
+
 }

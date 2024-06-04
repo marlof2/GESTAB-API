@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/{id}', [App\Http\Controllers\EstablishmentController::class, 'show'])->middleware('abilities:establishment_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentController::class, 'update'])->middleware('abilities:establishment_edit');
         Route::delete('/{id}', [App\Http\Controllers\EstablishmentController::class, 'destroy'])->middleware('abilities:establishment_delete');
+        Route::patch('/{id}', [App\Http\Controllers\EstablishmentController::class, 'restore'])->middleware('abilities:establishment_delete');
     });
 
     Route::prefix('services')->group(function () {
