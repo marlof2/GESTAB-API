@@ -30,9 +30,6 @@ class EstablishmentRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'phone' => [
-                'required',
-            ],
             'type_of_person_id' => 'required|integer',
             'cpf' => [
                 'required_if:type_of_person_id,1',
@@ -47,9 +44,6 @@ class EstablishmentRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'phone' => [
-                'required',
-            ],
             'type_of_person_id' => 'required|integer',
             'cpf' => [
                 'required_if:type_of_person_id,1',
@@ -68,11 +62,10 @@ class EstablishmentRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Campo obrigatório',
-            'phone.required' => 'Campo obrigatório',
-            'type_of_person_id.required' => 'Campo obrigatório',
-            'cpf.required' => 'CPF é obrigatório quando tipo de pessoa é 1',
-            'cnpj.required' => 'CNPJ é obrigatório quando tipo de pessoa é 2',
+            'name.required' => 'Nome é obrigatório',
+            'type_of_person_id.required' => 'Tipo de pessoa é obrigatório',
+            'cpf.required' => 'CPF é obrigatório',
+            'cnpj.required' => 'CNPJ é obrigatório',
         ];
     }
 
