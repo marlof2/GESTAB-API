@@ -13,7 +13,7 @@ class EstablishmentService
     public function __construct(Establishment $establishment)
     {
         $this->establishment = $establishment;
-        $this->pageLimit = 5;
+        $this->pageLimit = 20;
     }
     public function index($request)
     {
