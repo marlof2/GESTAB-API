@@ -13,12 +13,13 @@ class Establishment extends Model
     protected $table = "establishment";
     protected $guarded = ['id'];
     protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "phone"];
-    protected $hidden = ["created_at", "updated_at", "deleted_at"];
+    protected $hidden = ["created_at", "updated_at"];
 
 
     public  function scopeFiltro($query, $filtro, $page)
     {
         return $query
+            ->withTrashed()
             ->with("tipoPessoa")
             ->OrWhere('name', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('cnpj', 'LIKE', '%' . $filtro . '%')
