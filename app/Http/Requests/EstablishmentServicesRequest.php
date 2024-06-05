@@ -28,7 +28,10 @@ class EstablishmentServicesRequest extends FormRequest
 
 	public function store()
 	{
-		return [];
+		return [
+            "establishment_id" => ["required"],
+            "service_id" => ["required"]
+        ];
     }
 
 	public function update()
@@ -43,7 +46,10 @@ class EstablishmentServicesRequest extends FormRequest
 
 	public function messages()
 	{
-		return [];
+		return [
+            "establishment_id.required" => "O preenchimento do estabelecimento é obrigatório.",
+            "service_id.required" => "O preenchimento dos serviços é obrigatório."
+        ];
 	}
 
 	protected function failedValidation(Validator $validator)

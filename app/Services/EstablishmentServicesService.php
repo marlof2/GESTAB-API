@@ -38,6 +38,20 @@ class EstablishmentServicesService
     }
     public function store($request)
     {
+        try {
+            $service_id = $request["service_id"];
+            $establishment_id = $request->establishment_id;
+
+            foreach ($service_id as $key => $id) {
+
+                $this->establishmentservices->create(["establishment_id" => $establishment_id, "service_id" => $id]);
+            }
+
+            return response()->json(["message" => "Serviços vinculados com sucesso."], Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+        }
+
         $dataFrom = $request->all();
         try {
             $data = $this->establishmentservices->create($dataFrom);
@@ -46,13 +60,13 @@ class EstablishmentServicesService
             return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
-    public function show($id)
+    public function show($establishment_id)
     {
-        $data = $this->establishmentservices->find($id);
+        $data = $this->establishmentservices->with("service")->where('establishment_id', $establishment_id)->get();
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
-        return response()->json($data, Response::HTTP_OK);
+        return response()->json(["data" => $data], Response::HTTP_OK);
     }
     public function update($request, $id)
     {
@@ -69,17 +83,25 @@ class EstablishmentServicesService
         }
     }
 
-    public function destroy($id)
+    public function destroy($request)
     {
-        $data = $this->establishmentservices->find($id);
-        if (!$data) {
-            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
-        }
-        try {
-            $data->delete();
-            return response()->json(['success' => 'Deletado com sucesso.'], Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return response()->json(["message" => 'Não foi possível excluir', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
-        }
+        $service_id = $request["service_id"];
+            $establishment_id = $request->establishment_id;
+
+            $establishment = $this->establishmentservices->where('establishment_id', $establishment_id)->first();
+
+            if (!$establishment) {
+                return response()->json([
+                    "message" => "O estabelecimento informado não existe."
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            foreach ($service_id as $key => $id) {
+                $this->establishmentservices->where([
+                    'establishment_id' => $establishment_id,
+                    'service_id' => $id
+                ])->delete();
+            }
+            return response()->json(["message" => "Serviços desvinculados com sucesso."], Response::HTTP_OK);
     }
 }

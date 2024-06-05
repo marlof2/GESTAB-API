@@ -23,9 +23,9 @@ class EstablishmentServicesController extends Controller
         return $this->establishment_services_service->store($request);
     }
 
-    public function show($id)
+    public function show($establishment_id)
     {
-        return $this->establishment_services_service->show($id);
+        return $this->establishment_services_service->show($establishment_id);
     }
 
     public function update(EstablishmentServicesRequest $request, $id)
@@ -33,9 +33,9 @@ class EstablishmentServicesController extends Controller
         return $this->establishment_services_service->update($request,$id);
     }
 
-    public function destroy($id)
+    public function destroy(EstablishmentServicesRequest $request)
     {
-        return $this->establishment_services_service->destroy($id);
+        return $this->establishment_services_service->destroy($request);
     }
 
 }

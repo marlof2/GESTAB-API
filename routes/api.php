@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/', [App\Http\Controllers\EstablishmentServicesController::class, 'store'])->middleware('abilities:establishmentservices_insert');
         Route::get('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'show'])->middleware('abilities:establishmentservices_by_id');
         // Route::put('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'update'])->middleware('abilities:establishmentservices_edit');
-        // Route::delete('/{id}', [App\Http\Controllers\EstablishmentServicesController::class, 'destroy'])->middleware('abilities:establishmentservices_delete');
+        Route::delete('/', [App\Http\Controllers\EstablishmentServicesController::class, 'destroy'])->middleware('abilities:establishmentservices_delete');
     });
 
     Route::prefix('status')->group(function () {
