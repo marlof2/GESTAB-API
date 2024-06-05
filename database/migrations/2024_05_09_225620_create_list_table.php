@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date("date");
             $table->time("time");
+            $table->boolean("valid");
             $table->foreignId('establishment_id')->constrained('establishment');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('service_id')->constrained('services');

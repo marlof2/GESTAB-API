@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('profiles')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->middleware('abilities:profile_list');
-        Route::post('/', [ProfileController::class, 'store'])->middleware('abilities:profile_inset');
+        Route::post('/', [ProfileController::class, 'store'])->middleware('abilities:profile_insert');
         Route::get('/{id}', [ProfileController::class, 'show'])->middleware('abilities:profile_by_id');
         Route::put('/{id}', [ProfileController::class, 'update'])->middleware('abilities:profile_edit');
         Route::delete('/{id}', [ProfileController::class, 'destroy'])->middleware('abilities:profile_delete');

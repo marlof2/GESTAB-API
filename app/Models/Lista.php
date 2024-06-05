@@ -10,5 +10,5 @@ class Lista extends Model
 {
     protected $table = 'list';
     protected $guarded = ['id'];
-    protected $fillable = ["user_id","service_id","status_id","establishment_id","date","time"];
+    protected $fillable = ["user_id","service_id","status_id","establishment_id","date","time", "valid"];
 }

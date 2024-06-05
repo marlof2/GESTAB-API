@@ -21,7 +21,7 @@ class ProfileService
     {
         $data = $this->profile->orderBy('name');
         if ($request->filled('search')) {
-            $data = $data->where('name', 'ILIKE', '%' . $request->search . '%');
+            $data = $data->where('name', 'LIKE', '%' . $request->search . '%');
         }
         if ($request->filled('limit')) {
             $data = ["data" => $this->profile->get()];

@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'id', 'profile_id')->select("id", "name", "descricao");
+        return $this->hasOne(Profile::class, 'id', 'profile_id')->select("id", "name", "description");
     }
 
     public function establishments()

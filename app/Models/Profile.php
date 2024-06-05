@@ -10,6 +10,7 @@ class Profile extends Model
 {
     protected $guarded = ['id'];
     protected $fillable = ["name","description"];
+    protected $hidden = ["created_at","updated_at"];
 
     public function user()
     {

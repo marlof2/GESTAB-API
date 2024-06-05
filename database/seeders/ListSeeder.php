@@ -23,6 +23,7 @@ class ListSeeder extends Seeder
                 'service_id' => 1,
                 'user_id' => 1,
                 'status_id' => 1,
+                'valid' => true,
             ],
         ];
 
@@ -34,6 +35,7 @@ class ListSeeder extends Seeder
                 'service_id' => $value['service_id'],
                 'user_id' => $value['user_id'],
                 'status_id' => $value['status_id'],
+                'valid' => $value['valid'],
             ]);
         }
     }

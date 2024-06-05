@@ -18,19 +18,19 @@ class ProfileSeeder extends Seeder
         $profiles = [
             [
                 'name' => 'Administrador',
-                "descricao" => 'Acesso total ao sistema',
+                "description" => 'Acesso total ao sistema',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'name' => 'Cliente',
-                "descricao" => 'Breve descrição das permissões',
+                "description" => 'Breve descrição das permissões',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'name' => 'Profissional',
-                "descricao" => 'Breve descrição das permissões',
+                "description" => 'Breve descrição das permissões',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -40,7 +40,7 @@ class ProfileSeeder extends Seeder
         foreach ($profiles as $key => $value) {
             Profile::firstOrCreate([
                 'name' => $value['name'],
-                'descricao' => $value['descricao'],
+                'description' => $value['description'],
             ]);
         }
     }
