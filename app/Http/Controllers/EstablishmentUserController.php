@@ -12,9 +12,9 @@ class EstablishmentUserController extends Controller
         $this->establishment_user_service = $establishment_user_service;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
-         return $this->establishment_user_service->index($request);
+         return $this->establishment_user_service->index($request, $id);
     }
 
     public function store(EstablishmentUserRequest $request)

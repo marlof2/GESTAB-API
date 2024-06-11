@@ -20,6 +20,7 @@ class UserController
         return  $this->userService->index($request);
     }
 
+
     function store(StoreUpdateUserFormRequest $request)
     {
         $request->validated();
@@ -56,5 +57,10 @@ class UserController
     {
         return  $this->userService->establishments($id);
 
+    }
+
+    function listProfessionalsToEstablishmentUser(Request $request)
+    {
+        return  $this->userService->listProfessionalsToEstablishmentUser($request);
     }
 }

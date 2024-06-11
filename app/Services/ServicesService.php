@@ -18,7 +18,7 @@ class ServicesService
     }
     public function index($request)
     {
-        $data = $this->services->orderBy('name');
+        $data = $this->services->with('establishment')->where('establishment_id', $request->establishment_id)->orderBy('name');
 
         $data = $data->when($request->min_price, function ($query, $min_price) {
             $query->whereRaw("amount >= ?", $min_price);
@@ -35,8 +35,7 @@ class ServicesService
             $data = ["data" => $this->services->get()];
             return response()->json($data, Response::HTTP_OK);
         } else {
-            $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
-            $data = $data->paginate($page_limit);
+            $data = $data->paginate($this->pageLimit);
         }
         return response()->json($data, Response::HTTP_OK);
     }

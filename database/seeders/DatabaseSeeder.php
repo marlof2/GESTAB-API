@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
             TypeOfPersonSeeder::class,
             StatusSeeder::class,
-            ServiceSeeder::class,
             UserSeeder::class,
             AbilitySeeder::class,
             ProfileAbilitySeeder::class,
             EstablishmentSeeder::class,
             EstablishmentUserSeeder::class,
-            EstablishmentServiceSeeder::class,
+            ServiceSeeder::class,
+            // EstablishmentServiceSeeder::class,
             ListSeeder::class,
         ]);
     }

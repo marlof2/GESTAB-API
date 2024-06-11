@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Requests\ServicesRequest;
@@ -9,13 +10,14 @@ use App\Services\ServicesService;
 class ServicesController extends Controller
 {
     protected $services_service;
-    public function __construct(ServicesService $services_service){
+    public function __construct(ServicesService $services_service)
+    {
         $this->services_service = $services_service;
     }
 
     public function index(Request $request)
     {
-         return $this->services_service->index($request);
+        return $this->services_service->index($request);
     }
 
     public function store(ServicesRequest $request)
@@ -30,12 +32,11 @@ class ServicesController extends Controller
 
     public function update(ServicesRequest $request, $id)
     {
-        return $this->services_service->update($request,$id);
+        return $this->services_service->update($request, $id);
     }
 
     public function destroy($id)
     {
         return $this->services_service->destroy($id);
     }
-
 }

@@ -17,24 +17,28 @@ class ServiceSeeder extends Seeder
     {
         $data = [
             [
+                'establishment_id' => 1,
                 'name' => 'Corte simples',
                 'amount' => 10.00,
-                'time' => 20
+                'time' => '20:00'
             ],
             [
+                'establishment_id' => 1,
                 'name' => 'Corte e barba',
                 'amount' => 15.00,
-                'time' => 30
+                'time' => '30:00'
             ],
             [
+                'establishment_id' => 1,
                 'name' => 'Barba',
                 'amount' => 8.00,
-                'time' => 30
+                'time' => '30:00'
             ],
             [
+                'establishment_id' => 1,
                 'name' => 'Sobrancelha',
                 'amount' => 20.00,
-                'time' => 10
+                'time' => '10:00'
             ],
 
         ];
@@ -42,6 +46,8 @@ class ServiceSeeder extends Seeder
         foreach ($data as $key => $value) {
             Services::firstOrCreate([
                 'name' => $value['name'],
+                'establishment_id' => $value['establishment_id'],
+                'amount' => $value['amount'],
             ]);
         }
     }
