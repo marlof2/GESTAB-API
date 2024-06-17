@@ -244,7 +244,6 @@ class UserService
         try {
 
             $data = $this->user->with('profile')->orderBy('name');
-
             if ($request->filled('profile_id')) {
                 $data->where('profile_id', $request->profile_id);
             }
@@ -257,7 +256,8 @@ class UserService
             $result = $data->whereNotExists(function ($q) use ($request) {
                 $q->select('user_id')
                     ->from('establishment_user as EU')
-                    ->whereColumn('EU.user_id', 'users.id');
+                    ->whereColumn('EU.user_id', 'users.id')
+                    ->where('EU.establishment_id', $request->establishment_id);
             })->paginate($this->pageLimit);
 
             return response()->json($result, Response::HTTP_OK);
