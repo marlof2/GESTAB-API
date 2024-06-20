@@ -33,6 +33,20 @@ class EstablishmentUserService
         }
         return response()->json($data, Response::HTTP_OK);
     }
+    public function establishimentByUser($request, $id)
+    {
+        $data = $this->establishment_user->where('user_id', $id)->with("establishment_user");
+        if ($request->filled('search')) {
+            return response()->json($this->establishment_user::Filtro($request->search, $this->pageLimit));
+        }
+        if ($request->filled('limit')) {
+            $data = ["data" => $this->establishment_user->get()];
+            return response()->json($data, Response::HTTP_OK);
+        } else {
+            $data = $data->paginate($this->pageLimit);
+        }
+        return response()->json($data, Response::HTTP_OK);
+    }
     public function store($request)
     {
         try {

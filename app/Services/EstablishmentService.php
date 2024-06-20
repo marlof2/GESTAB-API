@@ -100,4 +100,30 @@ class EstablishmentService
     {
         return preg_replace('/\D/', '', $value);
     }
+
+    public function listEstablishimentByUser($request)
+    {
+        try {
+
+            $data = $this->establishment->orderBy('name');
+
+            if ($request->filled('search')) {
+                return $data->where('name', 'LIKE', '%' . $request->search . '%');
+            }
+
+            $result = $data->whereNotExists(function ($q) use ($request) {
+                $q->select('establishment_id')
+                    ->from('establishment_user as EU')
+                    ->whereColumn('EU.establishment_id', 'establishment.id')
+                    ->where('EU.user_id', $request->user_id);
+            })->paginate($this->pageLimit);
+
+            return response()->json($result, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Não foi possível obter os profissionais do estavelecimento.",
+                "error" => $e
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
 }

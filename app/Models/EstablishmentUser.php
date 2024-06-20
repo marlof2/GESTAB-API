@@ -11,10 +11,10 @@ class EstablishmentUser extends Model
     protected $fillable = ["user_id","establishment_id"];
     protected $hidden = ["created_at", "updated_at"];
 
-    public function establishment()
-    {
-        return $this->hasMany(Establishment::class, "id", "user_id");
-    }
+    // public function establishment()
+    // {
+    //     return $this->hasMany(Establishment::class, "id", "user_id");
+    // }
 
     public function establishment_user()
     {
@@ -26,10 +26,6 @@ class EstablishmentUser extends Model
         return $this->hasOne(User::class, "id", "user_id");
     }
 
-    // public function users()
-    // {
-    //     return $this->belongsToMany(User::class, EstablishmentUser::class, "establishment_id", "user_id");
-    // }
 
     public function scopeFiltro($query, $filtro, $page) {
         return $query

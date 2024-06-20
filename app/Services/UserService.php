@@ -239,7 +239,7 @@ class UserService
     }
 
 
-    public function listProfessionalsToEstablishmentUser($request)
+    public function listUsersByEstablishiment($request)
     {
         try {
 
@@ -263,10 +263,11 @@ class UserService
             return response()->json($result, Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([
-                "message" => "Não foi possível obter os profissionais do estavelecimento.",
+                "message" => "Não foi possível obter os profissionais do estabelecimento.",
                 "error" => $e
             ], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
+
 
 }

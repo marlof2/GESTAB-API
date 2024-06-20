@@ -59,8 +59,8 @@ class UserController
 
     }
 
-    function listProfessionalsToEstablishmentUser(Request $request)
+    function listUsersByEstablishiment(Request $request)
     {
-        return  $this->userService->listProfessionalsToEstablishmentUser($request);
+        return  $this->userService->listUsersByEstablishiment($request);
     }
 }

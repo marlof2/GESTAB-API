@@ -18,6 +18,11 @@ class EstablishmentController extends Controller
          return $this->establishment_service->index($request);
     }
 
+    public function listEstablishimentByUser(Request $request)
+    {
+         return $this->establishment_service->listEstablishimentByUser($request);
+    }
+
     public function store(EstablishmentRequest $request)
     {
         return $this->establishment_service->store($request);

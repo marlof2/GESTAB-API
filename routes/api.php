@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->middleware('abilities:user_list');
         Route::post('/', [UserController::class, 'store'])->middleware('abilities:user_insert');
-        Route::get('/listProfessionalsToEstablishmentUser', [UserController::class, 'listProfessionalsToEstablishmentUser'])->middleware('abilities:user_by_id');
+        Route::get('/listUsersByEstablishiment', [UserController::class, 'listUsersByEstablishiment'])->middleware('abilities:user_by_id');
         Route::get('/{id}', [UserController::class, 'show'])->middleware('abilities:user_by_id');
         Route::put('/{id}', [UserController::class, 'update'])->middleware('abilities:user_edit');
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('abilities:user_delete');
@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('establishments')->group(function () {
         Route::get('/', [App\Http\Controllers\EstablishmentController::class, 'index'])->middleware('abilities:establishment_list');
+        Route::get('/listEstablishimentByUser', [App\Http\Controllers\EstablishmentController::class, 'listEstablishimentByUser'])->middleware('abilities:establishment_list');
         Route::post('/', [App\Http\Controllers\EstablishmentController::class, 'store'])->middleware('abilities:establishment_insert');
         Route::get('/{id}', [App\Http\Controllers\EstablishmentController::class, 'show'])->middleware('abilities:establishment_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentController::class, 'update'])->middleware('abilities:establishment_edit');
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('establishment_user')->group(function () {
         Route::get('user_by_establishment/{establishment_id}', [App\Http\Controllers\EstablishmentUserController::class, 'index'])->middleware('abilities:establishmentuser_list');
+        Route::get('establishment_by_user/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'establishimentByUser'])->middleware('abilities:establishmentuser_list');
         Route::post('/', [App\Http\Controllers\EstablishmentUserController::class, 'store'])->middleware('abilities:establishmentuser_insert');
         Route::get('/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'update'])->middleware('abilities:establishmentuser_edit');
