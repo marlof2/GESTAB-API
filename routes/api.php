@@ -99,10 +99,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('establishment_user')->group(function () {
         Route::get('user_by_establishment/{establishment_id}', [App\Http\Controllers\EstablishmentUserController::class, 'index'])->middleware('abilities:establishmentuser_list');
         Route::get('establishment_by_user/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'establishimentByUser'])->middleware('abilities:establishmentuser_list');
-        Route::post('/', [App\Http\Controllers\EstablishmentUserController::class, 'store'])->middleware('abilities:establishmentuser_insert');
+        Route::post('/associationProfessionalAndEstablishment', [App\Http\Controllers\EstablishmentUserController::class, 'associationProfessionalAndEstablishment'])->middleware('abilities:establishmentuser_insert');
+        Route::post('/associationClientAndEstablishment', [App\Http\Controllers\EstablishmentUserController::class, 'associationClientAndEstablishment'])->middleware('abilities:establishmentuser_insert');
         Route::get('/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'update'])->middleware('abilities:establishmentuser_edit');
-        Route::delete('/', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
+        Route::delete('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
     });
 
     Route::prefix('lists')->group(function () {

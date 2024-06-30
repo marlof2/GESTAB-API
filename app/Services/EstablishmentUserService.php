@@ -21,33 +21,48 @@ class EstablishmentUserService
     }
     public function index($request, $id)
     {
-        $data = $this->establishment_user->where('establishment_id', $id)->with("user");
+        $data = $this->establishment_user->where('establishment_id', $id)
+            ->select('users.id as user_id', 'establishment_user.*')
+            ->join('users', 'users.id', '=', 'establishment_user.user_id')
+            ->with("user")
+            ->orderBy('users.name');
+
         if ($request->filled('search')) {
-            return response()->json($this->establishment_user::Filtro($request->search, $this->pageLimit));
+            return  $data->whereRelation('user', 'name', 'LIKE', '%' . $request->search . '%')
+                ->paginate($this->pageLimit);
         }
+
         if ($request->filled('limit')) {
             $data = ["data" => $this->establishment_user->get()];
             return response()->json($data, Response::HTTP_OK);
-        } else {
-            $data = $data->paginate($this->pageLimit);
         }
+
+        $data = $data->paginate($this->pageLimit);
         return response()->json($data, Response::HTTP_OK);
     }
     public function establishimentByUser($request, $id)
     {
-        $data = $this->establishment_user->where('user_id', $id)->with("establishment_user");
+        $data = $this->establishment_user
+            ->where('user_id', $id)
+            ->select('establishment.id as establishment_id', 'establishment_user.*')
+            ->join('establishment', 'establishment.id', '=', 'establishment_user.establishment_id')
+            ->with("establishment_user")
+            ->orderBy('establishment.name');
+
         if ($request->filled('search')) {
-            return response()->json($this->establishment_user::Filtro($request->search, $this->pageLimit));
+            return  $data->whereRelation('establishment_user', 'name', 'LIKE', '%' . $request->search . '%')
+                ->paginate($this->pageLimit);
         }
+
         if ($request->filled('limit')) {
             $data = ["data" => $this->establishment_user->get()];
             return response()->json($data, Response::HTTP_OK);
-        } else {
-            $data = $data->paginate($this->pageLimit);
         }
+
+        $data = $data->paginate($this->pageLimit);
         return response()->json($data, Response::HTTP_OK);
     }
-    public function store($request)
+    public function associationProfessionalAndEstablishment($request)
     {
         try {
             $user_id = $request["user_id"];
@@ -59,6 +74,21 @@ class EstablishmentUserService
             }
 
             return response()->json(["message" => "Profissionais vinculados com sucesso."], Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
+    public function associationClientAndEstablishment($request)
+    {
+        try {
+            $establishment_ids = $request["establishment_ids"];
+            $user_id = $request->user_id;
+
+            foreach ($establishment_ids as $key => $id) {
+                $this->establishment_user->create(["establishment_id" => $id, "user_id" => $user_id]);
+            }
+
+            return response()->json(["message" => "Estabelecimentos vinculados com sucesso."], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
@@ -86,35 +116,23 @@ class EstablishmentUserService
         }
     }
 
-    public function destroy($request)
+    public function destroy($id)
     {
         try {
-            $user_id = $request->user_id;
-            $establishment_id = $request->establishment_id;
 
-            $establishment = $this->establishment_user->where('establishment_id', $establishment_id)->first();
+            $establishment_user = $this->establishment_user->find($id);
 
-            if (!$establishment) {
+            if (!$establishment_user) {
                 return response()->json([
                     "message" => "O estabelecimento informado não existe."
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            $this->establishment_user->where(['establishment_id' => $establishment_id, 'user_id' => $user_id])->delete();
+            $establishment_user->delete();
 
-            // foreach ($user_id as $key => $id) {
-            //     $this->establishment_user->where([
-            //         'establishment_id' => $establishment_id,
-            //         'user_id' => $id
-            //     ])->delete();
-            // }
-
-            return response()->json(["message" => "Profissionais desvinculados com sucesso."], Response::HTTP_OK);
+            return response()->json(["message" => "Estabelecimento desvinculado com sucesso."], Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível desvincular', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
-
-
-
 }

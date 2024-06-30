@@ -22,9 +22,13 @@ class EstablishmentUserController extends Controller
          return $this->establishment_user_service->establishimentByUser($request, $id);
     }
 
-    public function store(EstablishmentUserRequest $request)
+    public function associationProfessionalAndEstablishment(EstablishmentUserRequest $request)
     {
-        return $this->establishment_user_service->store($request);
+        return $this->establishment_user_service->associationProfessionalAndEstablishment($request);
+    }
+    public function associationClientAndEstablishment(EstablishmentUserRequest $request)
+    {
+        return $this->establishment_user_service->associationClientAndEstablishment($request);
     }
 
     public function show($user_id)
@@ -37,8 +41,9 @@ class EstablishmentUserController extends Controller
         return $this->establishment_user_service->update($request,$id);
     }
 
-    public function destroy(EstablishmentUserRequest $request)
+
+    public function destroy($id)
     {
-        return $this->establishment_user_service->destroy($request);
+        return $this->establishment_user_service->destroy($id);
     }
 }

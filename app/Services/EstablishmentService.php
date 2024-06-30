@@ -108,7 +108,7 @@ class EstablishmentService
             $data = $this->establishment->orderBy('name');
 
             if ($request->filled('search')) {
-                return $data->where('name', 'LIKE', '%' . $request->search . '%');
+                 $data->where('name', 'LIKE', '%' . $request->search . '%');
             }
 
             $result = $data->whereNotExists(function ($q) use ($request) {
