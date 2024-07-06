@@ -106,7 +106,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
     });
 
-    Route::prefix('lists')->group(function () {
+    Route::prefix('list')->group(function () {
         Route::get('/', [App\Http\Controllers\ListController::class, 'index'])->middleware('abilities:list_list');
         Route::post('/', [App\Http\Controllers\ListController::class, 'store'])->middleware('abilities:list_insert');
         Route::get('/{id}', [App\Http\Controllers\ListController::class, 'show'])->middleware('abilities:list_by_id');
