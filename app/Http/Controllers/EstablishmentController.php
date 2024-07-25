@@ -48,4 +48,6 @@ class EstablishmentController extends Controller
         return $this->establishment_service->restore($id);
     }
 
+
+
 }

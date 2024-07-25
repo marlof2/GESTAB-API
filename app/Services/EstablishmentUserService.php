@@ -22,6 +22,7 @@ class EstablishmentUserService
     public function index($request, $id)
     {
         $data = $this->establishment_user->where('establishment_id', $id)
+            ->where('created_by_functionality', $request->created_by_functionality)
             ->select('users.id as user_id', 'establishment_user.*')
             ->join('users', 'users.id', '=', 'establishment_user.user_id')
             ->with("user")
@@ -44,6 +45,7 @@ class EstablishmentUserService
     {
         $data = $this->establishment_user
             ->where('user_id', $id)
+            ->where('created_by_functionality', $request->created_by_functionality)
             ->select('establishment.id as establishment_id', 'establishment_user.*')
             ->join('establishment', 'establishment.id', '=', 'establishment_user.establishment_id')
             ->with("establishment_user")
@@ -70,7 +72,7 @@ class EstablishmentUserService
 
             foreach ($user_id as $key => $id) {
 
-                $this->establishment_user->create(["establishment_id" => $establishment_id, "user_id" => $id]);
+                $this->establishment_user->create(["establishment_id" => $establishment_id, "user_id" => $id, "created_by_functionality" => $request->created_by_functionality]);
             }
 
             return response()->json(["message" => "Profissionais vinculados com sucesso."], Response::HTTP_CREATED);
@@ -85,7 +87,7 @@ class EstablishmentUserService
             $user_id = $request->user_id;
 
             foreach ($establishment_ids as $key => $id) {
-                $this->establishment_user->create(["establishment_id" => $id, "user_id" => $user_id]);
+                $this->establishment_user->create(["establishment_id" => $id, "user_id" => $user_id,  "created_by_functionality" => $request->created_by_functionality]);
             }
 
             return response()->json(["message" => "Estabelecimentos vinculados com sucesso."], Response::HTTP_CREATED);
@@ -134,5 +136,19 @@ class EstablishmentUserService
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível desvincular', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
+    }
+
+    public function comboEstablishimentsById($id)
+    {
+        $data = $this->establishment_user->where('created_by_functionality','ME')->with('establishments')->where('user_id', $id)->get();
+
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    public function professionalByEstablishment($id)
+    {
+        $data = $this->establishment_user->where('created_by_functionality','EP')->with('user')->where('establishment_id', $id)->get();
+
+        return response()->json($data, Response::HTTP_OK);
     }
 }

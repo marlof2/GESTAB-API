@@ -113,6 +113,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::put('/{id}', [App\Http\Controllers\ListController::class, 'update'])->middleware('abilities:list_edit');
         Route::delete('/{id}', [App\Http\Controllers\ListController::class, 'destroy'])->middleware('abilities:list_delete');
     });
+
 });
 
+
+Route::prefix('combo')->group(function () {
+    Route::get('/establishimentsUser/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboEstablishimentsById']);
+    Route::get('/professionalByEstablishment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'professionalByEstablishment']);
+    Route::get('/servicesByEstablishment/{id}', [App\Http\Controllers\ServicesController::class, 'servicesByEstablishment']);
+});
 

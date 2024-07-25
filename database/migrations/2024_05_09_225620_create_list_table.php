@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('list', function (Blueprint $table) {
             $table->id();
             $table->date("date");
-            $table->time("time");
-            $table->boolean("valid");
+            $table->time("time")->nullable();
             $table->foreignId('establishment_id')->constrained('establishment');
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('professional_id')->constrained('users');
             $table->foreignId('service_id')->constrained('services');
             $table->foreignId('status_id')->constrained('status');
+            $table->boolean("valid")->nullable();
             $table->timestamps();
 
         });

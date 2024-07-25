@@ -19,23 +19,29 @@ class EstablishmentSeeder extends Seeder
             [
                 'type_of_person_id' => 1,
                 'name' => 'Clube da Navalha',
+                'responsible' => 'João',
                 'cpf' => '25674675058',
                 'cnpj' => '',
-                'phone' => '71991717209'
+                'phone' => '71991717209',
+                'type_schedule' => 1
             ],
             [
                 'type_of_person_id' => 2,
                 'name' => 'Tiquinho Styles',
+                'responsible' => 'Mario',
                 'cpf' => '',
                 'cnpj' => '31397084000172',
-                'phone' => '71991717209'
+                'phone' => '71991717208',
+                'type_schedule' => 1
             ],
             [
                 'type_of_person_id' => 1,
-                'name' => 'Barbearia teste',
+                'name' => 'Salão de Jú',
+                'responsible' => 'Julio',
                 'cpf' => '25674675051',
                 'cnpj' => '',
-                'phone' => '71991717209'
+                'phone' => '71991717206',
+                'type_schedule' => 1
             ],
 
         ];
@@ -44,9 +50,11 @@ class EstablishmentSeeder extends Seeder
             Establishment::firstOrCreate([
                 'type_of_person_id' => $value['type_of_person_id'],
                 'name' => $value['name'],
+                'responsible' => $value['responsible'],
                 'cnpj' => $value['cnpj'],
                 'cpf' => $value['cpf'],
-                'phone' => $value['phone']
+                'phone' => $value['phone'],
+                'type_schedule' => $value['type_schedule'],
             ]);
         }
     }

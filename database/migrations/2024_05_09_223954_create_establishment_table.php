@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('type_of_person_id')->constrained('type_of_person');
             $table->string('name');
+            $table->string('responsible');
             $table->string('cpf')->nullable();
             $table->string('cnpj')->nullable();
             $table->string('phone')->nullable();
+            $table->boolean("type_schedule")->comment('Horario marcado (1) ou ordem de chegada (2)');
             $table->timestamps();
             $table->softDeletes();
         });

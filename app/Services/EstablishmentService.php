@@ -17,18 +17,13 @@ class EstablishmentService
     }
     public function index($request)
     {
-       $data = $this->establishment->with('tipoPessoa')->orderBy('name');
+        $data = $this->establishment->with('tipoPessoa')->orderBy('name');
 
         if ($request->filled('search')) {
             return response()->json($this->establishment::Filtro($request->search, $this->pageLimit));
         }
-        if ($request->filled('limit')) {
-            $data = ["data" => $this->establishment->with('tipoPessoa')->get()];
-            return response()->json($data, Response::HTTP_OK);
-        } else {
-            $data = $data->withTrashed()->paginate($this->pageLimit);
-        }
 
+        $data = $data->withTrashed()->paginate($this->pageLimit);
         return response()->json($data, Response::HTTP_OK);
     }
     public function store($request)
@@ -108,14 +103,15 @@ class EstablishmentService
             $data = $this->establishment->orderBy('name');
 
             if ($request->filled('search')) {
-                 $data->where('name', 'LIKE', '%' . $request->search . '%');
+                $data->where('name', 'LIKE', '%' . $request->search . '%');
             }
 
             $result = $data->whereNotExists(function ($q) use ($request) {
-                $q->select('establishment_id')
+                $q->select('establishment_id', 'created_by_functionality')
                     ->from('establishment_user as EU')
                     ->whereColumn('EU.establishment_id', 'establishment.id')
-                    ->where('EU.user_id', $request->user_id);
+                    ->where('EU.user_id', $request->user_id)
+                    ->where('EU.created_by_functionality', 'ME');
             })->paginate($this->pageLimit);
 
             return response()->json($result, Response::HTTP_OK);
@@ -126,4 +122,6 @@ class EstablishmentService
             ], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
+
+
 }

@@ -17,18 +17,16 @@ class ListService
     }
     public function index($request)
     {
-        $data = $this->list->with('user:id,name,phone','status:id,name','service')
-        ->whereDate('date', '=', $request->date)
-        ->orderBy('date');
+        $data = $this->list->with('user:id,name,phone', 'professional:id,name', 'status:id,name', 'service')
+            ->whereDate('date', '=', $request->date)
+            ->whereIn('status_id', [1, 2])
+            ->where('establishment_id', $request->establishment_id)
+            ->where('professional_id', $request->professional_id)
+            ->orderBy('date');
 
-        // if ($request->filled('search')) {
-        //     $data = $data->where('name', 'ILIKE', '%' . $request->search . '%');
-        // }
-
-        // if ($request->filled('limit')) {
-        //     $data = ["data" => $this->list->get()];
-        //     return response()->json($data, Response::HTTP_OK);
-        // }
+        if ($request->filled('search')) {
+            $data->whereRelation('user', 'name', 'LIKE', '%' . $request->search . '%');
+        }
 
         $data = $data->paginate($this->pageLimit);
         return response()->json($data, Response::HTTP_OK);
@@ -36,6 +34,7 @@ class ListService
     public function store($request)
     {
         $dataFrom = $request->all();
+        $dataFrom['status_id'] = 2;
         try {
             $data = $this->list->create($dataFrom);
             return response()->json($data, Response::HTTP_CREATED);

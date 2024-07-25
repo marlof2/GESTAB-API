@@ -39,4 +39,9 @@ class ServicesController extends Controller
     {
         return $this->services_service->destroy($id);
     }
+
+    public function servicesByEstablishment($id)
+    {
+        return $this->services_service->servicesByEstablishment($id);
+    }
 }

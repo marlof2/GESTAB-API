@@ -46,4 +46,13 @@ class EstablishmentUserController extends Controller
     {
         return $this->establishment_user_service->destroy($id);
     }
+
+    public function comboEstablishimentsById($id)
+    {
+        return $this->establishment_user_service->comboEstablishimentsById($id);
+    }
+    public function professionalByEstablishment($id)
+    {
+        return $this->establishment_user_service->professionalByEstablishment($id);
+    }
 }

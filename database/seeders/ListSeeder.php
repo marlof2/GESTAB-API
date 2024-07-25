@@ -22,8 +22,26 @@ class ListSeeder extends Seeder
                 'establishment_id' => 1,
                 'service_id' => 1,
                 'user_id' => 1,
+                'professional_id' => 5,
                 'status_id' => 1,
-                'valid' => true,
+            ],
+            [
+                'time' => '09:00',
+                'date' => Carbon::now()->format('Y/m/d'),
+                'establishment_id' => 1,
+                'service_id' => 1,
+                'user_id' => 2,
+                'professional_id' => 5,
+                'status_id' => 1,
+            ],
+            [
+                'time' => '09:00',
+                'date' => Carbon::now()->format('Y/m/d'),
+                'establishment_id' => 1,
+                'service_id' => 1,
+                'user_id' => 3,
+                'professional_id' => 5,
+                'status_id' => 1,
             ],
         ];
 
@@ -34,8 +52,8 @@ class ListSeeder extends Seeder
                 'establishment_id' => $value['establishment_id'],
                 'service_id' => $value['service_id'],
                 'user_id' => $value['user_id'],
+                'professional_id' => $value['professional_id'],
                 'status_id' => $value['status_id'],
-                'valid' => $value['valid'],
             ]);
         }
     }

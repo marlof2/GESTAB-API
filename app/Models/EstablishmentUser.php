@@ -8,7 +8,7 @@ class EstablishmentUser extends Model
 {
     protected $table = "establishment_user";
     protected $guarded = ["id"];
-    protected $fillable = ["user_id","establishment_id"];
+    protected $fillable = ["user_id","establishment_id","created_by_functionality"];
     protected $hidden = ["created_at", "updated_at"];
 
     // public function establishment()
@@ -18,12 +18,17 @@ class EstablishmentUser extends Model
 
     public function establishment_user()
     {
-        return $this->hasOne(Establishment::class, "id", "establishment_id")->select("id", "name", "cnpj", "cpf", "phone");
+        return $this->hasOne(Establishment::class, "id", "establishment_id")->select("id", "name", "cnpj", "cpf", "phone", 'responsible');
     }
 
     public function user()
     {
         return $this->hasOne(User::class, "id", "user_id");
+    }
+
+    public function establishments()
+    {
+        return $this->belongsTo(Establishment::class, "establishment_id" ,"id", );
     }
 
 

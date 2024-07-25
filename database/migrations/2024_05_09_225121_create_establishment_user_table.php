@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('establishment_id')->constrained('establishment')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users');
+            $table->string('created_by_functionality')->comment('Por qual funcionalidade foi criado o registo. ME = para Meu estabelecimento e EP = Estabelecimento profissional')->nullable();
             $table->timestamps();
 
         });

@@ -85,4 +85,11 @@ class ServicesService
             return response()->json(["message" => 'Não foi possível excluir', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
+
+    public function servicesByEstablishment($id)
+    {
+        $data = $this->services->where('establishment_id', $id)->orderBy('name')->get();
+
+        return response()->json($data, Response::HTTP_OK);
+    }
 }
