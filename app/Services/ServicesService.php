@@ -86,7 +86,7 @@ class ServicesService
         }
     }
 
-    public function servicesByEstablishment($id)
+    public function comboServicesByEstablishment($id)
     {
         $data = $this->services->where('establishment_id', $id)->orderBy('name')->get();
 

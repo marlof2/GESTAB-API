@@ -51,8 +51,12 @@ class EstablishmentUserController extends Controller
     {
         return $this->establishment_user_service->comboEstablishimentsById($id);
     }
-    public function professionalByEstablishment($id)
+    public function comboProfessionalByEstablishment($id)
     {
-        return $this->establishment_user_service->professionalByEstablishment($id);
+        return $this->establishment_user_service->comboProfessionalByEstablishment($id);
+    }
+    public function comboUserByEstablishiment($id)
+    {
+        return $this->establishment_user_service->comboUserByEstablishiment($id);
     }
 }

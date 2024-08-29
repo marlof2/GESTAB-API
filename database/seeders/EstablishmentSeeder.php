@@ -23,7 +23,6 @@ class EstablishmentSeeder extends Seeder
                 'cpf' => '25674675058',
                 'cnpj' => '',
                 'phone' => '71991717209',
-                'type_schedule' => 1
             ],
             [
                 'type_of_person_id' => 2,
@@ -32,7 +31,6 @@ class EstablishmentSeeder extends Seeder
                 'cpf' => '',
                 'cnpj' => '31397084000172',
                 'phone' => '71991717208',
-                'type_schedule' => 1
             ],
             [
                 'type_of_person_id' => 1,
@@ -41,7 +39,6 @@ class EstablishmentSeeder extends Seeder
                 'cpf' => '25674675051',
                 'cnpj' => '',
                 'phone' => '71991717206',
-                'type_schedule' => 1
             ],
 
         ];
@@ -54,7 +51,6 @@ class EstablishmentSeeder extends Seeder
                 'cnpj' => $value['cnpj'],
                 'cpf' => $value['cpf'],
                 'phone' => $value['phone'],
-                'type_schedule' => $value['type_schedule'],
             ]);
         }
     }

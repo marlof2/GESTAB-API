@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             EstablishmentSeeder::class,
             EstablishmentUserSeeder::class,
             ServiceSeeder::class,
-            // EstablishmentServiceSeeder::class,
             ListSeeder::class,
         ]);
     }

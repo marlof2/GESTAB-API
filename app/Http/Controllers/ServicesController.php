@@ -40,8 +40,8 @@ class ServicesController extends Controller
         return $this->services_service->destroy($id);
     }
 
-    public function servicesByEstablishment($id)
+    public function comboServicesByEstablishment($id)
     {
-        return $this->services_service->servicesByEstablishment($id);
+        return $this->services_service->comboServicesByEstablishment($id);
     }
 }

@@ -25,7 +25,7 @@ class StatusSeeder extends Seeder
                 'name' => 'Concluído',
             ],
             [
-                'name' => 'Faltou',
+                'name' => 'Desistir',
             ],
         ];
 

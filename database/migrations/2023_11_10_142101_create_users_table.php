@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->unique();
             $table->string('password');
+            $table->char("type_schedule", 2)->nullable()->comment('Horario marcado (HM) ou ordem de chegada (OC)');
             $table->timestamps();
             $table->softDeletes();
         });

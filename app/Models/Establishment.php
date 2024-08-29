@@ -12,7 +12,7 @@ class Establishment extends Model
 
     protected $table = "establishment";
     protected $guarded = ['id'];
-    protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "phone", "responsible", "type_schedule"];
+    protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "phone", "responsible", ];
     protected $hidden = ["created_at", "updated_at"];
 
 

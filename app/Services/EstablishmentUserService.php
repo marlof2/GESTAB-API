@@ -145,9 +145,16 @@ class EstablishmentUserService
         return response()->json($data, Response::HTTP_OK);
     }
 
-    public function professionalByEstablishment($id)
+    public function comboProfessionalByEstablishment($id)
     {
-        $data = $this->establishment_user->where('created_by_functionality','EP')->with('user')->where('establishment_id', $id)->get();
+        $data = $this->establishment_user->where('created_by_functionality','EP')->whereRelation('user', 'profile_id', '=', 3)->with('user')->where('establishment_id', $id)->get();
+
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    public function comboUserByEstablishiment($id)
+    {
+        $data = $this->establishment_user->with('user')->where('establishment_id', $id)->get();
 
         return response()->json($data, Response::HTTP_OK);
     }

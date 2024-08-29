@@ -112,6 +112,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/{id}', [App\Http\Controllers\ListController::class, 'show'])->middleware('abilities:list_by_id');
         Route::put('/{id}', [App\Http\Controllers\ListController::class, 'update'])->middleware('abilities:list_edit');
         Route::delete('/{id}', [App\Http\Controllers\ListController::class, 'destroy'])->middleware('abilities:list_delete');
+
+        Route::put('statusEmAtendimento/{id}', [App\Http\Controllers\ListController::class, 'statusEmAtendimento'])->middleware('abilities:list_edit');
+        Route::put('statusConcluido/{id}', [App\Http\Controllers\ListController::class, 'statusConcluido'])->middleware('abilities:list_edit');
+        Route::put('statusAguardandoAtendimento/{id}', [App\Http\Controllers\ListController::class, 'statusAguardandoAtendimento'])->middleware('abilities:list_edit');
+        Route::put('statusDesistiu/{id}', [App\Http\Controllers\ListController::class, 'statusDesistiu'])->middleware('abilities:list_edit');
     });
 
 });
@@ -119,7 +124,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::prefix('combo')->group(function () {
     Route::get('/establishimentsUser/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboEstablishimentsById']);
-    Route::get('/professionalByEstablishment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'professionalByEstablishment']);
-    Route::get('/servicesByEstablishment/{id}', [App\Http\Controllers\ServicesController::class, 'servicesByEstablishment']);
+    Route::get('/professionalByEstablishment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboProfessionalByEstablishment']);
+    Route::get('/servicesByEstablishment/{id}', [App\Http\Controllers\ServicesController::class, 'comboServicesByEstablishment']);
+    Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
 });
 

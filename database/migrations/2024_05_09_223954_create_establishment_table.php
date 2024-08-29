@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('cpf')->nullable();
             $table->string('cnpj')->nullable();
             $table->string('phone')->nullable();
-            $table->boolean("type_schedule")->comment('Horario marcado (1) ou ordem de chegada (2)');
             $table->timestamps();
             $table->softDeletes();
         });

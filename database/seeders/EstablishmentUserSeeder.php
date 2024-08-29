@@ -90,31 +90,6 @@ class EstablishmentUserSeeder extends Seeder
                 'user_id' => 15,
                 'created_by_functionality' => 'EP'
             ],
-            [
-                'establishment_id' => 1,
-                'user_id' => 16,
-                'created_by_functionality' => 'EP'
-            ],
-            [
-                'establishment_id' => 1,
-                'user_id' => 17,
-                'created_by_functionality' => 'EP'
-            ],
-            [
-                'establishment_id' => 1,
-                'user_id' => 18,
-                'created_by_functionality' => 'EP'
-            ],
-            [
-                'establishment_id' => 1,
-                'user_id' => 19,
-                'created_by_functionality' => 'EP'
-            ],
-            [
-                'establishment_id' => 1,
-                'user_id' => 20,
-                'created_by_functionality' => 'EP'
-            ],
         ];
 
         foreach ($data as $key => $value) {

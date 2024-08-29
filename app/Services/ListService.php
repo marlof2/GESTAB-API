@@ -78,4 +78,60 @@ class ListService
             return response()->json(["message" => 'Não foi possível excluir', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
+
+    public function statusEmAtendimento($id)
+    {
+        $data = $this->list->find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $data->update(['status_id' => 1]);
+            return response()->json($data, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(["message" => 'Não foi possível atualizar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
+
+    public function statusAguardandoAtendimento($id)
+    {
+        $data = $this->list->find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $data->update(['status_id' => 2]);
+            return response()->json($data, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(["message" => 'Não foi possível atualizar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
+
+    public function statusConcluido($id)
+    {
+        $data = $this->list->find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $data->update(['status_id' => 3]);
+            return response()->json($data, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(["message" => 'Não foi possível atualizar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
+
+    public function statusDesistiu($id)
+    {
+        $data = $this->list->find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $data->update(['status_id' => 4]);
+            return response()->json($data, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(["message" => 'Não foi possível atualizar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
 }
