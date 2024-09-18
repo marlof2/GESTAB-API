@@ -18,7 +18,7 @@ class EstablishmentUser extends Model
 
     public function establishment_user()
     {
-        return $this->hasOne(Establishment::class, "id", "establishment_id")->select("id", "name", "cnpj", "cpf", "phone", 'responsible');
+        return $this->hasOne(Establishment::class, "id", "establishment_id")->select("id", "name", "cnpj", "cpf", "phone", 'responsible_id');
     }
 
     public function user()

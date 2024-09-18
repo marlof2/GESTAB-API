@@ -32,7 +32,7 @@ class ServicesRequest extends FormRequest
         return [
             "name" => ["required", "string", "max:100", "unique:services"],
             "amount" => ["nullable", "numeric", "regex:/^\d+(\.\d{1,2})?$/"],
-            "time" => ["nullable", "date_format:H:i"],
+            "time" => ["nullable"],
         ];
     }
 
@@ -41,7 +41,7 @@ class ServicesRequest extends FormRequest
        return [
             "name" => ["required", "string", "max:100", "unique:services,name,$this->id_request,id"],
             "amount" => ["nullable", "numeric", "regex:/^\d+(\.\d{1,2})?$/"],
-            "time" => ["nullable", "date_format:H:i"],
+            "time" => ["nullable"],
         ];
     }
 
@@ -56,11 +56,10 @@ class ServicesRequest extends FormRequest
             "name.required" => "O campo é obrigatório.",
             "name.string" => "O campo informado deve ser do tipo texto.",
             "name.max" => "Máximo de 100 caracteres.",
-            "name.unique" => "O serviço informado já existe.",
-            "name.exists" => "O serviço informado já existe.",
+            "name.unique" => "O nome do serviço já existe para este estabelecimento.",
             "amount.numeric" => "O campo informado deve ser do tipo texto.",
             "amount.regex" => "O valor deve conter duas casas decimais.",
-            "time.date_format" => "O tempo informado deve ser no formato HH:mm.",
+            // "time.date_format" => "O tempo informado deve ser no formato HH:mm.",
         ];
     }
 

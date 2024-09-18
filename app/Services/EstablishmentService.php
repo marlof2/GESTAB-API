@@ -17,7 +17,7 @@ class EstablishmentService
     }
     public function index($request)
     {
-        $data = $this->establishment->with('tipoPessoa')->orderBy('name');
+        $data = $this->establishment->with('tipoPessoa','responsible')->orderBy('name');
 
         if ($request->filled('search')) {
             return response()->json($this->establishment::Filtro($request->search, $this->pageLimit));
@@ -100,7 +100,7 @@ class EstablishmentService
     {
         try {
 
-            $data = $this->establishment->orderBy('name');
+            $data = $this->establishment->with('responsible')->orderBy('name');
 
             if ($request->filled('search')) {
                 $data->where('name', 'LIKE', '%' . $request->search . '%');
@@ -117,7 +117,7 @@ class EstablishmentService
             return response()->json($result, Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json([
-                "message" => "Não foi possível obter os profissionais do estavelecimento.",
+                "message" => "Não foi possível obter os profissionais do estabelecimento.",
                 "error" => $e
             ], Response::HTTP_NOT_ACCEPTABLE);
         }

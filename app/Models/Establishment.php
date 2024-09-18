@@ -12,7 +12,7 @@ class Establishment extends Model
 
     protected $table = "establishment";
     protected $guarded = ['id'];
-    protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "phone", "responsible", ];
+    protected $fillable = ["name", "type_of_person_id", "cpf", "cnpj", "phone", "responsible_id", ];
     protected $hidden = ["created_at", "updated_at"];
 
 
@@ -33,24 +33,10 @@ class Establishment extends Model
     {
         return $this->hasOne(TypeOfPerson::class, 'id', 'type_of_person_id')->select("id", "name");
     }
+    public function responsible()
+    {
+        return $this->hasOne(User::class, 'id', 'responsible_id')->select("id", "name");
+    }
 
 
-    // public function checkExistenceUnityContract(array $data)
-    // {
-
-    //     $query = $this->unityContract;
-
-    //     $query =  $query->whereColumn(
-    //         [
-    //             ['contract_id',     (int)$data['contract_id']],
-    //             ['unity_id',        (int)$data['unity_id']],
-    //             ['profession_id',   (int)$data['profession_id']],
-    //             ['occupation_id',   (int)$data['occupation_id']],
-    //             ['dayweek_id',      (int)$data['dayWeek_id']],
-    //             ['shift_id',        (int)$data['shift_id']],
-    //         ]
-    //     )->count();
-
-    //     return $query;
-    // }
 }

@@ -48,7 +48,7 @@ class EstablishmentUserService
             ->where('created_by_functionality', $request->created_by_functionality)
             ->select('establishment.id as establishment_id', 'establishment_user.*')
             ->join('establishment', 'establishment.id', '=', 'establishment_user.establishment_id')
-            ->with("establishment_user")
+            ->with("establishment_user.responsible")
             ->orderBy('establishment.name');
 
         if ($request->filled('search')) {

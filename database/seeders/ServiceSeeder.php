@@ -48,6 +48,7 @@ class ServiceSeeder extends Seeder
                 'name' => $value['name'],
                 'establishment_id' => $value['establishment_id'],
                 'amount' => $value['amount'],
+                'time' => $value['time'],
             ]);
         }
     }

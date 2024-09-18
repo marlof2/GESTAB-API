@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('type_of_person_id')->constrained('type_of_person');
             $table->string('name');
-            $table->string('responsible');
+            $table->foreignId('responsible_id')->constrained('users');
             $table->string('cpf')->nullable();
             $table->string('cnpj')->nullable();
             $table->string('phone')->nullable();

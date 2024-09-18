@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Http\Response;
 use App\Models\Lista;
+use Carbon\Carbon;
+use Exception;
 
 class ListService
 {
@@ -36,13 +38,44 @@ class ListService
     {
         $dataFrom = $request->all();
         $dataFrom['status_id'] = 2;
+
         try {
+            if ($request->typeSchedule == "HM") {
+                // $count = $this->checkDuplicity($request);
+
+                // if ($count > 0) {
+                //     throw new Exception(
+                //         "Você já está agendado no dia " . Carbon::parse($request->date)->format('d/m/Y') .
+                //             " no horário das " . $request->time,
+                //         406
+                //     );
+                // }
+
+                // Verificação para impedir agendamento no passado
+                $timezone = 'America/Sao_Paulo'; // Ajuste conforme necessário
+                $requestedDateTime = Carbon::parse($request->date . ' ' . $request->time, $timezone);
+                $currentDateTime = Carbon::now($timezone);
+                if ($currentDateTime->gt($requestedDateTime)) {
+                    // A data/hora atual é maior que a data/hora solicitada
+                    // Não permite salvar
+                    throw new Exception(
+                        "Não é possível agendar para o dia " . Carbon::parse($request->date)->format('d/m/Y') .
+                            " às " . $request->time . " porque este horário já passou.",
+                        406
+                    );
+                }
+            }
+
             $data = $this->list->create($dataFrom);
             return response()->json($data, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
+            return response()->json([
+                "message" => 'Não foi possível cadastrar',
+                "error" => [$e->getMessage()]
+            ], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
+
     public function show($id)
     {
         $data = $this->list->find($id);
@@ -134,5 +167,23 @@ class ListService
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível atualizar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
+    }
+
+    public function checkDuplicity($data)
+    {
+        // Certifique-se de que os valores estão no formato correto
+        $conditions = [
+            'date' => $data['date'],
+            'time' => $data['time'] . ':00',
+            'establishment_id' => $data['establishment_id'],
+            'user_id' => $data['user_id'],
+            'professional_id' => $data['professional_id'],
+            'service_id' => $data['service_id'],
+        ];
+
+        $query = $this->list->where($conditions)->orWhere('status_id', 1)->orWhere('status_id', 2)->get();
+        dd($query);
+
+        return $query;
     }
 }
