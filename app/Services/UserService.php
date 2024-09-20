@@ -179,9 +179,6 @@ class UserService
                 ], 401);
             }
 
-            if ($user->primeiroAcesso) {
-                $user->primeiroAcesso = false;
-            }
 
             $user->password = Hash::make($request->senhaNova);
             $user->save();

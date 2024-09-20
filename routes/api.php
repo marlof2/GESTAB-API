@@ -41,10 +41,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/', [UserController::class, 'store'])->middleware('abilities:user_insert');
         Route::get('/listUsersByEstablishiment', [UserController::class, 'listUsersByEstablishiment'])->middleware('abilities:user_by_id');
         Route::get('/{id}', [UserController::class, 'show'])->middleware('abilities:user_by_id');
-        Route::put('/{id}', [UserController::class, 'update'])->middleware('abilities:user_edit');
+        // Route::put('/{id}', [UserController::class, 'update'])->middleware('abilities:user_edit');
+        Route::patch('/{id}', [UserController::class, 'update'])->middleware('abilities:user_edit');
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('abilities:user_delete');
         Route::post('/alterarsenha', [UserController::class, 'alterarSenhaUsuario'])->middleware('abilities:user_change_password');
-        Route::post('/resetSenha', [UserController::class, 'resetSenha'])->middleware('abilities:user_reset_senha');
+        // Route::post('/resetSenha', [UserController::class, 'resetSenha'])->middleware('abilities:user_reset_senha');
         Route::get('/establishments/{id}', [UserController::class, 'establishments'])->middleware('abilities:user_by_id');
     });
 
