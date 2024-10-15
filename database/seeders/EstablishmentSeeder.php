@@ -27,7 +27,7 @@ class EstablishmentSeeder extends Seeder
             [
                 'type_of_person_id' => 1,
                 'name' => 'Salão de beleza',
-                'responsible_id' => 1,
+                'responsible_id' => 3,
                 'cpf' => '25674675051',
                 'cnpj' => '',
                 'phone' => '71991717206',

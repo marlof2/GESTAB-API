@@ -154,7 +154,8 @@ class EstablishmentUserService
 
     public function comboUserByEstablishiment($id)
     {
-        $data = $this->establishment_user->with('user')->where('establishment_id', $id)->get();
+        $establishmentUser = $this->establishment_user->with('user')->where('establishment_id', $id)->get();
+        $data = $establishmentUser->pluck('user')->unique('id')->values();
 
         return response()->json($data, Response::HTTP_OK);
     }

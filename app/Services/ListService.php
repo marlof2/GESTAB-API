@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Response;
 use App\Models\Lista;
+use App\Models\Services;
 use Carbon\Carbon;
 use Exception;
 
@@ -36,37 +37,17 @@ class ListService
     }
     public function store($request)
     {
-        $dataFrom = $request->all();
-        $dataFrom['status_id'] = 2;
+        $request['status_id'] = 2;
 
         try {
             if ($request->typeSchedule == "HM") {
-                // $count = $this->checkDuplicity($request);
-
-                // if ($count > 0) {
-                //     throw new Exception(
-                //         "Você já está agendado no dia " . Carbon::parse($request->date)->format('d/m/Y') .
-                //             " no horário das " . $request->time,
-                //         406
-                //     );
-                // }
-
-                // Verificação para impedir agendamento no passado
-                $timezone = 'America/Sao_Paulo'; // Ajuste conforme necessário
-                $requestedDateTime = Carbon::parse($request->date . ' ' . $request->time, $timezone);
-                $currentDateTime = Carbon::now($timezone);
-                if ($currentDateTime->gt($requestedDateTime)) {
-                    // A data/hora atual é maior que a data/hora solicitada
-                    // Não permite salvar
-                    throw new Exception(
-                        "Não é possível agendar para o dia " . Carbon::parse($request->date)->format('d/m/Y') .
-                            " às " . $request->time . " porque este horário já passou.",
-                        406
-                    );
-                }
+                $this->checkAppointmentIsInFuture($request);
+                $this->checkDisponibilityOfTime($request);
+                // $this->checkDuplicity($request);
             }
 
-            $data = $this->list->create($dataFrom);
+            $data = $this->list->create($request->all());
+
             return response()->json($data, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json([
@@ -169,21 +150,109 @@ class ListService
         }
     }
 
+    public function checkAppointmentIsInFuture($request)
+{
+    // Definir o fuso horário
+    $timezone = 'America/Sao_Paulo';
+
+    // Obter a data e hora solicitada e a atual como objetos Carbon, sem milissegundos
+    $requestedDateTime = Carbon::parse($request->date . ' ' . $request->time, $timezone)->startOfMinute();
+    $currentDateTime = Carbon::now($timezone)->startOfMinute();
+
+    // Comparação direta de objetos Carbon sem milissegundos
+    if ($requestedDateTime->lessThan($currentDateTime)) {
+
+        // A data/hora atual é maior ou igual à data/hora solicitada, não permite salvar
+        throw new Exception(
+            "Não é possível agendar para o dia " . $requestedDateTime->format('d/m/Y') .
+                " às " . $requestedDateTime->format('H:i') . " porque este horário já passou.",
+            406
+        );
+    }
+}
+
+
+
+    public function checkDisponibilityOfTime($request)
+    {
+
+        // Definir as condições para buscar o último agendamento
+        $conditions = [
+            // 'service_id' =>  $request->service_id,
+            'establishment_id' =>  $request->establishment_id,
+            'date' =>  $request->date,
+            'professional_id' => $request['professional_id'],
+        ];
+
+        // Obter o horário do último agendamento
+        $lastScheduleTime = $this->list->where($conditions)
+            ->where('status_id', '!=', 3)
+            ->where('status_id', '!=', 4)
+            ->max('time');
+
+        $lastScheduleId = $this->list->where($conditions)->max('id');
+
+        if (!$lastScheduleTime && !$lastScheduleId) {
+            return true;
+        }
+
+        $lastServiceId = $this->list->find($lastScheduleId)->service_id;
+
+        $lastScheduleTime = substr($lastScheduleTime, 0, 5); // Formato 'HH:MM'
+
+        $timeService = Services::where('establishment_id', $request->establishment_id)
+            ->where('id', $lastServiceId)
+            ->value('time');
+
+        $timeService = substr($timeService, 0, 5); // Exemplo: '20:00'
+        list($serviceMinutes, $serviceSeconds) = explode(':', $timeService);
+        $serviceDurationInSeconds = ($serviceMinutes * 60) + $serviceSeconds;
+
+        // Horário proposto para o novo agendamento
+        $currentTime = $request->time; // Formato 'HH:MM'
+
+        $lastScheduleTimestamp = strtotime($lastScheduleTime);
+
+        // Calcular o horário de término do último agendamento
+        $endTimeLastAppointmentTimestamp = $lastScheduleTimestamp + $serviceDurationInSeconds;
+
+        // Converter o horário proposto para timestamp
+        $currentTimestamp = strtotime($currentTime);
+
+        // Verificar se o novo horário é posterior ao término do último agendamento
+        if ($currentTimestamp >= $endTimeLastAppointmentTimestamp) {
+            return true;
+        } else {
+            $nextAvailableTime = date('H:i', $endTimeLastAppointmentTimestamp);
+            throw new Exception(
+                "Não é possível agendar neste horário. Próximo horário disponível: " . $nextAvailableTime,
+                406
+            );
+        }
+    }
+
+
     public function checkDuplicity($data)
     {
+
         // Certifique-se de que os valores estão no formato correto
         $conditions = [
             'date' => $data['date'],
             'time' => $data['time'] . ':00',
             'establishment_id' => $data['establishment_id'],
-            'user_id' => $data['user_id'],
+            'status_id' => 1,
             'professional_id' => $data['professional_id'],
-            'service_id' => $data['service_id'],
+            // 'service_id' => $data['service_id'],
         ];
 
-        $query = $this->list->where($conditions)->orWhere('status_id', 1)->orWhere('status_id', 2)->get();
-        dd($query);
+        $count = $this->list->where($conditions)->orWhere('status_id', 2)->count();
 
-        return $query;
+
+        if ($count > 0) {
+            throw new Exception(
+                "Já existe um agendamento marcado para este dia e essa hora.",
+                406
+            );
+        }
     }
 }
