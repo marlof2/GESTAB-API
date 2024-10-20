@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use App\Http\Requests\EstablishmentRequest;
@@ -9,18 +10,19 @@ use App\Services\EstablishmentService;
 class EstablishmentController extends Controller
 {
     protected $establishment_service;
-    public function __construct(EstablishmentService $establishment_service){
+    public function __construct(EstablishmentService $establishment_service)
+    {
         $this->establishment_service = $establishment_service;
     }
 
     public function index(Request $request)
     {
-         return $this->establishment_service->index($request);
+        return $this->establishment_service->index($request);
     }
 
     public function listEstablishimentByUser(Request $request)
     {
-         return $this->establishment_service->listEstablishimentByUser($request);
+        return $this->establishment_service->listEstablishimentByUser($request);
     }
 
     public function store(EstablishmentRequest $request)
@@ -35,7 +37,7 @@ class EstablishmentController extends Controller
 
     public function update(EstablishmentRequest $request, $id)
     {
-        return $this->establishment_service->update($request,$id);
+        return $this->establishment_service->update($request, $id);
     }
 
     public function destroy($id)
@@ -48,6 +50,8 @@ class EstablishmentController extends Controller
         return $this->establishment_service->restore($id);
     }
 
-
-
+    public function establishimentByResponsible($id)
+    {
+        return $this->establishment_service->establishimentByResponsible($id);
+    }
 }

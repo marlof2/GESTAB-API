@@ -20,13 +20,13 @@ class ServicesService
     {
         $data = $this->services->with('establishment')->where('establishment_id', $request->establishment_id)->orderBy('name');
 
-        $data = $data->when($request->min_price, function ($query, $min_price) {
-            $query->whereRaw("amount >= ?", $min_price);
-        });
+        // $data = $data->when($request->min_price, function ($query, $min_price) {
+        //     $query->whereRaw("amount >= ?", $min_price);
+        // });
 
-        $data = $data->when($request->max_price, function ($query, $max_price) {
-            $query->whereRaw("amount <= ?", $max_price);
-        });
+        // $data = $data->when($request->max_price, function ($query, $max_price) {
+        //     $query->whereRaw("amount <= ?", $max_price);
+        // });
 
         if ($request->filled('search')) {
             return response()->json($this->services::Filtro($request->search, $this->pageLimit));

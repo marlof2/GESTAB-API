@@ -109,6 +109,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('list')->group(function () {
         Route::get('/', [App\Http\Controllers\ListController::class, 'index'])->middleware('abilities:list_list');
+        Route::get('exportReport/', [App\Http\Controllers\ListController::class, 'exportReport'])->middleware('abilities:list_list');
+        Route::get('exportReportDownload/', [App\Http\Controllers\ListController::class, 'exportReportDownload'])->middleware('abilities:list_list');
         Route::post('/', [App\Http\Controllers\ListController::class, 'store'])->middleware('abilities:list_insert');
         Route::get('/{id}', [App\Http\Controllers\ListController::class, 'show'])->middleware('abilities:list_by_id');
         Route::put('/{id}', [App\Http\Controllers\ListController::class, 'update'])->middleware('abilities:list_edit');
@@ -128,5 +130,6 @@ Route::prefix('combo')->group(function () {
     Route::get('/professionalByEstablishment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboProfessionalByEstablishment']);
     Route::get('/servicesByEstablishment/{id}', [App\Http\Controllers\ServicesController::class, 'comboServicesByEstablishment']);
     Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
+    // Route::get('/establishimentByResponsible/{id}', [App\Http\Controllers\EstablishmentController::class, 'establishimentByResponsible']);
 });
 

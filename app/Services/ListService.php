@@ -7,6 +7,8 @@ use App\Models\Lista;
 use App\Models\Services;
 use Carbon\Carbon;
 use Exception;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\App;
 
 class ListService
 {
@@ -151,25 +153,25 @@ class ListService
     }
 
     public function checkAppointmentIsInFuture($request)
-{
-    // Definir o fuso horário
-    $timezone = 'America/Sao_Paulo';
+    {
+        // Definir o fuso horário
+        $timezone = 'America/Sao_Paulo';
 
-    // Obter a data e hora solicitada e a atual como objetos Carbon, sem milissegundos
-    $requestedDateTime = Carbon::parse($request->date . ' ' . $request->time, $timezone)->startOfMinute();
-    $currentDateTime = Carbon::now($timezone)->startOfMinute();
+        // Obter a data e hora solicitada e a atual como objetos Carbon, sem milissegundos
+        $requestedDateTime = Carbon::parse($request->date . ' ' . $request->time, $timezone)->startOfMinute();
+        $currentDateTime = Carbon::now($timezone)->startOfMinute();
 
-    // Comparação direta de objetos Carbon sem milissegundos
-    if ($requestedDateTime->lessThan($currentDateTime)) {
+        // Comparação direta de objetos Carbon sem milissegundos
+        if ($requestedDateTime->lessThan($currentDateTime)) {
 
-        // A data/hora atual é maior ou igual à data/hora solicitada, não permite salvar
-        throw new Exception(
-            "Não é possível agendar para o dia " . $requestedDateTime->format('d/m/Y') .
-                " às " . $requestedDateTime->format('H:i') . " porque este horário já passou.",
-            406
-        );
+            // A data/hora atual é maior ou igual à data/hora solicitada, não permite salvar
+            throw new Exception(
+                "Não é possível agendar para o dia " . $requestedDateTime->format('d/m/Y') .
+                    " às " . $requestedDateTime->format('H:i') . " porque este horário já passou.",
+                406
+            );
+        }
     }
-}
 
 
 
@@ -254,5 +256,48 @@ class ListService
                 406
             );
         }
+    }
+
+    public function exportReport($request)
+    {
+        $data = $this->list->with('professional:id,name', 'status:id,name', 'service')
+            ->whereDate('date', '>=', $request->initial_date)
+            ->whereDate('date', '<=', $request->final_date)
+            ->where('establishment_id', $request->establishment_id)
+            ->where('status_id', 3)
+            ->orderBy('date');
+
+        $total = 0;
+        // Clonar a query para calcular o total
+        $query = clone $data;
+
+        foreach ($query->get() as $value) {
+            $total += $value->service->amount;
+        }
+
+        if ($request->filled('professional_id')) {
+            $data->where('professional_id', $request->professional_id);
+        }
+
+        if ($request->filled('service_id')) {
+            $data->where('service_id', $request->service_id);
+        }
+
+        // Obter os dados paginados
+        $dataPaginated = $data->paginate($this->pageLimit);
+
+        // Adicionar o total à resposta paginada
+        $response = $dataPaginated->toArray();
+        $response['total_amount'] = number_format($total, 2, ',', '.');
+
+
+        return response()->json($response, Response::HTTP_OK);
+    }
+
+    public function exportReportDownload($request)
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
     }
 }
