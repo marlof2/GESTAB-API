@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Exception;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\View;
 
 class ListService
 {
@@ -258,7 +259,7 @@ class ListService
         }
     }
 
-    public function exportReport($request)
+    public function exportReport($request, $forExport = false)
     {
         $data = $this->list->with('professional:id,name', 'status:id,name', 'service')
             ->whereDate('date', '>=', $request->initial_date)
@@ -283,21 +284,28 @@ class ListService
             $data->where('service_id', $request->service_id);
         }
 
-        // Obter os dados paginados
-        $dataPaginated = $data->paginate($this->pageLimit);
+        if ($forExport) {
+            $response['data'] =  $data->get();
+            $response['total_amount'] = number_format($total, 2, ',', '.');
+            return $response;
+        } else {
+            // Obter os dados paginados
+            $dataPaginated = $data->paginate($this->pageLimit);
 
-        // Adicionar o total à resposta paginada
-        $response = $dataPaginated->toArray();
-        $response['total_amount'] = number_format($total, 2, ',', '.');
-
-
-        return response()->json($response, Response::HTTP_OK);
+            // Adicionar o total à resposta paginada
+            $response = $dataPaginated->toArray();
+            $response['total_amount'] = number_format($total, 2, ',', '.');
+            return response()->json($response, Response::HTTP_OK);
+        }
     }
 
     public function exportReportDownload($request)
     {
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
+
+        $query =  $this->exportReport($request, true);
+        $view =  View::make('reports.financial', compact('query'))->render();
+        $pdf->loadHTML(mb_convert_encoding($view, 'HTML-ENTITIES', 'UTF-8'));
+        return $pdf->stream('teste.pdf', array("Attachment" => false));
     }
 }
