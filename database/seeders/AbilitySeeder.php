@@ -333,6 +333,50 @@ class AbilitySeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
 
+            [
+                'name' => 'Listar feedbacks',
+                'slug' => 'feedbacks_list',
+                'functionality' => 'feedbacks',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Cadastrar feedbacks',
+                'slug' => 'feedbacks_insert',
+                'functionality' => 'feedbacks',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Editar feedbacks',
+                'slug' => 'feedbacks_by_id',
+                'functionality' => 'feedbacks',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Seleciona feedbacks',
+                'slug' => 'feedbacks_edit',
+                'functionality' => 'feedbacks',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Deletar feedbacks',
+                'slug' => 'feedbacks_delete',
+                'functionality' => 'feedbacks',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
         ];
 
         foreach ($abilities as $key => $value) {

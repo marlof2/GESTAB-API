@@ -29,7 +29,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #7a7c7a;
             color: white;
             text-transform: uppercase;
         }

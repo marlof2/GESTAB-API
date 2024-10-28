@@ -122,8 +122,22 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::put('statusDesistiu/{id}', [App\Http\Controllers\ListController::class, 'statusDesistiu'])->middleware('abilities:list_edit');
     });
 
-});
+    Route::prefix('feedbacks')->group(function () {
+        Route::get('/', [App\Http\Controllers\FeedbacksController::class, 'index'])->middleware('abilities:feedbacks_list');
+        Route::post('/', [App\Http\Controllers\FeedbacksController::class, 'store'])->middleware('abilities:feedbacks_insert');
+        Route::get('/{id}', [App\Http\Controllers\FeedbacksController::class, 'show'])->middleware('abilities:feedbacks_by_id');
+        Route::put('/{id}', [App\Http\Controllers\FeedbacksController::class, 'update'])->middleware('abilities:feedbacks_edit');
+        Route::delete('/{id}', [App\Http\Controllers\FeedbacksController::class, 'destroy'])->middleware('abilities:feedbacks_delete');
+    });
 
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [App\Http\Controllers\CategoriesController::class, 'index'])->middleware('abilities:feedbacks_list');
+        // Route::post('/', [App\Http\Controllers\FeedbacksController::class, 'store'])->middleware('abilities:feedbacks_insert');
+        // Route::get('/{id}', [App\Http\Controllers\FeedbacksController::class, 'show'])->middleware('abilities:feedbacks_by_id');
+        // Route::put('/{id}', [App\Http\Controllers\FeedbacksController::class, 'update'])->middleware('abilities:feedbacks_edit');
+        // Route::delete('/{id}', [App\Http\Controllers\FeedbacksController::class, 'destroy'])->middleware('abilities:feedbacks_delete');
+    });
+});
 
 Route::prefix('combo')->group(function () {
     Route::get('/establishimentsUser/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboEstablishimentsById']);
@@ -132,4 +146,3 @@ Route::prefix('combo')->group(function () {
     Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
     // Route::get('/establishimentByResponsible/{id}', [App\Http\Controllers\EstablishmentController::class, 'establishimentByResponsible']);
 });
-
