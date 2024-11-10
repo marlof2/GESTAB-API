@@ -17,14 +17,19 @@ class ListRequest extends FormRequest
     }
 
     public function rules()
-    {
+	{
         $this->id_request = $this->route('id');
-        return match ($this->method()) {
-            'POST' => $this->store(),
-            'PUT', 'PATCH' => $this->update(),
-            default => $this->view()
-        };
-    }
+		$method = $this->method();
+		if ($method === 'POST') {
+			return $this->store();
+		} elseif ($method === 'PUT') {
+			return $this->update();
+		} elseif ($method === 'PATCH') {
+			return $this->patch();
+		} else {
+			return $this->view();
+		}
+	}
 
     public function store()
     {

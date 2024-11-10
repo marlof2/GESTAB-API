@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Establishment::class, 'establishment_user', 'user_id', 'establishment_id')->as("establishments")->select("establishment_id", "name", "cpf", "cnpj", "phone");
     }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new \App\Notifications\ForgotPasswordNotification($token, $this->name));
+    }
 }

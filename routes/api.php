@@ -4,8 +4,8 @@ use App\Http\Controllers\AbilityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EstablishmentProfessionalController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +26,8 @@ Route::get('', function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

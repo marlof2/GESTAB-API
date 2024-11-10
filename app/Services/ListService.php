@@ -268,20 +268,20 @@ class ListService
             ->where('status_id', 3)
             ->orderBy('date');
 
-        $total = 0;
-        // Clonar a query para calcular o total
-        $query = clone $data;
-
-        foreach ($query->get() as $value) {
-            $total += $value->service->amount;
-        }
-
         if ($request->filled('professional_id')) {
             $data->where('professional_id', $request->professional_id);
         }
 
         if ($request->filled('service_id')) {
             $data->where('service_id', $request->service_id);
+        }
+
+        $total = 0;
+        // Clonar a query para calcular o total
+        $query = clone $data;
+
+        foreach ($query->get() as $value) {
+            $total += $value->service->amount;
         }
 
         if ($forExport) {
