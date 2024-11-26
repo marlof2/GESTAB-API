@@ -28,8 +28,11 @@ class ListService
             ->whereIn('status_id', [1, 2])
             ->where('establishment_id', $request->establishment_id)
             ->where('professional_id', $request->professional_id)
-            ->orderBy('date')
-            ->orderBy('time');
+            ->orderBy('date');
+
+        if ($request->typeSchedule == "HM") {
+            $data->orderBy('time');
+        }
 
         if ($request->filled('search')) {
             $data->whereRelation('user', 'name', 'LIKE', '%' . $request->search . '%');
