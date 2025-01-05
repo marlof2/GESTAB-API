@@ -42,9 +42,9 @@ class FeedbacksService
             return response()->json(["message" => 'Não foi possível cadastrar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);
         }
     }
-    public function show($id)
+    public function show($user_id)
     {
-        $data = $this->feedbacks->find($id);
+        $data = $this->feedbacks->where('user_id', $user_id)->get();
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }

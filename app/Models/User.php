@@ -28,7 +28,8 @@ class User extends Authenticatable
         'cpf',
         'profile_id',
         'phone',
-        "type_schedule"
+        "type_schedule",
+        "last_name"
     ];
 
     /**

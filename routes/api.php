@@ -28,6 +28,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
+Route::post('/webhookMercadoPago', [App\Http\Controllers\PaymentController::class, 'webhookMercadoPago']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -126,18 +127,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('feedbacks')->group(function () {
         Route::get('/', [App\Http\Controllers\FeedbacksController::class, 'index'])->middleware('abilities:feedbacks_list');
-        Route::post('/', [App\Http\Controllers\FeedbacksController::class, 'store'])->middleware('abilities:feedbacks_insert');
-        Route::get('/{id}', [App\Http\Controllers\FeedbacksController::class, 'show'])->middleware('abilities:feedbacks_by_id');
-        Route::put('/{id}', [App\Http\Controllers\FeedbacksController::class, 'update'])->middleware('abilities:feedbacks_edit');
-        Route::delete('/{id}', [App\Http\Controllers\FeedbacksController::class, 'destroy'])->middleware('abilities:feedbacks_delete');
+        // Route::post('/', [App\Http\Controllers\FeedbacksController::class, 'store'])->middleware('abilities:feedbacks_insert');
+        Route::get('/{user_id}', [App\Http\Controllers\FeedbacksController::class, 'show'])->middleware('abilities:feedbacks_by_id');
+        // Route::put('/{id}', [App\Http\Controllers\FeedbacksController::class, 'update'])->middleware('abilities:feedbacks_edit');
+        // Route::delete('/{id}', [App\Http\Controllers\FeedbacksController::class, 'destroy'])->middleware('abilities:feedbacks_delete');
     });
 
     Route::prefix('categories')->group(function () {
         Route::get('/', [App\Http\Controllers\CategoriesController::class, 'index'])->middleware('abilities:feedbacks_list');
-        // Route::post('/', [App\Http\Controllers\FeedbacksController::class, 'store'])->middleware('abilities:feedbacks_insert');
-        // Route::get('/{id}', [App\Http\Controllers\FeedbacksController::class, 'show'])->middleware('abilities:feedbacks_by_id');
-        // Route::put('/{id}', [App\Http\Controllers\FeedbacksController::class, 'update'])->middleware('abilities:feedbacks_edit');
-        // Route::delete('/{id}', [App\Http\Controllers\FeedbacksController::class, 'destroy'])->middleware('abilities:feedbacks_delete');
+    });
+
+    Route::prefix('payments')->group(function () {
+        Route::get('status/{id}', [App\Http\Controllers\PaymentController::class, 'show']);
+        Route::get('/createPreference', [App\Http\Controllers\PaymentController::class, 'createPreference']);
+        Route::get('/hasActivePayment/{establishment_id}', [App\Http\Controllers\PaymentController::class, 'hasActivePayment']);
     });
 });
 
@@ -148,3 +151,5 @@ Route::prefix('combo')->group(function () {
     Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
     // Route::get('/establishimentByResponsible/{id}', [App\Http\Controllers\EstablishmentController::class, 'establishimentByResponsible']);
 });
+
+

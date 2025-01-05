@@ -25,9 +25,9 @@ class FeedbacksController extends Controller
         return $this->feedbacks_service->store($request);
     }
 
-    public function show($id)
+    public function show($user_id)
     {
-        return $this->feedbacks_service->show($id);
+        return $this->feedbacks_service->show($user_id);
     }
 
     public function update(FeedbacksRequest $request, $id)
