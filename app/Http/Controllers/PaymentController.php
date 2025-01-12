@@ -211,7 +211,7 @@ class PaymentController extends Controller
     {
         try {
             $ids = $this->extractIdsFromReference($payment->external_reference);
-            $subscriptionDates = $this->calculateSubscriptionDates($ids['establishment_id'], $ids['plan_id']);
+            $subscriptionDates = $this->calculateSubscriptionDates($ids['plan_id']);
 
             return $this->saveOrUpdatePayment($payment, $ids, $subscriptionDates);
         } catch (\Exception $e) {
@@ -220,7 +220,7 @@ class PaymentController extends Controller
         }
     }
 
-    private function calculateSubscriptionDates(int $establishmentId, int $planId): array
+    private function calculateSubscriptionDates(int $planId): array
     {
         $subscriptionStart = now();
 

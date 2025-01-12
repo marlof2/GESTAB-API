@@ -38,5 +38,20 @@ class Establishment extends Model
         return $this->hasOne(User::class, 'id', 'responsible_id')->select("id", "name");
     }
 
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'establishment_id', 'id')
+            ->where('status', 'approved')
+            ->where('subscription_end', '>=', now()->startOfDay())
+            ->latest();
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'establishment_id', 'id')
+            ->where('status', 'approved')
+            ->latest();
+    }
+
 
 }

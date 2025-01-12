@@ -25,10 +25,15 @@ class ListService
     {
         $data = $this->list->with('user:id,name,phone', 'professional:id,name', 'status:id,name', 'service')
             ->whereDate('date', '=', $request->date)
-            ->whereIn('status_id', [1, 2])
             ->where('establishment_id', $request->establishment_id)
             ->where('professional_id', $request->professional_id)
             ->orderBy('date');
+
+        if ($request->filled('clientsAttended') && $request->clientsAttended == 'attended') {
+            $data->where('status_id', 3);
+        } else {
+            $data->whereIn('status_id', [1, 2]);
+        }
 
         if ($request->typeSchedule == "HM") {
             $data->orderBy('time');
@@ -311,4 +316,5 @@ class ListService
         $pdf->loadHTML(mb_convert_encoding($view, 'HTML-ENTITIES', 'UTF-8'));
         return $pdf->stream('teste.pdf', array("Attachment" => false));
     }
+
 }

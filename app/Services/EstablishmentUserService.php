@@ -159,4 +159,6 @@ class EstablishmentUserService
 
         return response()->json($data, Response::HTTP_OK);
     }
+
+
 }

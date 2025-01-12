@@ -42,7 +42,7 @@ class EstablishmentService
     }
     public function show($id)
     {
-        $data = $this->establishment->find($id);
+        $data = $this->establishment->with('payment', 'payments')->find($id);
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
@@ -136,5 +136,21 @@ class EstablishmentService
                 "error" => $e
             ], Response::HTTP_NOT_ACCEPTABLE);
         }
+    }
+
+    public function checkPaymentActive($id)
+    {
+        $establishment = $this->establishment->with('payment')->find($id);
+
+        // Verifica se o establishment existe e tem um payment relacionado
+        if (!$establishment || !$establishment->payment) {
+            return response()->json([
+                'isActive' => false
+            ], Response::HTTP_OK);
+        }
+
+        return response()->json([
+            'isActive' => $establishment->payment->isActive()
+        ], Response::HTTP_OK);
     }
 }

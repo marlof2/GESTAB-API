@@ -64,6 +64,8 @@ class ListController extends Controller
     {
         return $this->list_service->exportReport($request);
     }
+
+
     public function exportReportDownload(Request $request)
     {
         return $this->list_service->exportReportDownload($request);
