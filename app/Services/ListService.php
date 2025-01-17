@@ -54,7 +54,6 @@ class ListService
             if ($request->typeSchedule == "HM") {
                 $this->checkAppointmentIsInFuture($request);
                 $this->checkDisponibilityOfTime($request);
-                // $this->checkDuplicity($request);
             }
 
             $data = $this->list->create($request->all());
@@ -186,85 +185,54 @@ class ListService
 
     public function checkDisponibilityOfTime($request)
     {
+        $existingAppointments = $this->list
+            ->where([
+                'establishment_id' => $request->establishment_id,
+                'date' => $request->date,
+                'professional_id' => $request->professional_id,
+            ])
+            ->whereIn('status_id', [1, 2])
+            ->with('service')
+            ->orderBy('time')
+            ->get();
 
-        // Definir as condições para buscar o último agendamento
-        $conditions = [
-            // 'service_id' =>  $request->service_id,
-            'establishment_id' =>  $request->establishment_id,
-            'date' =>  $request->date,
-            'professional_id' => $request['professional_id'],
-        ];
-
-        // Obter o horário do último agendamento
-        $lastScheduleTime = $this->list->where($conditions)
-            ->where('status_id', '!=', 3)
-            ->where('status_id', '!=', 4)
-            ->max('time');
-
-        $lastScheduleId = $this->list->where($conditions)->max('id');
-
-        if (!$lastScheduleTime && !$lastScheduleId) {
+        if ($existingAppointments->isEmpty()) {
             return true;
         }
 
-        $lastServiceId = $this->list->find($lastScheduleId)->service_id;
+        // Formatar e converter o horário solicitado
+        $requestedTimeFormatted = Carbon::parse($request->time)->format('H:i');
+        $requestedTime = Carbon::parse($requestedTimeFormatted);
 
-        $lastScheduleTime = substr($lastScheduleTime, 0, 5); // Formato 'HH:MM'
+        // Buscar o serviço solicitado e calcular sua duração
+        $requestedService = Services::find($request->service_id);
+        $requestedDuration = (int)$requestedService->time; // duração em minutos
+        $requestedEndTime = $requestedTime->copy()->addMinutes($requestedDuration);
+        foreach ($existingAppointments as $appointment) {
+            // Formatar e converter o horário do agendamento existente
+            $appointmentStart = Carbon::parse($appointment->time)->format('H:i');
+            $appointmentTime = Carbon::parse($appointmentStart);
+            $appointmentDuration = (int)$appointment->service->time; // duração em minutos
+            $appointmentEndTime = $appointmentTime->copy()->addMinutes($appointmentDuration);
 
-        $timeService = Services::where('establishment_id', $request->establishment_id)
-            ->where('id', $lastServiceId)
-            ->value('time');
-
-        $timeService = substr($timeService, 0, 5); // Exemplo: '20:00'
-        list($serviceMinutes, $serviceSeconds) = explode(':', $timeService);
-        $serviceDurationInSeconds = ($serviceMinutes * 60) + $serviceSeconds;
-
-        // Horário proposto para o novo agendamento
-        $currentTime = $request->time; // Formato 'HH:MM'
-
-        $lastScheduleTimestamp = strtotime($lastScheduleTime);
-
-        // Calcular o horário de término do último agendamento
-        $endTimeLastAppointmentTimestamp = $lastScheduleTimestamp + $serviceDurationInSeconds;
-
-        // Converter o horário proposto para timestamp
-        $currentTimestamp = strtotime($currentTime);
-
-        // Verificar se o novo horário é posterior ao término do último agendamento
-        if ($currentTimestamp >= $endTimeLastAppointmentTimestamp) {
-            return true;
-        } else {
-            $nextAvailableTime = date('H:i', $endTimeLastAppointmentTimestamp);
-            throw new Exception(
-                "Não é possível agendar neste horário. Próximo horário disponível: " . $nextAvailableTime,
-                406
-            );
+            // Verifica se há sobreposição de horários
+            if (
+                // Novo agendamento começa durante um existente
+                ($requestedTime >= $appointmentTime && $requestedTime < $appointmentEndTime) ||
+                // Novo agendamento termina durante um existente
+                ($requestedEndTime > $appointmentTime && $requestedEndTime <= $appointmentEndTime) ||
+                // Novo agendamento engloba um existente
+                ($requestedTime <= $appointmentTime && $requestedEndTime >= $appointmentEndTime)
+            ) {
+                $nextAvailable = $appointmentEndTime->format('H:i');
+                throw new Exception(
+                    "Horário ocupado. Próximo horário disponível: {$nextAvailable}",
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
         }
-    }
 
-
-    public function checkDuplicity($data)
-    {
-
-        // Certifique-se de que os valores estão no formato correto
-        $conditions = [
-            'date' => $data['date'],
-            'time' => $data['time'] . ':00',
-            'establishment_id' => $data['establishment_id'],
-            'status_id' => 1,
-            'professional_id' => $data['professional_id'],
-            // 'service_id' => $data['service_id'],
-        ];
-
-        $count = $this->list->where($conditions)->orWhere('status_id', 2)->count();
-
-
-        if ($count > 0) {
-            throw new Exception(
-                "Já existe um agendamento marcado para este dia e essa hora.",
-                406
-            );
-        }
+        return true;
     }
 
     public function exportReport($request, $forExport = false)

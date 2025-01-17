@@ -34,6 +34,33 @@ class ListSeeder extends Seeder
                 'professional_id' => 3,
                 'status_id' => 1,
             ],
+            [
+                'time' => '10:00',
+                'date' => Carbon::now()->format('Y/m/d'),
+                'establishment_id' => 1,
+                'service_id' => 1,
+                'user_id' => 3,
+                'professional_id' => 3,
+                'status_id' => 1,
+            ],
+            [
+                'time' => '11:00',
+                'date' => Carbon::now()->format('Y/m/d'),
+                'establishment_id' => 1,
+                'service_id' => 1,
+                'user_id' => 3,
+                'professional_id' => 3,
+                'status_id' => 1,
+            ],
+            [
+                'time' => '12:00',
+                'date' => Carbon::now()->format('Y/m/d'),
+                'establishment_id' => 1,
+                'service_id' => 1,
+                'user_id' => 2,
+                'professional_id' => 2,
+                'status_id' => 1,
+            ],
         ];
 
         foreach ($data as $key => $value) {
