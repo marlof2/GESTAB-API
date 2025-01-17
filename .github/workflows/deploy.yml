@@ -3,7 +3,7 @@ name: FTP Deploy
 on:
   push:
     branches:
-      - main # Altere para a branch principal do seu repositório, se necessário.
+      - master # Altere para a branch principal do seu repositório, se necessário.
 
 jobs:
   ftp-deploy:
