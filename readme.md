@@ -2,7 +2,7 @@
 
 ### Requisitos:
 
-- PHP 8.1.13
+- PHP 8.3.14
 - Laravel Framework 10.18.0
 - DB: MySql
 
