@@ -21,4 +21,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: ${{ secrets.FTP_PORT }}
         local-dir: ./ # Diretório local para upload. Ajuste conforme necessário.
-        server-dir: / # Diretório no servidor. Ajuste conforme necessário.
+        server-dir: /public_html/ # Diretório no servidor. Ajuste conforme necessário.
