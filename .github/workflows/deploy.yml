@@ -3,7 +3,7 @@ name: FTP Deploy
 on:
   push:
     branches:
-      - master # Altere para a branch principal do seu repositório, se necessário.
+      - master
 
 jobs:
   ftp-deploy:
@@ -14,11 +14,18 @@ jobs:
       uses: actions/checkout@v3
 
     - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.0
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ${{ secrets.FTP_HOST }}
+        server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        port: ${{ secrets.FTP_PORT }}
-        local-dir: ./ # Diretório local para upload. Ajuste conforme necessário.
-        server-dir: /public_html/ # Diretório no servidor. Ajuste conforme necessário.
+        server-dir: /public_html/
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/tests/**
+          **/.github/**
+          README.md
+          .env
+          .env.example
