@@ -285,4 +285,23 @@ class ListService
         return $pdf->stream('teste.pdf', array("Attachment" => false));
     }
 
+    public function hystoricUser($request)
+    {
+        try {
+            $data = $this->list->with('professional:id,name', 'status:id,name', 'service')
+                ->whereDate('date', '>=', $request->start_date)
+                ->whereDate('date', '<=', $request->end_date)
+                ->where('establishment_id', $request->establishment_id)
+                ->where('user_id', $request->user_id)
+                ->where('status_id', 3)
+                ->orderBy('date')
+                ->get();
+            return response()->json($data, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => 'Não foi possível buscar o histórico',
+                "error" => [$e->getMessage()]
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
 }

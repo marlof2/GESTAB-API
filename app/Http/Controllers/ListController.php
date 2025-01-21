@@ -70,4 +70,9 @@ class ListController extends Controller
     {
         return $this->list_service->exportReportDownload($request);
     }
+
+    public function hystoricUser(Request $request)
+    {
+        return $this->list_service->hystoricUser($request);
+    }
 }

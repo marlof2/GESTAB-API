@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('list')->group(function () {
         Route::get('/', [App\Http\Controllers\ListController::class, 'index'])->middleware('abilities:list_list');
+        Route::get('/hystoric-user', [App\Http\Controllers\ListController::class, 'hystoricUser'])->middleware('abilities:list_list');
         Route::get('exportReport/', [App\Http\Controllers\ListController::class, 'exportReport'])->middleware('abilities:list_list');
         Route::get('exportReportDownload/', [App\Http\Controllers\ListController::class, 'exportReportDownload'])->middleware('abilities:list_list');
         Route::post('/', [App\Http\Controllers\ListController::class, 'store'])->middleware('abilities:list_insert');
