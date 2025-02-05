@@ -377,6 +377,51 @@ class AbilitySeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
 
+
+            [
+                'name' => 'Listar blockcalendar',
+                'slug' => 'blockcalendar_list',
+                'functionality' => 'blockcalendar',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Cadastrar blockcalendar',
+                'slug' => 'blockcalendar_insert',
+                'functionality' => 'blockcalendar',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Editar blockcalendar',
+                'slug' => 'blockcalendar_by_id',
+                'functionality' => 'blockcalendar',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Seleciona blockcalendar',
+                'slug' => 'blockcalendar_edit',
+                'functionality' => 'blockcalendar',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
+
+            [
+                'name' => 'Deletar blockcalendar',
+                'slug' => 'blockcalendar_delete',
+                'functionality' => 'blockcalendar',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+
         ];
 
         foreach ($abilities as $key => $value) {

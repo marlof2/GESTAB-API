@@ -32,6 +32,13 @@ Route::post('/webhookMercadoPago', [App\Http\Controllers\PaymentController::clas
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/verify-token', function () {
+        return response()->json([
+            'status' => true,
+            'message' => 'Token válido'
+        ]);
+    });
+
     Route::get("/me", [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -144,6 +151,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/createPreference', [App\Http\Controllers\PaymentController::class, 'createPreference']);
         Route::get('/hasActivePayment/{establishment_id}', [App\Http\Controllers\PaymentController::class, 'hasActivePayment']);
     });
+
+    Route::prefix('blockcalendars')->group(function () {
+        Route::get('/', [App\Http\Controllers\BlockCalendarController::class, 'index']);
+        Route::post('/', [App\Http\Controllers\BlockCalendarController::class, 'store']);
+        // Route::get('/{id}', [App\Http\Controllers\BlockCalendarController::class, 'show']);
+        // Route::put('/{id}', [App\Http\Controllers\BlockCalendarController::class, 'update']);
+        Route::delete('/{id}', [App\Http\Controllers\BlockCalendarController::class, 'destroy']);
+    });
 });
 
 Route::prefix('combo')->group(function () {
@@ -153,5 +168,3 @@ Route::prefix('combo')->group(function () {
     Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
     // Route::get('/establishimentByResponsible/{id}', [App\Http\Controllers\EstablishmentController::class, 'establishimentByResponsible']);
 });
-
-

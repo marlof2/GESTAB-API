@@ -18,7 +18,7 @@ class AuthController extends Controller
 
     public function login(LoginFormRequest $request)
     {
-       return  $this->userService->login($request);
+        return  $this->userService->login($request);
     }
 
     public function me(Request $request)
@@ -31,5 +31,16 @@ class AuthController extends Controller
     {
         $response = $this->userService->logout($request);
         return response(['message' => 'Deslogado com sucesso.'], 200);
+    }
+
+
+    public function verifyToken(Request $request)
+    {
+        // Token is automatically verified by the auth:sanctum middleware
+        // If we reach this point, the token is valid
+        return response()->json([
+            'isValid' => true,
+            'message' => 'Token is valid'
+        ]);
     }
 }
