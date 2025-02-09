@@ -154,6 +154,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('blockcalendars')->group(function () {
         Route::get('/', [App\Http\Controllers\BlockCalendarController::class, 'index']);
+        Route::get('/getBlockCalendarByEstablishmentAndUser/{establishment_id}/{user_id}', [App\Http\Controllers\BlockCalendarController::class, 'getBlockCalendarByEstablishmentAndUser']);
         Route::post('/', [App\Http\Controllers\BlockCalendarController::class, 'store']);
         // Route::get('/{id}', [App\Http\Controllers\BlockCalendarController::class, 'show']);
         // Route::put('/{id}', [App\Http\Controllers\BlockCalendarController::class, 'update']);

@@ -11,11 +11,11 @@
 
   Dependencies
   - Composer for dependency management
-  - PHP 8.1+
+  - PHP 8.3+
   - Laravel 10.0+
 
   PHP and Laravel Standards
-  - Leverage PHP 8.1+ features when appropriate (e.g., typed properties, match expressions).
+  - Leverage PHP 8.3+ features when appropriate (e.g., typed properties, match expressions).
   - Adhere to PSR-12 coding standards for consistent code style.
   - Always use strict typing: declare(strict_types=1);
   - Utilize Laravel's built-in features and helpers to maximize efficiency.

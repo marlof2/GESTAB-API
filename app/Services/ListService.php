@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\BlockCalendar;
 use Illuminate\Http\Response;
 use App\Models\Lista;
 use App\Models\Services;
@@ -15,11 +16,12 @@ class ListService
 {
     protected $list;
     protected $pageLimit;
-
-    public function __construct(Lista $list)
+    protected $blockcalendar;
+    public function __construct(Lista $list, BlockCalendar $blockcalendar)
     {
         $this->list = $list;
         $this->pageLimit = 10;
+        $this->blockcalendar = $blockcalendar;
     }
     public function index($request)
     {
@@ -56,6 +58,10 @@ class ListService
                 $this->checkDisponibilityOfTime($request);
             }
 
+            if ($request->filled('block_calendar_id') && $request->block_calendar_id != null) {
+                $this->checkBlockCalendar($request);
+            }
+
             $data = $this->list->create($request->all());
 
             return response()->json($data, Response::HTTP_CREATED);
@@ -67,6 +73,27 @@ class ListService
         }
     }
 
+    private function checkBlockCalendar($request): void
+    {
+        $blockCalendar = $this->blockcalendar->find($request->block_calendar_id);
+
+        if ($blockCalendar) {
+            $requestTime = Carbon::parse($request->time);
+            $blockStart = Carbon::parse($blockCalendar->time_start);
+            $blockEnd = Carbon::parse($blockCalendar->time_end);
+
+            if ($requestTime->between($blockStart, $blockEnd)) {
+                throw new Exception(
+                    "Não é possível agendar para o dia " . Carbon::parse($request->date)->format('d/m/Y') .
+                    " às " . $requestTime->format('H:i') .
+                    " porque esta data está bloqueada, por favor verifique no calendário na tela anterior." .
+                    " Periodo do bloqueio: " . $blockStart->format('H:i') . " até " . $blockEnd->format('H:i'),
+                    Response::HTTP_NOT_ACCEPTABLE
+                );
+            }
+        }
+    }
+
     public function show($id)
     {
         $data = $this->list->find($id);
@@ -75,6 +102,7 @@ class ListService
         }
         return response()->json($data, Response::HTTP_OK);
     }
+
     public function update($request, $id)
     {
         $data = $this->list->find($id);
@@ -176,7 +204,7 @@ class ListService
             throw new Exception(
                 "Não é possível agendar para o dia " . $requestedDateTime->format('d/m/Y') .
                     " às " . $requestedDateTime->format('H:i') . " porque este horário já passou.",
-                406
+                Response::HTTP_NOT_ACCEPTABLE
             );
         }
     }

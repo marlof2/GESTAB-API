@@ -17,10 +17,10 @@ class BlockCalendarService
     }
     public function index($request)
     {
-        $data = $this->blockcalendar->orderBy('date');
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $data = $data->whereBetween('date', [$request->start_date, $request->end_date]);
-        }
+        $data = $this->blockcalendar->orderBy('date')
+        ->whereBetween('date', [$request->start_date, $request->end_date])
+        ->where('establishment_id', $request->establishment_id)
+        ->where('user_id', $request->user_id);
 
         if ($request->filled('limit')) {
             $data = ["data" => $this->blockcalendar->get()];
@@ -29,6 +29,12 @@ class BlockCalendarService
             $page_limit = $request->filled('per_page') ? $request->per_page : config($this->pageLimit);
             $data = $data->paginate($page_limit);
         }
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    public function getBlockCalendarByEstablishmentAndUser($establishment_id, $user_id)
+    {
+        $data = $this->blockcalendar->where('establishment_id', $establishment_id)->where('user_id', $user_id)->get();
         return response()->json($data, Response::HTTP_OK);
     }
 

@@ -18,6 +18,11 @@ class BlockCalendarController extends Controller
          return $this->block_calendar_service->index($request);
     }
 
+    public function getBlockCalendarByEstablishmentAndUser($establishment_id, $user_id)
+    {
+        return $this->block_calendar_service->getBlockCalendarByEstablishmentAndUser($establishment_id, $user_id);
+    }
+
     public function store(BlockCalendarRequest $request)
     {
         return $this->block_calendar_service->store($request);
