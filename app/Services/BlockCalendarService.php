@@ -18,9 +18,9 @@ class BlockCalendarService
     public function index($request)
     {
         $data = $this->blockcalendar->orderBy('date')
-        ->whereBetween('date', [$request->start_date, $request->end_date])
-        ->where('establishment_id', $request->establishment_id)
-        ->where('user_id', $request->user_id);
+            ->whereBetween('date', [$request->start_date, $request->end_date])
+            ->where('establishment_id', $request->establishment_id)
+            ->where('user_id', $request->user_id);
 
         if ($request->filled('limit')) {
             $data = ["data" => $this->blockcalendar->get()];
@@ -32,9 +32,15 @@ class BlockCalendarService
         return response()->json($data, Response::HTTP_OK);
     }
 
-    public function getBlockCalendarByEstablishmentAndUser($establishment_id, $user_id)
+    public function getBlockCalendarByEstablishmentAndUser($request)
     {
-        $data = $this->blockcalendar->where('establishment_id', $establishment_id)->where('user_id', $user_id)->get();
+        $query = $this->blockcalendar
+            ->where('establishment_id', $request->establishmentId)
+            ->where('user_id', $request->professionalId)
+            ->whereMonth('date', '=', date('m', strtotime($request->month)))
+            ->whereYear('date', '=', date('Y', strtotime($request->month)));
+
+        $data = $query->get();
         return response()->json($data, Response::HTTP_OK);
     }
 

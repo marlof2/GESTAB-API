@@ -51,12 +51,16 @@ class EstablishmentService
     public function update($request, $id)
     {
         $data = $this->establishment->find($id);
+
         if (!$data) {
             return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
         }
-        $dataFrom = $request->all();
+
+        $request['cnpj'] = $this->removeCaracters($request->cnpj);
+        $request['cpf'] = $this->removeCaracters($request->cpf);
+        $request['phone'] = $this->removeCaracters($request->phone);
         try {
-            $data->update($dataFrom);
+            $data->update($request->all());
             return response()->json($data, Response::HTTP_OK);
         } catch (\Exception $e) {
             return response()->json(["message" => 'Não foi possível atualizar', "error" => $e], Response::HTTP_NOT_ACCEPTABLE);

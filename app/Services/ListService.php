@@ -82,7 +82,9 @@ class ListService
             $blockStart = Carbon::parse($blockCalendar->time_start);
             $blockEnd = Carbon::parse($blockCalendar->time_end);
 
-            if ($requestTime->between($blockStart, $blockEnd)) {
+            // Verifica se o horário solicitado está dentro do período bloqueado
+            // mas permite agendamento exatamente no horário final do bloqueio
+            if ($requestTime >= $blockStart && $requestTime < $blockEnd) {
                 throw new Exception(
                     "Não é possível agendar para o dia " . Carbon::parse($request->date)->format('d/m/Y') .
                     " às " . $requestTime->format('H:i') .

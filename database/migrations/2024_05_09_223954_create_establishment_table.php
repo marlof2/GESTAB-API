@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('cpf')->nullable();
             $table->string('cnpj')->nullable();
             $table->string('phone')->nullable();
+            $table->boolean('client_can_schedule')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
