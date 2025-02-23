@@ -29,7 +29,9 @@ class User extends Authenticatable
         'profile_id',
         'phone',
         "type_schedule",
-        "last_name"
+        "last_name",
+        "google_id",
+        "avatar"
     ];
 
     /**
@@ -81,5 +83,10 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new \App\Notifications\ForgotPasswordNotification($token, $this->name));
+    }
+
+    public function googleCalendarToken()
+    {
+        return $this->hasOne(GoogleCalendarToken::class);
     }
 }

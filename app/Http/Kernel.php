@@ -66,4 +66,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
     ];
+
+    protected $routeMiddleware = [
+        'google.token' => \App\Http\Middleware\CheckGoogleToken::class,
+    ];
 }

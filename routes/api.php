@@ -6,6 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\GoogleCalendarController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +32,23 @@ Route::post('/register', [UserController::class, 'store']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.reset');
 Route::post('/webhookMercadoPago', [App\Http\Controllers\PaymentController::class, 'webhookMercadoPago']);
+
+Route::prefix('google')->group(function () {
+    Route::get('/auth', [GoogleLoginController::class, 'redirect']);
+    Route::post('/callback', [GoogleLoginController::class, 'callback']);
+
+    Route::get('/calendar/auth', [GoogleAuthController::class, 'redirect']);
+    Route::post('/calendar/callback', [GoogleAuthController::class, 'callback']);
+});
+
+
+Route::prefix('combo')->group(function () {
+    Route::get('/establishimentsUser/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboEstablishimentsById']);
+    Route::get('/professionalByEstablishment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboProfessionalByEstablishment']);
+    Route::get('/servicesByEstablishment/{id}', [App\Http\Controllers\ServicesController::class, 'comboServicesByEstablishment']);
+    Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
+    // Route::get('/establishimentByResponsible/{id}', [App\Http\Controllers\EstablishmentController::class, 'establishimentByResponsible']);
+});
 
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -158,12 +178,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/', [App\Http\Controllers\BlockCalendarController::class, 'store']);
         Route::delete('/{id}', [App\Http\Controllers\BlockCalendarController::class, 'destroy']);
     });
-});
 
-Route::prefix('combo')->group(function () {
-    Route::get('/establishimentsUser/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboEstablishimentsById']);
-    Route::get('/professionalByEstablishment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboProfessionalByEstablishment']);
-    Route::get('/servicesByEstablishment/{id}', [App\Http\Controllers\ServicesController::class, 'comboServicesByEstablishment']);
-    Route::get('/userByEstablishiment/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'comboUserByEstablishiment']);
-    // Route::get('/establishimentByResponsible/{id}', [App\Http\Controllers\EstablishmentController::class, 'establishimentByResponsible']);
+    Route::prefix('google-calendar')->middleware(['google.token'])->group(function () {
+        // Route::get('/', [GoogleCalendarController::class, 'getEventsByUser']);
+        Route::post('/', [GoogleCalendarController::class, 'store']);
+        // Route::put('/{eventId}', [GoogleCalendarController::class, 'updateEvent']);
+        Route::delete('/{user_id}/{list_id}', [GoogleCalendarController::class, 'destroy']);
+    });
 });

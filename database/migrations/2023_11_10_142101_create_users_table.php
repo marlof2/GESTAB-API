@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('google_id')->nullable();
             $table->foreignId('profile_id')->constrained('profiles');
             $table->string('name');
             $table->string('cpf')->unique();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->char("type_schedule", 2)->nullable()->comment('Horario marcado (HM) ou ordem de chegada (OC)');
+            $table->string('avatar')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
