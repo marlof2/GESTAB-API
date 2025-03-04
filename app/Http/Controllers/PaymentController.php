@@ -124,7 +124,6 @@ class PaymentController extends Controller
             $payment = $payment['body'];
 
             $dataExternalReference = $this->extractIdsFromReference($payment->external_reference);
-            dd($dataExternalReference);
             // Processa o status do pagamento
             switch ($payment->status) {
                 case 'approved':
