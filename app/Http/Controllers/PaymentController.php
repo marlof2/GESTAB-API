@@ -75,16 +75,17 @@ class PaymentController extends Controller
 
             $item = $this->createItem($request);
 
-            // external_reference composto por establishment_id user_id plan_id exemplo: E_1_U_1_P_1
-            $external_reference = 'E_' . $request->establishment_id . '_U_' . $request->user()->id . '_P_' . $request->plan_id;
+            // external_reference composto por establishment_id user_id
+            //plan_id, quantity_professionals e remove_ads_client exemplo: E_1_U_1_P_1_Q_1_R_1
+            $external_reference = 'E_' . $request->establishment_id . '_U_' . $request->user()->id . '_P_' . $request->plan_id . '_Q_' . $request->quantity_professionals . '_R_' . $request->remove_ads_client;
 
-            $additional_info = [
-                'quantity_professionals' => $request->quantity_professionals,
-                'remove_ads_client' => $request->remove_ads_client,
-                'plan_id' => $request->plan_id,
-                'user_id' => $request->user()->id,
-                'establishment_id' => $request->establishment_id,
-            ];
+            // $additional_info = [
+            //     'quantity_professionals' => $request->quantity_professionals,
+            //     'remove_ads_client' => $request->remove_ads_client,
+            //     'plan_id' => $request->plan_id,
+            //     'user_id' => $request->user()->id,
+            //     'establishment_id' => $request->establishment_id,
+            // ];
 
             $preference = Preference::make()
                 ->setPayer($payer)
@@ -94,8 +95,9 @@ class PaymentController extends Controller
                     'gestab.app.scheme://',
                     'gestab.app.scheme://',
                 ))
-                ->setExternalReference($external_reference)
-                ->setAdditionalInfo(json_encode($additional_info));
+                ->setExternalReference($external_reference);
+            // ->setAdditionalInfo(json_encode($additional_info))
+            // ->setStatementDescriptor('GESTAB');
 
             $response = MercadoPago::preference()->create($preference);
 
@@ -121,26 +123,28 @@ class PaymentController extends Controller
             $payment = MercadoPago::payment()->find($paymentId);
             $payment = $payment['body'];
 
+            $dataExternalReference = $this->extractIdsFromReference($payment->external_reference);
+
             // Processa o status do pagamento
             switch ($payment->status) {
                 case 'approved':
                     // Pagamento aprovado - Libera o plano
-                    return $this->createPaymentMercadoPago($payment);
+                    return $this->createPaymentMercadoPago($payment, $dataExternalReference);
                     break;
 
                 case 'pending':
                     // Pagamento pendente
-                    return $this->createPaymentMercadoPago($payment);
+                    return $this->createPaymentMercadoPago($payment, $dataExternalReference);
                     break;
 
                 case 'rejected':
                     // Pagamento rejeitado
-                    return $this->createPaymentMercadoPago($payment);
+                    return $this->createPaymentMercadoPago($payment, $dataExternalReference);
                     break;
 
                 case 'cancelled':
                     // Pagamento cancelado
-                    return $this->createPaymentMercadoPago($payment);
+                    return $this->createPaymentMercadoPago($payment, $dataExternalReference);
                     break;
             }
 
@@ -155,42 +159,56 @@ class PaymentController extends Controller
         }
     }
 
-    // private function extractIdsFromReference(string $externalReference): array
-    // {
-    //     $parts = explode('_', $externalReference);
+    private function extractIdsFromReference(string $externalReference): array
+    {
+        $parts = explode('_', $externalReference);
 
-    //     // Encontra o índice do identificador do usuário
-    //     $userIndex = array_search('U', $parts);
-    //     if ($userIndex === false || !isset($parts[$userIndex + 1])) {
-    //         throw new \InvalidArgumentException('Referência externa inválida: ID do usuário não encontrado');
-    //     }
+        // Encontra o índice do identificador do usuário
+        $userIndex = array_search('U', $parts);
+        if ($userIndex === false || !isset($parts[$userIndex + 1])) {
+            throw new \InvalidArgumentException('Referência externa inválida: ID do usuário não encontrado');
+        }
 
-    //     // Encontra o índice do plano
-    //     $planIndex = array_search('P', $parts);
-    //     if ($planIndex === false || !isset($parts[$planIndex + 1])) {
-    //         throw new \InvalidArgumentException('Referência externa inválida: ID do plano não encontrado');
-    //     }
+        // Encontra o índice do plano
+        $planIndex = array_search('P', $parts);
+        if ($planIndex === false || !isset($parts[$planIndex + 1])) {
+            throw new \InvalidArgumentException('Referência externa inválida: ID do plano não encontrado');
+        }
 
-    //     // Encontra o estabelecimento
-    //     $establishmentIndex = array_search('E', $parts);
-    //     if ($establishmentIndex === false || !isset($parts[$establishmentIndex + 1])) {
-    //         throw new \InvalidArgumentException('Referência externa inválida: ID do estabelecimento não encontrado');
-    //     }
+        // Encontra o estabelecimento
+        $establishmentIndex = array_search('E', $parts);
+        if ($establishmentIndex === false || !isset($parts[$establishmentIndex + 1])) {
+            throw new \InvalidArgumentException('Referência externa inválida: ID do estabelecimento não encontrado');
+        }
 
-    //     return [
-    //         'user_id' => (int) $parts[$userIndex + 1],
-    //         'plan_id' => (int) $parts[$planIndex + 1],
-    //         'establishment_id' => (int) $parts[$establishmentIndex + 1],
-    //     ];
-    // }
+        $quantityProfessionalsIndex = array_search('Q', $parts);
+        if ($quantityProfessionalsIndex === false || !isset($parts[$quantityProfessionalsIndex + 1])) {
+            throw new \InvalidArgumentException('Referência externa inválida: Quantidade de profissionais não encontrada');
+        }
 
-    private function createPaymentMercadoPago(object $payment)
+        $removeAdsClientIndex = array_search('R', $parts);
+        if ($removeAdsClientIndex === false || !isset($parts[$removeAdsClientIndex + 1])) {
+            throw new \InvalidArgumentException('Referência externa inválida: Remover anúncios não encontrada');
+        }
+
+
+
+
+        return [
+            'user_id' => (int) $parts[$userIndex + 1],
+            'plan_id' => (int) $parts[$planIndex + 1],
+            'establishment_id' => (int) $parts[$establishmentIndex + 1],
+            'quantity_professionals' => (int) $parts[$quantityProfessionalsIndex + 1],
+            'remove_ads_client' => (int) $parts[$removeAdsClientIndex + 1],
+        ];
+    }
+
+    private function createPaymentMercadoPago(object $payment, array $dataExternalReference)
     {
         try {
-            $additional_info = json_decode($payment->additional_info);
-            $subscriptionDates = $this->calculateSubscriptionDates($additional_info->plan_id);
+            $subscriptionDates = $this->calculateSubscriptionDates($dataExternalReference['plan_id']);
 
-            return $this->saveOrUpdatePayment($payment, $additional_info, $subscriptionDates);
+            return $this->saveOrUpdatePayment($payment, $dataExternalReference, $subscriptionDates);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -210,20 +228,20 @@ class PaymentController extends Controller
         ];
     }
 
-    private function saveOrUpdatePayment(object $payment, $additional_info, array $subscriptionDates)
+    private function saveOrUpdatePayment(object $payment, array $dataExternalReference, array $subscriptionDates)
     {
         $existingPayment = Payment::where('payment_id', $payment->id)
-            ->where('establishment_id', $additional_info->establishment_id)
+            ->where('establishment_id', $dataExternalReference['establishment_id'])
             ->first();
 
         if ($existingPayment) {
-            return $this->updateExistingPayment($existingPayment, $additional_info, $payment, $subscriptionDates);
+            return $this->updateExistingPayment($existingPayment, $dataExternalReference, $payment, $subscriptionDates);
         }
 
-        return $this->createNewPayment($payment, $additional_info, $subscriptionDates);
+        return $this->createNewPayment($payment, $dataExternalReference, $subscriptionDates);
     }
 
-    private function updateExistingPayment(Payment $existingPayment, $additional_info, object $payment, array $subscriptionDates)
+    private function updateExistingPayment(Payment $existingPayment, array $dataExternalReference, object $payment, array $subscriptionDates)
     {
         $existingPayment->update([
             'status' => $payment->status,
@@ -231,29 +249,28 @@ class PaymentController extends Controller
             'payment_method' => $payment->payment_type_id,
             'subscription_start' => $payment->status === 'approved' ? $subscriptionDates['start'] : null,
             'subscription_end' => $payment->status === 'approved' ? $subscriptionDates['end'] : null,
-            'quantity_professionals' => $additional_info->quantity_professionals,
-            'remove_ads_client' => $additional_info->remove_ads_client,
+            'quantity_professionals' => $dataExternalReference['quantity_professionals'],
+            'remove_ads_client' => $dataExternalReference['remove_ads_client'],
         ]);
 
         return response()->json(['message' => 'Status do pagamento atualizado com sucesso']);
     }
 
-    private function createNewPayment(object $payment, $additional_info, array $subscriptionDates)
+    private function createNewPayment(object $payment, array $dataExternalReference, array $subscriptionDates)
     {
 
-        $additional_info = json_decode($payment->additional_info);
         Payment::create([
-            'user_id' => $additional_info->user_id,
-            'establishment_id' => $additional_info->establishment_id,
+            'user_id' => $dataExternalReference['user_id'],
+            'establishment_id' => $dataExternalReference['establishment_id'],
             'payment_id' => $payment->id,
             'amount' => $payment->transaction_amount,
             'status' => $payment->status,
             'payment_method' => $payment->payment_method_id,
             'preference_id' => $payment->collector_id,
             'external_reference' => $payment->external_reference,
-            'plan_id' => $additional_info->plan_id,
-            'quantity_professionals' => $additional_info->quantity_professionals,
-            'remove_ads_client' => $additional_info->remove_ads_client,
+            'plan_id' => $dataExternalReference['plan_id'],
+            'quantity_professionals' => $dataExternalReference['quantity_professionals'],
+            'remove_ads_client' => $dataExternalReference['remove_ads_client'],
             'subscription_start' => $payment->status === 'approved' ? $subscriptionDates['start'] : null,
             'subscription_end' => $payment->status === 'approved' ? $subscriptionDates['end'] : null,
         ]);
