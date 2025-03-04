@@ -75,9 +75,10 @@ class PaymentController extends Controller
 
             $item = $this->createItem($request);
 
+            $removeClient = $request->remove_ads_client ? 1 : 0;
             // external_reference composto por establishment_id user_id
             //plan_id, quantity_professionals e remove_ads_client exemplo: E_1_U_1_P_1_Q_1_R_1
-            $external_reference = 'ESTAB_' . $request->establishment_id . '_USER_' . $request->user()->id . '_PLAN_' . $request->plan_id . '_QTD_' . $request->quantity_professionals . '_REM_CLI' . $request->remove_ads_client . '_PER_' . $request->payment_period;
+            $external_reference = 'ESTAB_' . $request->establishment_id . '_USER_' . $request->user()->id . '_PLAN_' . $request->plan_id . '_QTD_' . $request->quantity_professionals . '_REM_CLI_' . $removeClient . '_PER_' . $request->payment_period;
 
             // $additional_info = [
             //     'quantity_professionals' => $request->quantity_professionals,
@@ -257,6 +258,7 @@ class PaymentController extends Controller
             'subscription_end' => $payment->status === 'approved' ? $subscriptionDates['end'] : null,
             'quantity_professionals' => $dataExternalReference['quantity_professionals'],
             'remove_ads_client' => $dataExternalReference['remove_ads_client'],
+            'period' => $dataExternalReference['payment_period'],
         ]);
 
         return response()->json(['message' => 'Status do pagamento atualizado com sucesso']);
@@ -277,6 +279,7 @@ class PaymentController extends Controller
             'plan_id' => $dataExternalReference['plan_id'],
             'quantity_professionals' => $dataExternalReference['quantity_professionals'],
             'remove_ads_client' => $dataExternalReference['remove_ads_client'],
+            'period' => $dataExternalReference['payment_period'],
             'subscription_start' => $payment->status === 'approved' ? $subscriptionDates['start'] : null,
             'subscription_end' => $payment->status === 'approved' ? $subscriptionDates['end'] : null,
         ]);

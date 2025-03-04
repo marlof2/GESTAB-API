@@ -24,6 +24,7 @@ class Payment extends Model
         'subscription_end',
         'quantity_professionals',
         'remove_ads_client',
+        'period',
     ];
 
     protected $casts = [
