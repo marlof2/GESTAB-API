@@ -59,4 +59,9 @@ class EstablishmentUserController extends Controller
     {
         return $this->establishment_user_service->comboUserByEstablishiment($id);
     }
+
+    public function updateHavePlanEstablishment(Request $request, $id)
+    {
+        return $this->establishment_user_service->updateHavePlanEstablishment($request, $id);
+    }
 }

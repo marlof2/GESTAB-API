@@ -38,6 +38,7 @@ class Establishment extends Model
         return $this->hasOne(User::class, 'id', 'responsible_id')->select("id", "name");
     }
 
+    //só pega o último pagamento aprovado
     public function payment()
     {
         return $this->hasOne(Payment::class, 'establishment_id', 'id')

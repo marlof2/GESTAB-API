@@ -8,13 +8,9 @@ class EstablishmentUser extends Model
 {
     protected $table = "establishment_user";
     protected $guarded = ["id"];
-    protected $fillable = ["user_id","establishment_id","created_by_functionality"];
+    protected $fillable = ["user_id","establishment_id","created_by_functionality","have_plan_establishment"];
     protected $hidden = ["created_at", "updated_at"];
 
-    // public function establishment()
-    // {
-    //     return $this->hasMany(Establishment::class, "id", "user_id");
-    // }
 
     public function establishment_user()
     {

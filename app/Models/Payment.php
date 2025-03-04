@@ -22,6 +22,8 @@ class Payment extends Model
         'external_reference',
         'subscription_start',
         'subscription_end',
+        'quantity_professionals',
+        'remove_ads_client',
     ];
 
     protected $casts = [

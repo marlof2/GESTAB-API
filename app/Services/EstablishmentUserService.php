@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Establishment;
 use Illuminate\Http\Response;
 use App\Models\EstablishmentUser;
+use App\Models\Payment;
 use App\Models\User;
 
 class EstablishmentUserService
@@ -25,7 +26,7 @@ class EstablishmentUserService
             ->where('created_by_functionality', $request->created_by_functionality)
             ->select('users.id as user_id', 'establishment_user.*')
             ->join('users', 'users.id', '=', 'establishment_user.user_id')
-            ->with("user")
+            ->with("user", "establishment_user.payment:id,establishment_id,quantity_professionals,status")
             ->orderBy('users.name');
 
         if ($request->filled('search')) {
@@ -140,14 +141,14 @@ class EstablishmentUserService
 
     public function comboEstablishimentsById($id)
     {
-        $data = $this->establishment_user->where('created_by_functionality','ME')->with('establishments')->where('user_id', $id)->get();
+        $data = $this->establishment_user->where('created_by_functionality', 'ME')->with('establishments')->where('user_id', $id)->get();
 
         return response()->json($data, Response::HTTP_OK);
     }
 
     public function comboProfessionalByEstablishment($id)
     {
-        $data = $this->establishment_user->where('created_by_functionality','EP')->whereRelation('user', 'profile_id', '=', 3)->with('user')->where('establishment_id', $id)->get();
+        $data = $this->establishment_user->where('created_by_functionality', 'EP')->whereRelation('user', 'profile_id', '=', 3)->with('user')->where('establishment_id', $id)->get();
 
         return response()->json($data, Response::HTTP_OK);
     }
@@ -160,5 +161,34 @@ class EstablishmentUserService
         return response()->json($data, Response::HTTP_OK);
     }
 
+    public function updateHavePlanEstablishment($request, $id)
+    {
+        $data = $this->establishment_user->find($id);
+        if (!$data) {
+            return response()->json(['error' => 'Dados não encontrados'], Response::HTTP_NOT_FOUND);
+        }
 
+        $payment = Payment::find($request->payment_id);
+
+        // Se estiver tentando ativar o profissional
+        if ($request->have_plan_establishment) {
+            // Conta quantos profissionais já têm plano ativo neste estabelecimento
+            $profissionaisComPlano = $this->establishment_user
+                ->where('establishment_id', $data->establishment_id)
+                ->where('have_plan_establishment', true)
+                ->count();
+
+            // Se já atingiu o limite de profissionais permitidos no plano
+            if ($profissionaisComPlano >= $payment->quantity_professionals) {
+                return response()->json([
+                    'error' => ['Limite de profissionais atingido para este plano do estabelecimento | limite: ' . $payment->quantity_professionals]
+                ], Response::HTTP_NOT_ACCEPTABLE);
+            }
+        }
+
+        $data->have_plan_establishment = $request->have_plan_establishment;
+        $data->save();
+
+        return response()->json($data, Response::HTTP_OK);
+    }
 }
