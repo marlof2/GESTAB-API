@@ -78,8 +78,7 @@ class PaymentController extends Controller
             $removeClient = $request->remove_ads_client ? 1 : 0;
             // external_reference composto por establishment_id user_id
             //plan_id, quantity_professionals e remove_ads_client exemplo: E_1_U_1_P_1_Q_1_R_1
-            $external_reference = 'ESTAB_' . $request->establishment_id . '_USER_' . $request->user()->id . '_PLAN_' . $request->plan_id . '_QTD_' . $request->quantity_professionals . '_REM_CLI_' . $removeClient . '_PER_' . $request->payment_period;
-
+            $external_reference = 'ESTAB_' . $request->establishment_id . '_USER_' . $request->user()->id . '_PLAN_' . $request->plan_id . '_QTD_' . $request->quantity_professionals . '_REMCLI_' . $removeClient . '_PER_' . $request->payment_period;
             // $additional_info = [
             //     'quantity_professionals' => $request->quantity_professionals,
             //     'remove_ads_client' => $request->remove_ads_client,
@@ -187,7 +186,7 @@ class PaymentController extends Controller
             throw new \InvalidArgumentException('Referência externa inválida: Quantidade de profissionais não encontrada');
         }
 
-        $removeAdsClientIndex = array_search('REM_CLI', $parts);
+        $removeAdsClientIndex = array_search('REMCLI', $parts);
         if ($removeAdsClientIndex === false || !isset($parts[$removeAdsClientIndex + 1])) {
             throw new \InvalidArgumentException('Referência externa inválida: Remover anúncios não encontrada');
         }
