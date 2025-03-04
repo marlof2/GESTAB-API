@@ -77,7 +77,7 @@ class PaymentController extends Controller
 
             // external_reference composto por establishment_id user_id
             //plan_id, quantity_professionals e remove_ads_client exemplo: E_1_U_1_P_1_Q_1_R_1
-            $external_reference = 'E_' . $request->establishment_id . '_U_' . $request->user()->id . '_P_' . $request->plan_id . '_Q_' . $request->quantity_professionals . '_R_' . $request->remove_ads_client;
+            $external_reference = 'ESTAB_' . $request->establishment_id . '_USER_' . $request->user()->id . '_PLAN_' . $request->plan_id . '_QTD_' . $request->quantity_professionals . '_REM_CLI' . $request->remove_ads_client . '_PER_' . $request->payment_period;
 
             // $additional_info = [
             //     'quantity_professionals' => $request->quantity_professionals,
@@ -164,31 +164,36 @@ class PaymentController extends Controller
         $parts = explode('_', $externalReference);
 
         // Encontra o índice do identificador do usuário
-        $userIndex = array_search('U', $parts);
+        $userIndex = array_search('USER', $parts);
         if ($userIndex === false || !isset($parts[$userIndex + 1])) {
             throw new \InvalidArgumentException('Referência externa inválida: ID do usuário não encontrado');
         }
 
         // Encontra o índice do plano
-        $planIndex = array_search('P', $parts);
+        $planIndex = array_search('PLAN', $parts);
         if ($planIndex === false || !isset($parts[$planIndex + 1])) {
             throw new \InvalidArgumentException('Referência externa inválida: ID do plano não encontrado');
         }
 
         // Encontra o estabelecimento
-        $establishmentIndex = array_search('E', $parts);
+        $establishmentIndex = array_search('ESTAB', $parts);
         if ($establishmentIndex === false || !isset($parts[$establishmentIndex + 1])) {
             throw new \InvalidArgumentException('Referência externa inválida: ID do estabelecimento não encontrado');
         }
 
-        $quantityProfessionalsIndex = array_search('Q', $parts);
+        $quantityProfessionalsIndex = array_search('QTD', $parts);
         if ($quantityProfessionalsIndex === false || !isset($parts[$quantityProfessionalsIndex + 1])) {
             throw new \InvalidArgumentException('Referência externa inválida: Quantidade de profissionais não encontrada');
         }
 
-        $removeAdsClientIndex = array_search('R', $parts);
+        $removeAdsClientIndex = array_search('REM_CLI', $parts);
         if ($removeAdsClientIndex === false || !isset($parts[$removeAdsClientIndex + 1])) {
             throw new \InvalidArgumentException('Referência externa inválida: Remover anúncios não encontrada');
+        }
+
+        $paymentPeriodIndex = array_search('PER', $parts);
+        if ($paymentPeriodIndex === false || !isset($parts[$paymentPeriodIndex + 1])) {
+            throw new \InvalidArgumentException('Referência externa inválida: Período de pagamento não encontrado');
         }
 
 
@@ -200,13 +205,14 @@ class PaymentController extends Controller
             'establishment_id' => (int) $parts[$establishmentIndex + 1],
             'quantity_professionals' => (int) $parts[$quantityProfessionalsIndex + 1],
             'remove_ads_client' => (int) $parts[$removeAdsClientIndex + 1],
+            'payment_period' => (int) $parts[$paymentPeriodIndex + 1],
         ];
     }
 
     private function createPaymentMercadoPago(object $payment, array $dataExternalReference)
     {
         try {
-            $subscriptionDates = $this->calculateSubscriptionDates($dataExternalReference['plan_id']);
+            $subscriptionDates = $this->calculateSubscriptionDates($dataExternalReference['payment_period']);
 
             return $this->saveOrUpdatePayment($payment, $dataExternalReference, $subscriptionDates);
         } catch (\Exception $e) {
@@ -214,11 +220,11 @@ class PaymentController extends Controller
         }
     }
 
-    private function calculateSubscriptionDates(int $planId): array
+    private function calculateSubscriptionDates(string $paymentPeriod): array
     {
         $subscriptionStart = now();
 
-        $subscriptionEnd = $planId === 1
+        $subscriptionEnd = $paymentPeriod === 'monthly'
             ? $subscriptionStart->copy()->addMonth()
             : $subscriptionStart->copy()->addYear()->addMonth();
 
