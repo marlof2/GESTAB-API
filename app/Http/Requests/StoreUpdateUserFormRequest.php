@@ -71,11 +71,10 @@ class StoreUpdateUserFormRequest extends FormRequest
 	public function patch()
 	{
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'string|max:255',
             'phone' => 'required|string|max:15',
             'type_schedule' => 'nullable|string|size:2',
             'email' => [
-                'required',
                 'string',
                 'email',
                 'max:255',
