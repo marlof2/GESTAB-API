@@ -129,7 +129,7 @@ final class GoogleLoginController extends Controller
             $token = $user->createToken('AccessToken', $abilities)->plainTextToken;
 
             // Redireciona para o app sem rota específica
-            return redirect('com.marlof2.gestab://' . '?' . http_build_query([
+            return redirect('com.marlof2.gestab://?' . http_build_query([
                 'token' => $token,
                 'needsProfileCompletion' => !$existingUser,
                 'message' => 'Login realizado com sucesso'
