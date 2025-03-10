@@ -128,15 +128,15 @@ final class GoogleLoginController extends Controller
 
             $token = $user->createToken('AccessToken', $abilities)->plainTextToken;
 
-            // Redireciona para o app com URL em lowercase
-            return redirect('com.marlof2.gestab://signin?' . http_build_query([
+            // Redireciona para o app
+            return redirect('com.marlof2.gestab://SignIn?' . http_build_query([
                 'token' => $token,
-                'needsProfileCompletion' => !$existingUser ? 'true' : 'false', // Convertendo para string
+                'needsProfileCompletion' => !$existingUser,
                 'message' => 'Login realizado com sucesso'
             ]));
         } catch (\Exception $e) {
-            // Em caso de erro, redireciona com URL em lowercase
-            return redirect('com.marlof2.gestab://signin?error=' . urlencode($e->getMessage()));
+            // Em caso de erro, redireciona com mensagem de erro
+            return redirect('com.marlof2.gestab://SignIn?error=' . urlencode($e->getMessage()));
         }
     }
 }
