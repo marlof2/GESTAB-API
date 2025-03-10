@@ -35,7 +35,7 @@ Route::post('/webhookMercadoPago', [App\Http\Controllers\PaymentController::clas
 
 Route::prefix('google')->group(function () {
     Route::get('/auth', [GoogleLoginController::class, 'redirect']);
-    Route::post('/callback', [GoogleLoginController::class, 'callback']);
+    Route::get('/callback', [GoogleLoginController::class, 'callback']);
 
     Route::get('/calendar/auth', [GoogleAuthController::class, 'redirect']);
     Route::post('/calendar/callback', [GoogleAuthController::class, 'callback']);
