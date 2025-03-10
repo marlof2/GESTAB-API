@@ -91,7 +91,7 @@ final class GoogleLoginController extends Controller
             $result = $this->googleService->handleCallback($request->code);
 
             if (!$result['success']) {
-                return redirect('seuapp://signin?error=' . urlencode($result['message']));
+                return redirect('com.marlof2.gestab://signin?error=' . urlencode($result['message']));
             }
 
             // Verifica se o usuário já existe
@@ -129,14 +129,14 @@ final class GoogleLoginController extends Controller
             $token = $user->createToken('AccessToken', $abilities)->plainTextToken;
 
             // Redireciona para o app
-            return redirect('gestab://signin?' . http_build_query([
+            return redirect('com.marlof2.gestab://signin?' . http_build_query([
                 'token' => $token,
                 'needsProfileCompletion' => !$existingUser,
                 'message' => 'Login realizado com sucesso'
             ]));
         } catch (\Exception $e) {
             // Em caso de erro, redireciona com mensagem de erro
-            return redirect('gestab://signin?error=' . urlencode($e->getMessage()));
+            return redirect('com.marlof2.gestab://signin?error=' . urlencode($e->getMessage()));
         }
     }
 }
