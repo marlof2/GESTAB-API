@@ -128,19 +128,15 @@ final class GoogleLoginController extends Controller
 
             $token = $user->createToken('AccessToken', $abilities)->plainTextToken;
 
-            // Construir a URL de redirecionamento com todos os parâmetros
-            $redirectUrl = 'seuapp://signin?' . http_build_query([
-                'status' => 'success',
+            // Redireciona para o app
+            return redirect('gestab://signin?' . http_build_query([
                 'token' => $token,
                 'needsProfileCompletion' => !$existingUser,
                 'message' => 'Login realizado com sucesso'
-            ]);
-
-            // Redireciona para o app
-            return redirect($redirectUrl);
+            ]));
         } catch (\Exception $e) {
             // Em caso de erro, redireciona com mensagem de erro
-            return redirect('seuapp://signin?error=' . urlencode($e->getMessage()));
+            return redirect('gestab://signin?error=' . urlencode($e->getMessage()));
         }
     }
 }
