@@ -104,7 +104,8 @@ final class GoogleLoginController extends Controller
                     'email' => $result['user']['email'],
                     'name' => $result['user']['name'],
                     'google_id' => $result['user']['google_id'],
-                    'avatar' => $result['user']['picture']
+                    'avatar' => $result['user']['picture'],
+                    'profile_id' => 2
                 ]);
             } else {
                 $user->update([
