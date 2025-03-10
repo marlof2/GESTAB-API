@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('payment_method')->nullable();
             $table->integer('quantity_professionals')->nullable();
             $table->boolean('remove_ads_client')->default(false);
+            $table->string('period')->nullable();
             $table->json('metadata')->nullable();
             $table->timestamp('subscription_start')->nullable();
             $table->timestamp('subscription_end')->nullable();

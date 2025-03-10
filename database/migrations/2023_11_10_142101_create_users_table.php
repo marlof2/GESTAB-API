@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('google_id')->nullable();
             $table->foreignId('profile_id')->constrained('profiles');
-            $table->string('name');
-            $table->string('cpf')->unique();
-            $table->string('phone');
+            $table->string('name')->nullable();
+            $table->string('cpf')->unique()->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->char("type_schedule", 2)->nullable()->comment('Horario marcado (HM) ou ordem de chegada (OC)');
+            $table->boolean('need_profile_complete')->default(false);
             $table->string('avatar')->nullable();
             $table->timestamps();
             $table->softDeletes();

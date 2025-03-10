@@ -31,7 +31,8 @@ class User extends Authenticatable
         "type_schedule",
         "last_name",
         "google_id",
-        "avatar"
+        "avatar",
+        "need_profile_complete"
     ];
 
     /**
