@@ -135,7 +135,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/associationClientAndEstablishment', [App\Http\Controllers\EstablishmentUserController::class, 'associationClientAndEstablishment'])->middleware('abilities:establishmentuser_insert');
         Route::get('/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
         Route::put('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'update'])->middleware('abilities:establishmentuser_edit');
-        Route::put('/change-plan/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'updateHavePlanEstablishment'])->middleware('abilities:establishmentuser_edit');
         Route::delete('/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'destroy'])->middleware('abilities:establishmentuser_delete');
     });
 
@@ -169,7 +168,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('payments')->group(function () {
         Route::get('status/{id}', [App\Http\Controllers\PaymentController::class, 'show']);
-        Route::post('/createPreference', [App\Http\Controllers\PaymentController::class, 'createPreference']);
+        Route::get('/createPreference', [App\Http\Controllers\PaymentController::class, 'createPreference']);
         Route::get('/hasActivePayment/{establishment_id}', [App\Http\Controllers\PaymentController::class, 'hasActivePayment']);
     });
 
