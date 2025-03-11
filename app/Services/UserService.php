@@ -167,11 +167,6 @@ class UserService
                 ], 401);
             }
 
-            if (!Hash::check($request->senhaAntiga, $user->password)) {
-                return response([
-                    'message' => 'Senha antiga inválida.'
-                ], 401);
-            }
 
             if ($request->senhaNova != $request->confirmaSenhaNova) {
                 return response([
