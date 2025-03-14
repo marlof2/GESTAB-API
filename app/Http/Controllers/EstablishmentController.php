@@ -55,8 +55,8 @@ class EstablishmentController extends Controller
         return $this->establishment_service->establishimentByResponsible($id);
     }
 
-    public function checkPaymentActive($id)
+    public function checkPaymentActive($establishment_id, $user_id)
     {
-        return $this->establishment_service->checkPaymentActive($id);
+        return $this->establishment_service->checkPaymentActive($establishment_id, $user_id);
     }
 }

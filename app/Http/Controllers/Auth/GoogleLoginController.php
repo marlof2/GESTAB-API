@@ -24,63 +24,6 @@ final class GoogleLoginController extends Controller
         ]);
     }
 
-    // public function callback(Request $request): JsonResponse
-    // {
-    //     $request->validate([
-    //         'code' => 'required|string'
-    //     ]);
-
-    //     $result = $this->googleService->handleCallback($request->code);
-
-    //     if (!$result['success']) {
-    //         return response()->json([
-    //             'message' => $result['message']
-    //         ], 400);
-    //     }
-
-    //     // Verifica se o usuário já existe
-    //     $existingUser = User::where('email', $result['user']['email'])->first();
-
-    //     $user = $existingUser;
-    //     if (!$existingUser) {
-    //         // Se não existe, cria um novo usuário
-    //         $user = User::create([
-    //             'email' => $result['user']['email'],
-    //             'name' => $result['user']['name'],
-    //             'google_id' => $result['user']['google_id'],
-    //             'avatar' => $result['user']['picture']
-    //         ]);
-    //     }else{
-    //         $user->update([
-    //             'google_id' => $result['user']['google_id'],
-    //             'avatar' => $result['user']['picture']
-    //         ]);
-    //     }
-
-    //     // Remove tokens antigos
-    //     $user->tokens()->delete();
-
-    //     // Inicializa array de abilities
-    //     $abilities = [];
-
-    //     // Verifica se o usuário tem perfil e abilities antes de acessá-los
-    //     if ($user->profile && $user->profile->abilities) {
-    //         foreach ($user->profile->abilities as $ability) {
-    //             $abilities[] = $ability->slug;
-    //         }
-    //     }
-
-    //     $token = $user->createToken('AccessToken', $abilities)->plainTextToken;
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => 'Login realizado com sucesso',
-    //         // 'user' => $user,
-    //         'needsProfileCompletion' => !$existingUser,
-    //         'token' => $token
-    //     ], 200);
-    // }
-
     public function callback(Request $request)
     {
         try {

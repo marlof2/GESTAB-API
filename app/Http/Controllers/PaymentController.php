@@ -50,7 +50,8 @@ class PaymentController extends Controller
             ->setUnitPrice(1)
             // ->setUnitPrice($request->amount)
             ->setDescription("Plano de assinatura")
-            ->setPictureUrl('https://www.mercadopago.com/org-img/MP3/home/logomp3.gif')
+            // ->setPictureUrl('https://www.mercadopago.com/org-img/MP3/home/logomp3.gif')
+            ->setPictureUrl(public_path('gestab.jpg'))
             ->setCategoryId($request->payment_period);
     }
 
@@ -91,9 +92,9 @@ class PaymentController extends Controller
                 ->setPayer($payer)
                 ->addItem($item)
                 ->setBackUrls(new BackUrls(
-                    'gestab.app.scheme://',
-                    'gestab.app.scheme://',
-                    'gestab.app.scheme://',
+                    'com.marlof2.gestab://Plans?',
+                    'com.marlof2.gestab://Plans?',
+                    'com.marlof2.gestab://Plans?',
                 ))
                 ->setExternalReference($external_reference);
             // ->setAdditionalInfo(json_encode($additional_info))

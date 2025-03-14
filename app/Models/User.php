@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(GoogleCalendarToken::class);
     }
+
+    public function establishmentUser()
+    {
+        return $this->hasOne(EstablishmentUser::class);
+    }
 }

@@ -38,7 +38,7 @@ Route::prefix('google')->group(function () {
     Route::get('/callback', [GoogleLoginController::class, 'callback']);
 
     Route::get('/calendar/auth', [GoogleAuthController::class, 'redirect']);
-    Route::post('/calendar/callback', [GoogleAuthController::class, 'callback']);
+    Route::get('/calendar/callback', [GoogleAuthController::class, 'callback']);
 });
 
 
@@ -104,7 +104,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::put('/{id}', [App\Http\Controllers\EstablishmentController::class, 'update'])->middleware('abilities:establishment_edit');
         Route::delete('/{id}', [App\Http\Controllers\EstablishmentController::class, 'destroy'])->middleware('abilities:establishment_delete');
         Route::patch('/{id}', [App\Http\Controllers\EstablishmentController::class, 'restore'])->middleware('abilities:establishment_delete');
-        Route::get('/checkPaymentActive/{id}', [App\Http\Controllers\EstablishmentController::class, 'checkPaymentActive'])->middleware('abilities:establishment_by_id');
+        Route::get('/checkPaymentActive/{establishment_id}/{user_id}', [App\Http\Controllers\EstablishmentController::class, 'checkPaymentActive'])->middleware('abilities:establishment_by_id');
     });
 
     Route::prefix('services')->group(function () {
@@ -131,6 +131,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('establishment_user')->group(function () {
         Route::get('user_by_establishment/{establishment_id}', [App\Http\Controllers\EstablishmentUserController::class, 'index'])->middleware('abilities:establishmentuser_list');
         Route::get('establishment_by_user/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'establishimentByUser'])->middleware('abilities:establishmentuser_list');
+        Route::put('/change-plan/{id}', [App\Http\Controllers\EstablishmentUserController::class, 'updateHavePlanEstablishment'])->middleware('abilities:establishmentuser_edit');
         Route::post('/associationProfessionalAndEstablishment', [App\Http\Controllers\EstablishmentUserController::class, 'associationProfessionalAndEstablishment'])->middleware('abilities:establishmentuser_insert');
         Route::post('/associationClientAndEstablishment', [App\Http\Controllers\EstablishmentUserController::class, 'associationClientAndEstablishment'])->middleware('abilities:establishmentuser_insert');
         Route::get('/{user_id}', [App\Http\Controllers\EstablishmentUserController::class, 'show'])->middleware('abilities:establishmentuser_by_id');
@@ -168,7 +169,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('payments')->group(function () {
         Route::get('status/{id}', [App\Http\Controllers\PaymentController::class, 'show']);
-        Route::get('/createPreference', [App\Http\Controllers\PaymentController::class, 'createPreference']);
+        Route::post('/createPreference', [App\Http\Controllers\PaymentController::class, 'createPreference']);
         Route::get('/hasActivePayment/{establishment_id}', [App\Http\Controllers\PaymentController::class, 'hasActivePayment']);
     });
 

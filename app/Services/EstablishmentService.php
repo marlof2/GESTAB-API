@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Http\Response;
 use App\Models\Establishment;
+use App\Models\EstablishmentUser;
+use App\Models\User;
 
 class EstablishmentService
 {
@@ -142,19 +144,60 @@ class EstablishmentService
         }
     }
 
-    public function checkPaymentActive($id)
+    public function checkPaymentActive($establishment_id, $user_id)
     {
-        $establishment = $this->establishment->with('payment')->find($id);
+        $establishment = $this->establishment->with('payment')->find($establishment_id);
 
-        // Verifica se o establishment existe e tem um payment relacionado
-        if (!$establishment || !$establishment->payment) {
+        $user = User::find($user_id);
+
+        $existsProfessionalInPlan = EstablishmentUser::where('establishment_id', $establishment_id)
+            ->where('user_id', $user_id)
+            ->where('created_by_functionality', 'EP')
+            ->where('have_plan_establishment', 1)
+            ->exists();
+
+        // caso entre é pq é um profissional e está em um plano
+        if ($existsProfessionalInPlan && $user->profile_id == 3) {
+            if (isset($establishment->payment)) { //profissional
+                return response()->json([
+                    'isActive' => $establishment->payment->isActive(),
+                    'userInPlan' => true,
+                    'remove_ads_client' => $establishment->payment->remove_ads_client ? true : false
+                ], Response::HTTP_OK);
+            }
+        } else if (!$existsProfessionalInPlan && $user->profile_id == 3) {
             return response()->json([
-                'isActive' => false
+                'isActive' => isset($establishment->payment) ? $establishment->payment->isActive() : false,
+                'userInPlan' => false,
+                'remove_ads_client' => isset($establishment->payment) ? $establishment->payment->remove_ads_client : 0
             ], Response::HTTP_OK);
         }
 
-        return response()->json([
-            'isActive' => $establishment->payment->isActive()
-        ], Response::HTTP_OK);
+
+        // caso não encontrou um profissional é um cliente
+        if (!$existsProfessionalInPlan && $user->profile_id == 2) {
+            if (isset($establishment->payment) && $establishment->payment->remove_ads_client) { //profissional
+                return response()->json([
+                    'isActive' => isset($establishment->payment) ? $establishment->payment->isActive() : false,
+                    'userInPlan' => true,
+                    'remove_ads_client' => true
+                ], Response::HTTP_OK);
+            } else {
+                return response()->json([
+                    'isActive' => isset($establishment->payment) ? $establishment->payment->isActive() : false,
+                    'userInPlan' => false,
+                    'remove_ads_client' => false
+                ], Response::HTTP_OK);
+            }
+        }
+
+        if ($user->profile_id == 1) {
+
+            return response()->json([
+                'isActive' => true,
+                'userInPlan' => true,
+                'remove_ads_client' => true
+            ], Response::HTTP_OK);
+        }
     }
 }
