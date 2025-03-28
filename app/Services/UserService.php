@@ -94,8 +94,7 @@ class UserService
 
     public function login($request)
     {
-        $request['cpf'] = preg_replace('/[^0-9]/', '', $request->cpf);
-        $user = $this->user->where('cpf', $request->cpf)->first();
+        $user = $this->user->where('email', $request->email)->first();
 
         if (!$user) {
             return response()->json(['message' => 'Usuario não encontrado na base de dados.'], Response::HTTP_NOT_FOUND);
@@ -141,7 +140,6 @@ class UserService
 
         $abilitiesAux = $abilities->pluck('abilities');
 
-        // $abilitiesAux = base64_encode(Crypt::encryptString($abilitiesAux));
 
         $data['abilities'] = $abilitiesAux;
         $data['user'] = $request->user()->with('profile')->whereId($request->user()->id)->first();

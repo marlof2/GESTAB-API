@@ -31,8 +31,6 @@ class BlockCalendarSeeder extends Seeder
 
     public function run(): void
     {
-        $establishments = DB::table('establishment')->pluck('id');
-        $users = DB::table('users')->pluck('id');
 
         // Create entries for each specific period
         foreach (self::PERIODS as $period => $times) {
@@ -41,8 +39,8 @@ class BlockCalendarSeeder extends Seeder
                 $date = Carbon::now()->addDays(rand(1, 30));
 
                 DB::table('block_calendar')->insert([
-                    'establishment_id' => $establishments->random(),
-                    'user_id' => $users->random(),
+                    'establishment_id' => 1,
+                    'user_id' => 2,
                     'period' => $period,
                     'date' => $date->format('Y-m-d'),
                     'time_start' => $times['start'],

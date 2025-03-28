@@ -23,6 +23,7 @@ return new class extends Migration
             $table->char("type_schedule", 2)->nullable()->comment('Horario marcado (HM) ou ordem de chegada (OC)');
             $table->boolean('need_profile_complete')->default(false);
             $table->string('avatar')->nullable();
+            $table->boolean('terms_accepted')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

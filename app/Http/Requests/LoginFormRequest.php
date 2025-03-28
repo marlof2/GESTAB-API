@@ -27,7 +27,7 @@ class LoginFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'cpf' => ["required", "string"],
+            'email' => ["required", "string"],
             'password' => ["required","string"]
         ];
     }
@@ -35,9 +35,7 @@ class LoginFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'cpf.required' => 'Campo Obrigatório!.',
-            'cpf.string' => 'CPF deve ser uma string.',
-            'password.string' => 'Senha deve ser uma string.',
+            'email.required' => 'Campo Obrigatório!.',
             'password.required' => 'Campo Obrigatório!.',
         ];
     }

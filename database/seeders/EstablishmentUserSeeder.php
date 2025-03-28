@@ -17,6 +17,11 @@ class EstablishmentUserSeeder extends Seeder
         $data = [
             [
                 'establishment_id' => 1,
+                'user_id' => 1,
+                'created_by_functionality' => 'ME'
+            ],
+            [
+                'establishment_id' => 1,
                 'user_id' => 3,
                 'created_by_functionality' => 'EP'
             ],

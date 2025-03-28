@@ -20,7 +20,7 @@ class Establishment extends Model
     {
         return $query
             ->withTrashed()
-            ->with("tipoPessoa")
+            ->with("tipoPessoa", "responsible")
             ->OrWhere('name', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('cnpj', 'LIKE', '%' . $filtro . '%')
             ->OrWhere('cpf', 'LIKE', '%' . $filtro . '%')

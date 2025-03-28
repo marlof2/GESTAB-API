@@ -19,25 +19,25 @@ class ServiceSeeder extends Seeder
             [
                 'establishment_id' => 1,
                 'name' => 'Corte simples',
-                'amount' => 10.00,
-                'time' => '20:00'
+                'amount' => 25.00,
+                'time' => '30:00'
             ],
             [
                 'establishment_id' => 1,
                 'name' => 'Corte e barba',
+                'amount' => 30.00,
+                'time' => '45:00'
+            ],
+            [
+                'establishment_id' => 1,
+                'name' => 'Barba',
                 'amount' => 15.00,
                 'time' => '30:00'
             ],
             [
                 'establishment_id' => 1,
-                'name' => 'Barba',
-                'amount' => 8.00,
-                'time' => '30:00'
-            ],
-            [
-                'establishment_id' => 1,
                 'name' => 'Sobrancelha',
-                'amount' => 20.00,
+                'amount' => 15.00,
                 'time' => '10:00'
             ],
 

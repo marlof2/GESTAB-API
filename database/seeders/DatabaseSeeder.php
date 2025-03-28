@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             EstablishmentUserSeeder::class,
             ServiceSeeder::class,
             ListSeeder::class,
-            CategorieSeeder::class,
+            // CategorieSeeder::class,
             // BlockCalendarSeeder::class,
         ]);
     }

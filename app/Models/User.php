@@ -32,7 +32,8 @@ class User extends Authenticatable
         "last_name",
         "google_id",
         "avatar",
-        "need_profile_complete"
+        "need_profile_complete",
+        "terms_accepted"
     ];
 
     /**
